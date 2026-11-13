@@ -220,7 +220,7 @@ export function WhatsAppAndPopups() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 12 }}
               transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-[#FFFFFF] text-[#181413] border border-[#DDD5C9] rounded-[4px] w-full max-w-md shadow-2xl overflow-hidden"
+              className="bg-surface text-ink border border-hairline rounded-[4px] w-full max-w-md shadow-2xl overflow-hidden"
             >
               <div className="bg-[#110D0C] border-b border-[#931916] px-5 py-4 flex items-center justify-between text-white">
                 <h3 className="font-serif text-xl font-bold text-[#F6F2EA]">
@@ -238,10 +238,10 @@ export function WhatsAppAndPopups() {
                 </button>
               </div>
 
-              <div className="p-5 bg-[#F7F4EF]">
+              <div className="p-5 bg-page">
                 {activePopup === 'popup_quote' ? (
                   <div className="space-y-4">
-                    <p className="text-sm text-[#574E4A] leading-relaxed">
+                    <p className="text-sm text-muted leading-relaxed">
                       {p(
                         'Vous comparez des prestataires à Conakry ? Obtenez un devis gradué (options papier, volume, délais) adapté à votre budget.',
                         'Comparing agencies in Conakry? Receive a tiered quote tailored to your timeline and budget.',
@@ -261,7 +261,7 @@ export function WhatsAppAndPopups() {
                 ) : pStatus === 'success' ? (
                   <div className="py-4 text-center space-y-3">
                     <CheckCircle2 className="w-9 h-9 text-[#931916] mx-auto" />
-                    <p className="text-sm text-[#181413] font-medium">
+                    <p className="text-sm text-ink font-medium">
                       {activePopup === 'popup_brochure'
                         ? p('Merci ! Votre plaquette institutionnelle est prête.', 'Thank you! Your agency profile is ready.')
                         : p('Merci ! Dernière étape pour activer votre veille.', 'Thank you! One last step to activate your briefing.')}
@@ -269,7 +269,7 @@ export function WhatsAppAndPopups() {
                     {activePopup === 'popup_newsletter' &&
                       (confirmUrl ? (
                         <div className="space-y-2">
-                          <p className="text-xs text-[#574E4A] leading-relaxed">
+                          <p className="text-xs text-muted leading-relaxed">
                             {p(
                               'Conformément au double opt-in, confirmez votre inscription d’un clic :',
                               'As a double opt-in safeguard, confirm your subscription with one click:',
@@ -288,7 +288,7 @@ export function WhatsAppAndPopups() {
                           </a>
                         </div>
                       ) : (
-                        <p className="text-xs text-[#574E4A] leading-relaxed">
+                        <p className="text-xs text-muted leading-relaxed">
                           {p(
                             'Votre inscription est enregistrée et sera activée après confirmation.',
                             'Your subscription is recorded and will be activated after confirmation.',
@@ -312,7 +312,7 @@ export function WhatsAppAndPopups() {
                   </div>
                 ) : (
                   <form onSubmit={handlePopupSubmit} className="space-y-3">
-                    <p className="text-xs text-[#574E4A] leading-relaxed">
+                    <p className="text-xs text-muted leading-relaxed">
                       {activePopup === 'popup_brochure'
                         ? p(
                             'Recevez la présentation complète de nos références institutionnelles et capacités d’impression.',
@@ -332,14 +332,14 @@ export function WhatsAppAndPopups() {
                           value={pName}
                           onChange={(e) => setPName(e.target.value)}
                           placeholder={p('Nom complet *', 'Full name *')}
-                          className="w-full px-3 py-2.5 text-sm bg-white border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                          className="w-full px-3 py-2.5 text-sm bg-surface border border-hairline text-ink placeholder:text-faint rounded-[4px] focus:border-[#931916] focus:outline-none"
                         />
                         <input
                           type="text"
                           value={pOrg}
                           onChange={(e) => setPOrg(e.target.value)}
                           placeholder={p('Organisation', 'Organization')}
-                          className="w-full px-3 py-2.5 text-sm bg-white border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                          className="w-full px-3 py-2.5 text-sm bg-surface border border-hairline text-ink placeholder:text-faint rounded-[4px] focus:border-[#931916] focus:outline-none"
                         />
                       </>
                     )}
@@ -350,10 +350,10 @@ export function WhatsAppAndPopups() {
                       value={pEmail}
                       onChange={(e) => setPEmail(e.target.value)}
                       placeholder={p('Courriel professionnel *', 'Work email *')}
-                      className="w-full px-3 py-2.5 text-sm bg-white border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                      className="w-full px-3 py-2.5 text-sm bg-surface border border-hairline text-ink placeholder:text-faint rounded-[4px] focus:border-[#931916] focus:outline-none"
                     />
 
-                    <label className="flex items-start gap-2 text-xs text-[#574E4A] cursor-pointer">
+                    <label className="flex items-start gap-2 text-xs text-muted cursor-pointer">
                       <input
                         type="checkbox"
                         checked={pConsent}

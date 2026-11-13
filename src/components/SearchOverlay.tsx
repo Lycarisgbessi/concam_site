@@ -96,7 +96,7 @@ export function SearchOverlay() {
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-2xl bg-[#F7F4EF] text-[#181413] border border-[#181413]/20 rounded-[4px] shadow-2xl overflow-hidden"
+            className="w-full max-w-2xl bg-page text-ink border border-[#181413]/20 rounded-[4px] shadow-2xl overflow-hidden"
           >
             <form onSubmit={goFullSearch} className="bg-[#110D0C] border-b border-[#931916] px-4 sm:px-5 py-3.5 flex items-center gap-3">
               <Search className="w-4 h-4 text-[#E40014] shrink-0" aria-hidden="true" />
@@ -122,9 +122,9 @@ export function SearchOverlay() {
               </button>
             </form>
 
-            <div className="max-h-[60vh] overflow-y-auto divide-y divide-[#DDD5C9]">
+            <div className="max-h-[60vh] overflow-y-auto divide-y divide-hairline">
               {!query.trim() ? (
-                <div className="p-6 text-xs text-[#574E4A] space-y-3">
+                <div className="p-6 text-xs text-muted space-y-3">
                   <p className="uppercase tracking-[0.16em] font-semibold text-[#931916]">
                     {p('Recherches fréquentes', 'Suggested topics')}
                   </p>
@@ -140,7 +140,7 @@ export function SearchOverlay() {
                         key={term}
                         type="button"
                         onClick={() => setQuery(term)}
-                        className="px-3 py-1.5 text-xs bg-white border border-[#DDD5C9] hover:border-[#931916] text-[#181413] rounded-[4px] cursor-pointer transition-colors"
+                        className="px-3 py-1.5 text-xs bg-surface border border-hairline hover:border-[#931916] text-ink rounded-[4px] cursor-pointer transition-colors"
                       >
                         {term}
                       </button>
@@ -148,7 +148,7 @@ export function SearchOverlay() {
                   </div>
                 </div>
               ) : results.length === 0 && !loading ? (
-                <div className="p-8 text-center text-sm text-[#574E4A]">
+                <div className="p-8 text-center text-sm text-muted">
                   {p(
                     'Aucun résultat exact pour cette recherche. Essayez un autre mot-clé ou consultez nos pôles de services.',
                     'No exact match found. Try another keyword or browse our service pillars.',
@@ -160,26 +160,26 @@ export function SearchOverlay() {
                     key={`${item.type}-${item.id}`}
                     to={item.href}
                     onClick={() => setSearchOpen(false)}
-                    className="flex items-start gap-4 p-4 hover:bg-[#EFEAE1] transition-colors group"
+                    className="flex items-start gap-4 p-4 hover:bg-limestone transition-colors group"
                   >
                     {item.imageUrl && (
                       <img
                         src={item.imageUrl}
                         alt=""
                         referrerPolicy="no-referrer"
-                        className="w-14 h-12 object-cover rounded-[4px] border border-[#DDD5C9] shrink-0 hidden sm:block"
+                        className="w-14 h-12 object-cover rounded-[4px] border border-hairline shrink-0 hidden sm:block"
                       />
                     )}
                     <div className="min-w-0 flex-1 space-y-1">
                       <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-[#931916] font-semibold">
                         <span>{typeLabel(item.type)}</span>
-                        <span className="text-[#9C9188]">·</span>
-                        <span className="text-[#574E4A] truncate">{item.subtitle}</span>
+                        <span className="text-faint">·</span>
+                        <span className="text-muted truncate">{item.subtitle}</span>
                       </div>
-                      <p className="font-serif text-lg font-bold text-[#181413] group-hover:text-[#931916] transition-colors truncate">
+                      <p className="font-serif text-lg font-bold text-ink group-hover:text-[#931916] transition-colors truncate">
                         {item.title}
                       </p>
-                      <p className="text-xs text-[#574E4A] line-clamp-1">{item.excerpt}</p>
+                      <p className="text-xs text-muted line-clamp-1">{item.excerpt}</p>
                     </div>
                     <ArrowUpRight className="w-4 h-4 text-[#931916] shrink-0 mt-1 opacity-60 group-hover:opacity-100" />
                   </Link>
@@ -187,7 +187,7 @@ export function SearchOverlay() {
               )}
             </div>
 
-            <div className="bg-[#EFEAE1] border-t border-[#DDD5C9] px-4 py-2.5 flex items-center justify-between text-[11px] text-[#574E4A]">
+            <div className="bg-limestone border-t border-hairline px-4 py-2.5 flex items-center justify-between text-[11px] text-muted">
               <span>
                 {p('Raccourci : ⌘K / Ctrl+K · Échap pour fermer', 'Shortcut: ⌘K / Ctrl+K · Esc to close')}
               </span>

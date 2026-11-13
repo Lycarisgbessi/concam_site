@@ -48,7 +48,7 @@ export function ServiceDetailPage() {
 
   if (!service) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-32 text-center space-y-4 text-[#181413]">
+      <div className="max-w-4xl mx-auto px-4 py-32 text-center space-y-4 text-ink">
         <h1 className="font-serif text-3xl font-bold">{p('Service introuvable', 'Service not found')}</h1>
         <Link to={p('/services', '/en/services')} className="text-[#931916] font-semibold underline">
           {p('Retour au catalogue des services', 'Back to services')}
@@ -183,7 +183,7 @@ export function ServiceDetailPage() {
 
       {/* Split Editorial Scope & Benefits on Archival Ivory with Curtain Overlap */}
       <ParallaxCurtainSection zIndex={20} topAccent>
-        <section className="relative py-20 lg:py-24 bg-[#F7F4EF] text-[#181413] border-b border-[#DDD5C9] overflow-x-clip">
+        <section className="relative py-20 lg:py-24 bg-page text-ink border-b border-hairline overflow-x-clip">
           <ParallaxBackdropPlate variant="light-grid" offset={112} />
           <ParallaxOppositeSplit
             amplitude={70}
@@ -197,10 +197,10 @@ export function ServiceDetailPage() {
                   {p('Notre approche métier', 'Strategic Methodology')}
                 </p>
               </ParallaxHorizontalTitle>
-              <p className="text-base sm:text-lg text-[#574E4A] leading-relaxed">{summary}</p>
-              <ul className="divide-y divide-[#DDD5C9] border-y border-[#DDD5C9]">
+              <p className="text-base sm:text-lg text-muted leading-relaxed">{summary}</p>
+              <ul className="divide-y divide-hairline border-y border-hairline">
                 {benefits.map((b, i) => (
-                  <li key={i} className="py-3.5 flex items-start gap-3 text-sm text-[#181413]">
+                  <li key={i} className="py-3.5 flex items-start gap-3 text-sm text-ink">
                     <Check className="w-4 h-4 text-[#931916] shrink-0 mt-0.5" />
                     <span>{b}</span>
                   </li>
@@ -211,7 +211,7 @@ export function ServiceDetailPage() {
           right={
             <ParallaxScroll3DPlate direction={-1} tiltX={8} tiltY={6} liftY={46}>
               <TiltCard3D intensity={4.5}>
-                <div className="aspect-[4/3] rounded-[4px] overflow-hidden border border-[#DDD5C9] bg-[#EFEAE1] shadow-lg">
+                <div className="aspect-[4/3] rounded-[4px] overflow-hidden border border-hairline bg-limestone shadow-lg">
                   <ParallaxImageFrame shiftPct={8}>
                     <ClipCurtainReveal direction="right" className="w-full h-full">
                       <img
@@ -232,7 +232,7 @@ export function ServiceDetailPage() {
 
       {/* Interactive Motion Tabs for Offerings on Warm Limestone */}
       <ParallaxCurtainSection zIndex={25} topAccent>
-        <section className="relative py-20 bg-[#EFEAE1] text-[#181413] border-b border-[#DDD5C9] overflow-x-clip">
+        <section className="relative py-20 bg-limestone text-ink border-b border-hairline overflow-x-clip">
           <ParallaxBackdropPlate variant="editorial-lines" offset={108} />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8 relative z-10">
           <div className="space-y-2">
@@ -245,7 +245,7 @@ export function ServiceDetailPage() {
               <SplitTextReveal
                 as="h2"
                 text={p('Déclinaisons de l’offre', 'Service Scope & Deliverables')}
-                className="font-serif text-3xl sm:text-4xl font-bold text-[#181413]"
+                className="font-serif text-3xl sm:text-4xl font-bold text-ink"
               />
             </ParallaxHorizontalTitle>
           </div>
@@ -261,7 +261,7 @@ export function ServiceDetailPage() {
                   className={`relative px-4 py-2.5 text-sm font-semibold rounded-[4px] border transition-colors cursor-pointer whitespace-nowrap ${
                     active
                       ? 'text-white border-[#931916]'
-                      : 'bg-white border-[#DDD5C9] text-[#574E4A] hover:text-[#181413] hover:border-[#931916]/50'
+                      : 'bg-surface border-hairline text-muted hover:text-ink hover:border-[#931916]/50'
                   }`}
                 >
                   {active && (
@@ -291,12 +291,12 @@ export function ServiceDetailPage() {
                   <p className="font-serif text-xs font-semibold text-[#931916] uppercase tracking-wider">
                     {ROMAN[activeOfferingIdx] || activeOfferingIdx + 1} · {title}
                   </p>
-                  <h3 className="font-serif text-2xl font-bold text-[#181413]">
+                  <h3 className="font-serif text-2xl font-bold text-ink">
                     {lang === 'en'
                       ? service.offerings[activeOfferingIdx].titleEn
                       : service.offerings[activeOfferingIdx].titleFr}
                   </h3>
-                  <p className="text-base text-[#574E4A] leading-relaxed max-w-3xl">
+                  <p className="text-base text-muted leading-relaxed max-w-3xl">
                     {lang === 'en'
                       ? service.offerings[activeOfferingIdx].descEn
                       : service.offerings[activeOfferingIdx].descFr}
@@ -312,7 +312,7 @@ export function ServiceDetailPage() {
       {/* Sticky Execution Protocol + Staggered Process Cards on Archival Ivory */}
       <section
         style={{ zIndex: 30 }}
-        className="relative py-20 lg:py-24 bg-[#F7F4EF] text-[#181413] border-b border-[#DDD5C9] overflow-x-clip shadow-[0_-24px_64px_-14px_rgba(17,13,12,0.4)]"
+        className="relative py-20 lg:py-24 bg-page text-ink border-b border-hairline overflow-x-clip shadow-[0_-24px_64px_-14px_rgba(17,13,12,0.4)]"
       >
         <ParallaxBackdropPlate variant="light-grid" offset={110} />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
@@ -332,11 +332,11 @@ export function ServiceDetailPage() {
                   <SplitTextReveal
                     as="h2"
                     text={p('Processus de réalisation en 4 étapes', 'Our 4-Step Execution Workflow')}
-                    className="font-serif text-3xl sm:text-4xl font-bold text-[#181413]"
+                    className="font-serif text-3xl sm:text-4xl font-bold text-ink"
                   />
                 </ParallaxHorizontalTitle>
                 <EngravedRuleReveal tone="light" align="left" />
-                <p className="text-sm text-[#574E4A] leading-relaxed">
+                <p className="text-sm text-muted leading-relaxed">
                   {p(
                     'Chaque étape suit un contrôle qualité rigoureux depuis l’atelier de Kaloum jusqu’à la livraison finale.',
                     'Each phase enforces strict quality gates from our Kaloum studio through final delivery.',
@@ -357,10 +357,10 @@ export function ServiceDetailPage() {
                           <span className="inline-flex items-center justify-center w-10 h-10 rounded-[4px] bg-[#110D0C] border border-[#931916] text-white font-serif text-sm font-bold tabular-nums">
                             {ROMAN[idx] || `0${st.step}`}
                           </span>
-                          <h3 className="font-serif text-xl font-bold text-[#181413]">
+                          <h3 className="font-serif text-xl font-bold text-ink">
                             {lang === 'en' ? st.titleEn : st.titleFr}
                           </h3>
-                          <p className="text-sm text-[#574E4A] leading-relaxed">
+                          <p className="text-sm text-muted leading-relaxed">
                             {lang === 'en' ? st.descEn : st.descFr}
                           </p>
                         </div>
@@ -468,7 +468,7 @@ export function ServiceDetailPage() {
 
       {/* Animated FAQ + Crisp Archival Quote Form with Curtain Overlap */}
       <ParallaxCurtainSection zIndex={40} topAccent>
-        <section id="service-quote" className="relative py-20 bg-[#F7F4EF] text-[#181413] overflow-x-clip">
+        <section id="service-quote" className="relative py-20 bg-page text-ink overflow-x-clip">
           <ParallaxBackdropPlate variant="editorial-lines" offset={106} />
           <ParallaxOppositeSplit
             amplitude={62}
@@ -478,7 +478,7 @@ export function ServiceDetailPage() {
           left={
             <RevealBlock preset="slide-left" className="space-y-5">
               <ParallaxHorizontalTitle direction={-1} distance={20}>
-                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#181413]">
+                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-ink">
                   {p('Questions fréquentes', 'Frequently Asked Questions')}
                 </h2>
               </ParallaxHorizontalTitle>
@@ -490,7 +490,7 @@ export function ServiceDetailPage() {
                       <button
                         type="button"
                         onClick={() => setOpenFaqIdx(open ? null : idx)}
-                        className="w-full px-4 py-3.5 text-left flex items-center justify-between gap-3 text-sm font-semibold text-[#181413] hover:bg-[#EFEAE1]/50 transition-colors cursor-pointer"
+                        className="w-full px-4 py-3.5 text-left flex items-center justify-between gap-3 text-sm font-semibold text-ink hover:bg-limestone/50 transition-colors cursor-pointer"
                       >
                         <span>{lang === 'en' ? faq.questionEn : faq.questionFr}</span>
                         <ChevronDown
@@ -508,7 +508,7 @@ export function ServiceDetailPage() {
                             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                             className="overflow-hidden"
                           >
-                            <div className="px-4 pb-4 text-sm text-[#574E4A] leading-relaxed border-t border-[#DDD5C9] pt-3">
+                            <div className="px-4 pb-4 text-sm text-muted leading-relaxed border-t border-hairline pt-3">
                               {lang === 'en' ? faq.answerEn : faq.answerFr}
                             </div>
                           </motion.div>
@@ -522,7 +522,7 @@ export function ServiceDetailPage() {
           }
           right={
             <RevealBlock preset="slide-right" delay={0.08} className="archival-plate rounded-[4px] p-7 sm:p-9">
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#181413] mb-1">
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-ink mb-1">
               {p(`Demander un devis — ${title}`, `Request a Quote — ${title}`)}
             </h2>
             <p className="text-xs font-medium text-[#931916] mb-6">
@@ -533,10 +533,10 @@ export function ServiceDetailPage() {
             </p>
 
             {status === 'success' ? (
-              <div className="bg-[#EFEAE1] border border-[#DDD5C9] rounded-[4px] p-6 text-center space-y-3">
+              <div className="bg-limestone border border-hairline rounded-[4px] p-6 text-center space-y-3">
                 <CheckCircle2 className="w-10 h-10 text-[#931916] mx-auto" />
-                <h3 className="font-serif text-lg font-bold text-[#181413]">{p('Demande envoyée', 'Request Sent')}</h3>
-                <p className="text-sm text-[#574E4A]">
+                <h3 className="font-serif text-lg font-bold text-ink">{p('Demande envoyée', 'Request Sent')}</h3>
+                <p className="text-sm text-muted">
                   {p(
                     'Votre demande de devis a bien été transmise à l’équipe CONCAM.',
                     'Your quote request has been transmitted to the CONCAM team.',
@@ -552,14 +552,14 @@ export function ServiceDetailPage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={p('Nom complet *', 'Full name *')}
-                    className="w-full px-3.5 py-2.5 text-sm bg-[#F7F4EF] border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] focus:border-[#931916] focus:outline-none rounded-[4px]"
+                    className="w-full px-3.5 py-2.5 text-sm bg-page border border-hairline text-ink placeholder:text-faint focus:border-[#931916] focus:outline-none rounded-[4px]"
                   />
                   <input
                     type="text"
                     value={org}
                     onChange={(e) => setOrg(e.target.value)}
                     placeholder={p('Organisation / Société', 'Organization / Company')}
-                    className="w-full px-3.5 py-2.5 text-sm bg-[#F7F4EF] border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] focus:border-[#931916] focus:outline-none rounded-[4px]"
+                    className="w-full px-3.5 py-2.5 text-sm bg-page border border-hairline text-ink placeholder:text-faint focus:border-[#931916] focus:outline-none rounded-[4px]"
                   />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -569,14 +569,14 @@ export function ServiceDetailPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={p('Courriel professionnel *', 'Work email *')}
-                    className="w-full px-3.5 py-2.5 text-sm bg-[#F7F4EF] border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] focus:border-[#931916] focus:outline-none rounded-[4px]"
+                    className="w-full px-3.5 py-2.5 text-sm bg-page border border-hairline text-ink placeholder:text-faint focus:border-[#931916] focus:outline-none rounded-[4px]"
                   />
                   <input
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder={p('Téléphone / WhatsApp', 'Phone / WhatsApp')}
-                    className="w-full px-3.5 py-2.5 text-sm bg-[#F7F4EF] border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] focus:border-[#931916] focus:outline-none rounded-[4px]"
+                    className="w-full px-3.5 py-2.5 text-sm bg-page border border-hairline text-ink placeholder:text-faint focus:border-[#931916] focus:outline-none rounded-[4px]"
                   />
                 </div>
                 <input
@@ -584,7 +584,7 @@ export function ServiceDetailPage() {
                   readOnly
                   value={title}
                   aria-label={p('Service sélectionné', 'Selected service')}
-                  className="w-full px-3.5 py-2.5 text-sm bg-[#EFEAE1] border border-[#931916]/45 text-[#181413] font-semibold rounded-[4px]"
+                  className="w-full px-3.5 py-2.5 text-sm bg-limestone border border-[#931916]/45 text-ink font-semibold rounded-[4px]"
                 />
                 <textarea
                   rows={4}
@@ -595,9 +595,9 @@ export function ServiceDetailPage() {
                     'Décrivez votre besoin (quantités, format, échéance souhaitée)...',
                     'Describe your scope (quantities, format, target deadline)...',
                   )}
-                  className="w-full px-3.5 py-2.5 text-sm bg-[#F7F4EF] border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] focus:border-[#931916] focus:outline-none rounded-[4px]"
+                  className="w-full px-3.5 py-2.5 text-sm bg-page border border-hairline text-ink placeholder:text-faint focus:border-[#931916] focus:outline-none rounded-[4px]"
                 />
-                <label className="flex items-start gap-2 text-xs text-[#574E4A] cursor-pointer">
+                <label className="flex items-start gap-2 text-xs text-muted cursor-pointer">
                   <input
                     type="checkbox"
                     checked={consent}

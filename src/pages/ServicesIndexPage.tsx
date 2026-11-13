@@ -110,7 +110,7 @@ export function ServicesIndexPage() {
 
       <section
         style={{ zIndex: 25 }}
-        className="py-20 lg:py-24 bg-[#F7F4EF] text-[#181413] relative overflow-x-clip border-t border-[#DDD5C9] shadow-[0_-24px_64px_-14px_rgba(17,13,12,0.38)]"
+        className="py-20 lg:py-24 bg-page text-ink relative overflow-x-clip border-t border-hairline shadow-[0_-24px_64px_-14px_rgba(17,13,12,0.38)]"
       >
         <ParallaxBackdropPlate variant="light-grid" offset={115} />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-20 relative z-10">
@@ -137,7 +137,7 @@ export function ServicesIndexPage() {
                         className={`relative px-4 py-2 text-xs font-semibold rounded-[4px] border transition-colors cursor-pointer whitespace-nowrap ${
                           active
                             ? 'text-white border-[#931916]'
-                            : 'bg-white border-[#DDD5C9] text-[#574E4A] hover:text-[#181413] hover:border-[#931916]/50'
+                            : 'bg-surface border-hairline text-muted hover:text-ink hover:border-[#931916]/50'
                         }`}
                       >
                         {active && (
@@ -164,7 +164,7 @@ export function ServicesIndexPage() {
                       setSlideIdx((i) => (i - 1 + data.services.length) % data.services.length);
                     }}
                     aria-label={p('Pôle précédent', 'Previous service')}
-                    className="bg-white border border-[#DDD5C9] p-2 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                    className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
@@ -175,7 +175,7 @@ export function ServicesIndexPage() {
                       setSlideIdx((i) => (i + 1) % data.services.length);
                     }}
                     aria-label={p('Pôle suivant', 'Next service')}
-                    className="bg-white border border-[#DDD5C9] p-2 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                    className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>
@@ -193,7 +193,7 @@ export function ServicesIndexPage() {
                     transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
                     className="grid grid-cols-1 lg:grid-cols-12 items-stretch"
                   >
-                    <div className="lg:col-span-5 aspect-[16/10] lg:aspect-auto lg:min-h-[300px] bg-[#EFEAE1] overflow-hidden">
+                    <div className="lg:col-span-5 aspect-[16/10] lg:aspect-auto lg:min-h-[300px] bg-limestone overflow-hidden">
                       <ParallaxImageFrame shiftPct={6.5}>
                         <img
                           src={activeSrv.imageUrl}
@@ -208,10 +208,10 @@ export function ServicesIndexPage() {
                         <p className="text-xs font-sans font-semibold uppercase tracking-[0.16em] text-[#931916]">
                           {p('Pôle', 'Pillar')} {ROMAN[slideIdx] || slideIdx + 1} · {lang === 'en' ? activeSrv.taglineEn : activeSrv.taglineFr}
                         </p>
-                        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#181413]">
+                        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-ink">
                           {lang === 'en' ? activeSrv.titleEn : activeSrv.titleFr}
                         </h2>
-                        <p className="text-sm sm:text-base text-[#574E4A] leading-relaxed">
+                        <p className="text-sm sm:text-base text-muted leading-relaxed">
                           {lang === 'en' ? activeSrv.summaryEn : activeSrv.summaryFr}
                         </p>
                       </div>
@@ -226,7 +226,7 @@ export function ServicesIndexPage() {
                         <button
                           type="button"
                           onClick={() => openQuoteModal({ serviceSlug: activeSrv.slug })}
-                          className="bg-[#EFEAE1] hover:bg-[#DDD5C9] px-4 py-2.5 text-xs font-semibold text-[#181413] border border-[#DDD5C9] rounded-[4px] transition-colors cursor-pointer"
+                          className="bg-limestone hover:bg-hairline px-4 py-2.5 text-xs font-semibold text-ink border border-hairline rounded-[4px] transition-colors cursor-pointer"
                         >
                           {p('Demander un devis', 'Request Quote')}
                         </button>
@@ -234,7 +234,7 @@ export function ServicesIndexPage() {
                     </div>
                   </motion.div>
                 </AnimatePresence>
-                <div className="h-[2px] w-full bg-[#EFEAE1] relative overflow-hidden">
+                <div className="h-[2px] w-full bg-limestone relative overflow-hidden">
                   <motion.div
                     key={`srvidx-prog-${slideIdx}-${paused ? 'p' : 'r'}`}
                     initial={{ scaleX: 0 }}
@@ -261,14 +261,14 @@ export function ServicesIndexPage() {
               return (
                 <article
                   key={srv.id}
-                  className="archival-plate bg-white rounded-[4px] p-6 sm:p-8 lg:p-10 border border-[#DDD5C9] hover:border-[#931916] transition-colors"
+                  className="archival-plate bg-surface rounded-[4px] p-6 sm:p-8 lg:p-10 border border-hairline hover:border-[#931916] transition-colors"
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
                     <div className={`lg:col-span-5 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
                       <TiltCard3D intensity={5}>
                         <Link
                           to={lang === 'en' ? `/en/services/${srv.slug}` : `/services/${srv.slug}`}
-                          className="group block relative aspect-[16/10] lg:aspect-[4/3] rounded-[4px] overflow-hidden border border-[#DDD5C9] hover:border-[#931916] bg-[#EFEAE1] shadow-[0_18px_38px_-18px_rgba(24,20,19,0.28)] transition-colors"
+                          className="group block relative aspect-[16/10] lg:aspect-[4/3] rounded-[4px] overflow-hidden border border-hairline hover:border-[#931916] bg-limestone shadow-[0_18px_38px_-18px_rgba(24,20,19,0.28)] transition-colors"
                         >
                           <ParallaxImageFrame shiftPct={8}>
                             <img
@@ -302,18 +302,18 @@ export function ServicesIndexPage() {
                       </ParallaxHorizontalTitle>
 
                       <ParallaxHorizontalTitle direction={isEven ? -1 : 1} distance={22}>
-                        <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#181413] leading-tight">
+                        <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-ink leading-tight">
                           {lang === 'en' ? srv.titleEn : srv.titleFr}
                         </h2>
                       </ParallaxHorizontalTitle>
 
-                      <p className="text-sm sm:text-base text-[#574E4A] leading-relaxed line-clamp-2">
+                      <p className="text-sm sm:text-base text-muted leading-relaxed line-clamp-2">
                         {lang === 'en' ? srv.summaryEn : srv.summaryFr}
                       </p>
 
-                      <ul className="divide-y divide-[#DDD5C9] border-y border-[#DDD5C9]">
+                      <ul className="divide-y divide-hairline border-y border-hairline">
                         {benefits.map((b, bIdx) => (
-                          <li key={bIdx} className="py-2 flex items-start gap-2.5 text-xs sm:text-sm text-[#181413]">
+                          <li key={bIdx} className="py-2 flex items-start gap-2.5 text-xs sm:text-sm text-ink">
                             <Check className="w-4 h-4 text-[#931916] shrink-0 mt-0.5" />
                             <span>{b}</span>
                           </li>
@@ -323,7 +323,7 @@ export function ServicesIndexPage() {
                       <div className="pt-2 flex flex-wrap items-center gap-4">
                         <Link
                           to={lang === 'en' ? `/en/services/${srv.slug}` : `/services/${srv.slug}`}
-                          className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-[#181413] py-1"
+                          className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-ink py-1"
                         >
                           <span>{p('Voir la fiche complète', 'View Full Service')}</span>
                           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

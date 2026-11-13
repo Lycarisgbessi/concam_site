@@ -71,10 +71,10 @@ function ServiceOfferingTicker({ service, lang }: { service: ServiceItem; lang: 
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-0.5"
         >
-          <p className="text-sm font-semibold text-[#181413]">
+          <p className="text-sm font-semibold text-ink">
             {lang === 'en' ? active.titleEn : active.titleFr}
           </p>
-          <p className="text-xs text-[#574E4A] line-clamp-1">
+          <p className="text-xs text-muted line-clamp-1">
             {lang === 'en' ? active.descEn : active.descFr}
           </p>
         </motion.div>
@@ -342,7 +342,7 @@ export function HomePage() {
           <section
             key="services"
             style={{ zIndex: 25 }}
-            className="relative py-24 lg:py-28 bg-[#F7F4EF] text-[#181413] overflow-x-clip border-t-2 border-[#931916] shadow-[0_-28px_72px_-12px_rgba(17,13,12,0.42)]"
+            className="relative py-24 lg:py-28 bg-page text-ink overflow-x-clip border-t-2 border-[#931916] shadow-[0_-28px_72px_-12px_rgba(17,13,12,0.42)]"
           >
             <ParallaxBackdropPlate variant="light-grid" offset={115} />
             <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
@@ -362,14 +362,14 @@ export function HomePage() {
                         'Quatre pôles métiers pour vos projets institutionnels',
                         'Four core pillars for institutional & corporate impact',
                       )}
-                      className="font-serif text-3xl sm:text-5xl font-bold text-[#181413] tracking-tight leading-[1.06]"
+                      className="font-serif text-3xl sm:text-5xl font-bold text-ink tracking-tight leading-[1.06]"
                     />
                   </ParallaxHorizontalTitle>
                 </div>
                 <MagneticWrapper strength={0.18}>
                   <Link
                     to={p('/services', '/en/services')}
-                    className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-[#181413] whitespace-nowrap shrink-0 pb-1"
+                    className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-ink whitespace-nowrap shrink-0 pb-1"
                   >
                     <span>{p('Explorer tous les services', 'Explore all services')}</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -401,7 +401,7 @@ export function HomePage() {
                             className={`relative px-4 py-2 text-xs font-semibold rounded-[4px] border transition-colors cursor-pointer whitespace-nowrap ${
                               active
                                 ? 'text-white border-[#931916]'
-                                : 'bg-white border-[#DDD5C9] text-[#574E4A] hover:text-[#181413] hover:border-[#931916]/50'
+                                : 'bg-surface border-hairline text-muted hover:text-ink hover:border-[#931916]/50'
                             }`}
                           >
                             {active && (
@@ -421,7 +421,7 @@ export function HomePage() {
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-serif font-semibold tabular-nums text-[#574E4A] mr-1">
+                      <span className="text-xs font-serif font-semibold tabular-nums text-muted mr-1">
                         0{srvSlideIdx + 1} / 0{services.length}
                       </span>
                       <button
@@ -431,7 +431,7 @@ export function HomePage() {
                           setSrvSlideIdx((i) => (i - 1 + services.length) % services.length);
                         }}
                         aria-label={p('Pôle précédent', 'Previous pillar')}
-                        className="bg-white border border-[#DDD5C9] p-2.5 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                        className="bg-surface border border-hairline p-2.5 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
                       >
                         <ChevronLeft className="w-4 h-4" />
                       </button>
@@ -442,7 +442,7 @@ export function HomePage() {
                           setSrvSlideIdx((i) => (i + 1) % services.length);
                         }}
                         aria-label={p('Pôle suivant', 'Next pillar')}
-                        className="bg-white border border-[#DDD5C9] p-2.5 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                        className="bg-surface border border-hairline p-2.5 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
                       >
                         <ChevronRight className="w-4 h-4" />
                       </button>
@@ -461,7 +461,7 @@ export function HomePage() {
                         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                         className="grid grid-cols-1 lg:grid-cols-12 items-stretch"
                       >
-                        <div className="lg:col-span-5 relative aspect-[16/10] lg:aspect-auto lg:min-h-[340px] bg-[#EFEAE1] overflow-hidden">
+                        <div className="lg:col-span-5 relative aspect-[16/10] lg:aspect-auto lg:min-h-[340px] bg-limestone overflow-hidden">
                           <ParallaxImageFrame shiftPct={6.5}>
                             <motion.img
                               key={activeSrv.imageUrl}
@@ -485,19 +485,19 @@ export function HomePage() {
                             <p className="text-xs font-sans font-semibold uppercase tracking-[0.16em] text-[#931916]">
                               {lang === 'en' ? activeSrv.taglineEn : activeSrv.taglineFr}
                             </p>
-                            <h3 className="font-serif text-3xl sm:text-4xl font-bold text-[#181413] leading-snug">
+                            <h3 className="font-serif text-3xl sm:text-4xl font-bold text-ink leading-snug">
                               {lang === 'en' ? activeSrv.titleEn : activeSrv.titleFr}
                             </h3>
-                            <p className="text-sm sm:text-base text-[#574E4A] leading-relaxed">
+                            <p className="text-sm sm:text-base text-muted leading-relaxed">
                               {lang === 'en' ? activeSrv.summaryEn : activeSrv.summaryFr}
                             </p>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                               {(activeSrv.offerings || []).slice(0, 2).map((off, oi) => (
                                 <div key={oi} className="archival-plate-warm rounded-[4px] p-3.5 space-y-1">
-                                  <p className="text-xs font-semibold text-[#181413]">
+                                  <p className="text-xs font-semibold text-ink">
                                     {lang === 'en' ? off.titleEn : off.titleFr}
                                   </p>
-                                  <p className="text-xs text-[#574E4A] line-clamp-2">
+                                  <p className="text-xs text-muted line-clamp-2">
                                     {lang === 'en' ? off.descEn : off.descFr}
                                   </p>
                                 </div>
@@ -505,7 +505,7 @@ export function HomePage() {
                             </div>
                           </div>
 
-                          <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-[#DDD5C9]">
+                          <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-hairline">
                             <Link
                               to={lang === 'en' ? `/en/services/${activeSrv.slug}` : `/services/${activeSrv.slug}`}
                               className="magnetic-sheen inline-flex items-center gap-2 px-5 py-2.5 text-xs font-semibold bg-[#931916] hover:bg-[#A30013] text-white rounded-[4px] transition-colors whitespace-nowrap"
@@ -516,7 +516,7 @@ export function HomePage() {
                             <button
                               type="button"
                               onClick={() => openQuoteModal({ serviceSlug: activeSrv.slug })}
-                              className="bg-[#EFEAE1] hover:bg-[#DDD5C9] px-4 py-2.5 text-xs font-semibold text-[#181413] border border-[#DDD5C9] rounded-[4px] transition-colors cursor-pointer whitespace-nowrap"
+                              className="bg-limestone hover:bg-hairline px-4 py-2.5 text-xs font-semibold text-ink border border-hairline rounded-[4px] transition-colors cursor-pointer whitespace-nowrap"
                             >
                               {p('Chiffrer ce projet', 'Quote This Project')}
                             </button>
@@ -526,7 +526,7 @@ export function HomePage() {
                     </AnimatePresence>
 
                     {/* Auto-progress bar */}
-                    <div className="h-[2px] w-full bg-[#EFEAE1] relative overflow-hidden">
+                    <div className="h-[2px] w-full bg-limestone relative overflow-hidden">
                       <motion.div
                         key={`srv-prog-${srvSlideIdx}-${srvPaused ? 'p' : 'r'}`}
                         initial={{ scaleX: 0 }}
@@ -551,14 +551,14 @@ export function HomePage() {
                   return (
                     <article
                       key={srv.id}
-                      className="archival-plate bg-white rounded-[4px] p-6 sm:p-8 lg:p-10 border border-[#DDD5C9] hover:border-[#931916] transition-colors"
+                      className="archival-plate bg-surface rounded-[4px] p-6 sm:p-8 lg:p-10 border border-hairline hover:border-[#931916] transition-colors"
                     >
                       <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-10 items-center">
                         <div className={`lg:col-span-5 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
                           <TiltCard3D intensity={5}>
                             <Link
                               to={lang === 'en' ? `/en/services/${srv.slug}` : `/services/${srv.slug}`}
-                              className="group block relative aspect-[16/10] lg:aspect-[4/3] rounded-[4px] overflow-hidden border border-[#DDD5C9] hover:border-[#931916] bg-[#EFEAE1] shadow-[0_18px_38px_-18px_rgba(24,20,19,0.3)] transition-colors"
+                              className="group block relative aspect-[16/10] lg:aspect-[4/3] rounded-[4px] overflow-hidden border border-hairline hover:border-[#931916] bg-limestone shadow-[0_18px_38px_-18px_rgba(24,20,19,0.3)] transition-colors"
                             >
                               <ParallaxImageFrame shiftPct={8}>
                                 <img
@@ -594,20 +594,20 @@ export function HomePage() {
                           </ParallaxHorizontalTitle>
 
                           <ParallaxHorizontalTitle direction={isEven ? -1 : 1} distance={22}>
-                            <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#181413] tracking-tight leading-tight">
+                            <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-ink tracking-tight leading-tight">
                               {lang === 'en' ? srv.titleEn : srv.titleFr}
                             </h3>
                           </ParallaxHorizontalTitle>
 
-                          <p className="text-sm sm:text-base text-[#574E4A] leading-relaxed line-clamp-2">
+                          <p className="text-sm sm:text-base text-muted leading-relaxed line-clamp-2">
                             {lang === 'en' ? srv.summaryEn : srv.summaryFr}
                           </p>
 
                           <ServiceOfferingTicker service={srv} lang={lang} />
 
-                          <ul className="divide-y divide-[#DDD5C9] border-y border-[#DDD5C9]">
+                          <ul className="divide-y divide-hairline border-y border-hairline">
                             {benefits.map((b, i) => (
-                              <li key={i} className="py-2 flex items-start gap-2.5 text-xs sm:text-sm text-[#181413]">
+                              <li key={i} className="py-2 flex items-start gap-2.5 text-xs sm:text-sm text-ink">
                                 <Check className="w-4 h-4 text-[#931916] shrink-0 mt-0.5" aria-hidden="true" />
                                 <span>{b}</span>
                               </li>
@@ -617,7 +617,7 @@ export function HomePage() {
                           <div className="pt-1 flex flex-wrap items-center gap-4">
                             <Link
                               to={lang === 'en' ? `/en/services/${srv.slug}` : `/services/${srv.slug}`}
-                              className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-[#181413] py-1"
+                              className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-ink py-1"
                             >
                               <span>{p('Découvrir l’offre complète', 'View Full Service')}</span>
                               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -627,7 +627,7 @@ export function HomePage() {
                               <button
                                 type="button"
                                 onClick={() => openQuoteModal({ serviceSlug: srv.slug })}
-                                className="bg-[#F7F4EF] border border-[#DDD5C9] hover:border-[#931916] hover:bg-[#931916] hover:text-white px-4 py-2 text-xs font-semibold text-[#181413] rounded-[4px] transition-all cursor-pointer"
+                                className="bg-page border border-hairline hover:border-[#931916] hover:bg-[#931916] hover:text-white px-4 py-2 text-xs font-semibold text-ink rounded-[4px] transition-all cursor-pointer"
                               >
                                 {p('Devis rapide', 'Quick Quote')}
                               </button>
@@ -775,7 +775,7 @@ export function HomePage() {
           headlines.length > 0 ? [...headlines, ...headlines, ...headlines] : [];
         return (
           <ParallaxCurtainSection key="media_hub" zIndex={35} topAccent>
-            <section className="relative pt-20 lg:pt-28 bg-[#EFEAE1] text-[#181413] border-b border-[#DDD5C9] overflow-x-clip">
+            <section className="relative pt-20 lg:pt-28 bg-limestone text-ink border-b border-hairline overflow-x-clip">
               <ParallaxBackdropPlate variant="editorial-lines" offset={108} />
             <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-12 relative z-10">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -789,7 +789,7 @@ export function HomePage() {
                     <SplitTextReveal
                       as="h2"
                       text={p('À la une de nos médias', 'Featured Across Our Media')}
-                      className="font-serif text-3xl sm:text-5xl font-bold text-[#181413] tracking-tight"
+                      className="font-serif text-3xl sm:text-5xl font-bold text-ink tracking-tight"
                     />
                   </ParallaxHorizontalTitle>
                 </div>
@@ -797,14 +797,14 @@ export function HomePage() {
                 <div className="flex items-center gap-4">
                   {mediaHub.headlinesFeedEnabled && headlines.length > 1 && (
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-serif font-semibold tabular-nums text-[#574E4A] mr-1">
+                      <span className="text-xs font-serif font-semibold tabular-nums text-muted mr-1">
                         0{carouselIdx + 1} / 0{headlines.length}
                       </span>
                       <button
                         type="button"
                         onClick={() => setCarouselIdx((i) => (i - 1 + headlines.length) % headlines.length)}
                         aria-label={p('Dépêche précédente', 'Previous headline')}
-                        className="bg-white border border-[#DDD5C9] p-2.5 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                        className="bg-surface border border-hairline p-2.5 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
                       >
                         <ChevronLeft className="w-4 h-4" />
                       </button>
@@ -812,7 +812,7 @@ export function HomePage() {
                         type="button"
                         onClick={() => setCarouselIdx((i) => (i + 1) % headlines.length)}
                         aria-label={p('Dépêche suivante', 'Next headline')}
-                        className="bg-white border border-[#DDD5C9] p-2.5 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                        className="bg-surface border border-hairline p-2.5 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
                       >
                         <ChevronRight className="w-4 h-4" />
                       </button>
@@ -820,7 +820,7 @@ export function HomePage() {
                   )}
                   <Link
                     to={p('/presse-edition', '/en/press-publishing')}
-                    className="editorial-link text-sm font-semibold text-[#931916] hover:text-[#181413] whitespace-nowrap"
+                    className="editorial-link text-sm font-semibold text-[#931916] hover:text-ink whitespace-nowrap"
                   >
                     {p('Pôle Presse & Édition', 'Press & Publishing')}
                   </Link>
@@ -844,7 +844,7 @@ export function HomePage() {
                       <div key={h.id} className="w-full shrink-0">
                         <div className="archival-plate rounded-[4px] p-7 sm:p-11 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                           <div className="lg:col-span-8 space-y-4">
-                            <div className="flex items-center gap-3 text-xs tabular-nums text-[#574E4A]">
+                            <div className="flex items-center gap-3 text-xs tabular-nums text-muted">
                               <span className="font-bold uppercase tracking-wider text-[#931916]">
                                 {h.sourceName}
                               </span>
@@ -853,10 +853,10 @@ export function HomePage() {
                               <span aria-hidden="true">·</span>
                               <span className="font-serif font-semibold">0{i + 1}</span>
                             </div>
-                            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#181413] leading-snug">
+                            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-ink leading-snug">
                               {lang === 'en' ? h.titleEn : h.titleFr}
                             </h3>
-                            <p className="text-sm text-[#574E4A]">
+                            <p className="text-sm text-muted">
                               {p(
                                 `Dossier publié sur ${h.sourceName} · Écosystème éditorial du groupe CONCAM`,
                                 `Featured on ${h.sourceName} · CONCAM Group Editorial Network`,
@@ -892,7 +892,7 @@ export function HomePage() {
                           aria-label={`Headline ${idx + 1}`}
                           className="py-1.5 cursor-pointer"
                         >
-                          <span className="block w-10 h-[2px] bg-[#DDD5C9] overflow-hidden relative">
+                          <span className="block w-10 h-[2px] bg-hairline overflow-hidden relative">
                             {carouselIdx === idx && (
                               <motion.span
                                 key={`bar-${idx}-${carouselPaused ? 'p' : 'r'}`}
@@ -925,7 +925,7 @@ export function HomePage() {
                           onClick={() => trackEvent('media_outbound', 'reussitemagazine.info')}
                           className="archival-plate group hover:border-[#931916] rounded-[4px] overflow-hidden flex flex-col justify-between h-full transition-colors"
                         >
-                          <div className="relative aspect-[16/9] bg-[#110D0C] overflow-hidden border-b border-[#DDD5C9]">
+                          <div className="relative aspect-[16/9] bg-[#110D0C] overflow-hidden border-b border-hairline">
                             <ParallaxImageFrame shiftPct={8}>
                               <img
                                 src={LUXURY_HEADER_IMAGES.mediaReussite}
@@ -940,11 +940,11 @@ export function HomePage() {
                             <div className="space-y-2.5">
                               <div className="flex items-center gap-2.5 text-[#931916]">
                                 <Newspaper className="w-5 h-5" aria-hidden="true" />
-                                <span className="font-serif text-2xl font-bold text-[#181413] group-hover:text-[#931916] transition-colors">
+                                <span className="font-serif text-2xl font-bold text-ink group-hover:text-[#931916] transition-colors">
                                   Réussite Magazine
                                 </span>
                               </div>
-                              <p className="text-sm text-[#574E4A] leading-relaxed">
+                              <p className="text-sm text-muted leading-relaxed">
                                 {lang === 'en' ? mediaHub.reussiteMagazineDescEn : mediaHub.reussiteMagazineDescFr}
                               </p>
                               <p className="text-xs font-medium text-[#931916] pt-1">{mediaHub.reussiteMagazineUrl}</p>
@@ -968,7 +968,7 @@ export function HomePage() {
                           onClick={() => trackEvent('media_outbound', 'mediainfopro.net')}
                           className="archival-plate group hover:border-[#931916] rounded-[4px] overflow-hidden flex flex-col justify-between h-full transition-colors"
                         >
-                          <div className="relative aspect-[16/9] bg-[#110D0C] overflow-hidden border-b border-[#DDD5C9]">
+                          <div className="relative aspect-[16/9] bg-[#110D0C] overflow-hidden border-b border-hairline">
                             <ParallaxImageFrame shiftPct={8}>
                               <img
                                 src={LUXURY_HEADER_IMAGES.mediaInfopro}
@@ -983,11 +983,11 @@ export function HomePage() {
                             <div className="space-y-2.5">
                               <div className="flex items-center gap-2.5 text-[#931916]">
                                 <Newspaper className="w-5 h-5" aria-hidden="true" />
-                                <span className="font-serif text-2xl font-bold text-[#181413] group-hover:text-[#931916] transition-colors">
+                                <span className="font-serif text-2xl font-bold text-ink group-hover:text-[#931916] transition-colors">
                                   MediaInfoPro
                                 </span>
                               </div>
-                              <p className="text-sm text-[#574E4A] leading-relaxed">
+                              <p className="text-sm text-muted leading-relaxed">
                                 {lang === 'en' ? mediaHub.mediaInfoProDescEn : mediaHub.mediaInfoProDescFr}
                               </p>
                               <p className="text-xs font-medium text-[#931916] pt-1">{mediaHub.mediaInfoProUrl}</p>
@@ -1043,7 +1043,7 @@ export function HomePage() {
                 p('QUALITÉ PRÉPRESSE CONAKRY', 'PRE-PRESS PRECISION CONAKRY'),
               ]}
             />
-            <section className="py-24 lg:py-28 bg-[#F7F4EF] text-[#181413] relative overflow-x-clip">
+            <section className="py-24 lg:py-28 bg-page text-ink relative overflow-x-clip">
               <ParallaxBackdropPlate variant="light-grid" offset={115} />
               <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 space-y-14">
                 <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8">
@@ -1057,14 +1057,14 @@ export function HomePage() {
                       <SplitTextReveal
                         as="h2"
                         text={p('Réalisations récentes', 'Featured Case Studies')}
-                        className="font-serif text-3xl sm:text-5xl font-bold text-[#181413] tracking-tight"
+                        className="font-serif text-3xl sm:text-5xl font-bold text-ink tracking-tight"
                       />
                     </ParallaxHorizontalTitle>
                   </div>
                   <MagneticWrapper strength={0.18}>
                     <Link
                       to={p('/galerie', '/en/gallery')}
-                      className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-[#181413] whitespace-nowrap"
+                      className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-ink whitespace-nowrap"
                     >
                       <span>{p('Voir toute la galerie', 'View Full Portfolio')}</span>
                       <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -1106,7 +1106,7 @@ export function HomePage() {
                                       setGalSlideIdx((i) => (i - 1 + featuredGallery.length) % featuredGallery.length);
                                     }}
                                     aria-label={p('Projet précédent', 'Previous case study')}
-                                    className="bg-[#F7F4EF] border border-[#DDD5C9] p-2 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                                    className="bg-page border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
                                   >
                                     <ChevronLeft className="w-3.5 h-3.5" />
                                   </button>
@@ -1117,41 +1117,41 @@ export function HomePage() {
                                       setGalSlideIdx((i) => (i + 1) % featuredGallery.length);
                                     }}
                                     aria-label={p('Projet suivant', 'Next case study')}
-                                    className="bg-[#F7F4EF] border border-[#DDD5C9] p-2 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                                    className="bg-page border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
                                   >
                                     <ChevronRight className="w-3.5 h-3.5" />
                                   </button>
                                 </div>
                               </div>
 
-                              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#181413] leading-snug">
+                              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-ink leading-snug">
                                 {lang === 'en' ? activeGal.titleEn : activeGal.titleFr}
                               </h3>
-                              <p className="text-sm text-[#574E4A] leading-relaxed">
-                                <strong className="text-[#181413]">{p('Enjeu :', 'Challenge:')} </strong>
+                              <p className="text-sm text-muted leading-relaxed">
+                                <strong className="text-ink">{p('Enjeu :', 'Challenge:')} </strong>
                                 {lang === 'en' ? activeGal.needEn : activeGal.needFr}
                               </p>
-                              <p className="text-sm text-[#574E4A] leading-relaxed">
+                              <p className="text-sm text-muted leading-relaxed">
                                 <strong className="text-[#931916]">{p('Déploiement :', 'Solution:')} </strong>
                                 {lang === 'en' ? activeGal.solutionEn : activeGal.solutionFr}
                               </p>
                             </div>
 
-                            <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-[#DDD5C9]">
+                            <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-hairline">
                               <Link
                                 to={`${p('/galerie', '/en/gallery')}?item=${activeGal.id}`}
-                                className="editorial-link inline-flex items-center gap-1.5 text-xs font-semibold text-[#931916] hover:text-[#181413]"
+                                className="editorial-link inline-flex items-center gap-1.5 text-xs font-semibold text-[#931916] hover:text-ink"
                               >
                                 <span>{p('Ouvrir la fiche projet', 'Inspect Case Study')}</span>
                                 <ArrowUpRight className="w-3.5 h-3.5" />
                               </Link>
-                              <span className="text-xs font-serif font-semibold tabular-nums text-[#574E4A]">
+                              <span className="text-xs font-serif font-semibold tabular-nums text-muted">
                                 Planche 0{galSlideIdx + 1} / 0{featuredGallery.length}
                               </span>
                             </div>
                           </div>
 
-                          <div className="lg:col-span-6 relative aspect-[16/10] lg:aspect-auto lg:min-h-[320px] bg-[#EFEAE1] overflow-hidden order-1 lg:order-2">
+                          <div className="lg:col-span-6 relative aspect-[16/10] lg:aspect-auto lg:min-h-[320px] bg-limestone overflow-hidden order-1 lg:order-2">
                             <ParallaxImageFrame shiftPct={6.5}>
                               <motion.img
                                 key={activeGal.images[0]}
@@ -1168,7 +1168,7 @@ export function HomePage() {
                         </motion.div>
                       </AnimatePresence>
 
-                      <div className="h-[2px] w-full bg-[#EFEAE1] relative overflow-hidden">
+                      <div className="h-[2px] w-full bg-limestone relative overflow-hidden">
                         <motion.div
                           key={`gal-prog-${galSlideIdx}-${galPaused ? 'p' : 'r'}`}
                           initial={{ scaleX: 0 }}
@@ -1194,22 +1194,22 @@ export function HomePage() {
                       <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
                         {p('Archives de production', 'Production Archive')}
                       </p>
-                      <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#181413] leading-tight">
+                      <h3 className="font-serif text-2xl sm:text-3xl font-bold text-ink leading-tight">
                         {p(
                           'Chaque planche illustre un déploiement sur mesure à Conakry.',
                           'Each plate highlights a tailored deployment delivered in Conakry.',
                         )}
                       </h3>
-                      <p className="text-sm text-[#574E4A] leading-relaxed">
+                      <p className="text-sm text-muted leading-relaxed">
                         {p(
                           'De la conception éditoriale de manuels techniques au marquage événementiel et à l’impression grand format, parcourez nos dossiers sélectionnés.',
                           'From technical manual publishing to executive branding and large-format printing, inspect our selected case studies.',
                         )}
                       </p>
-                      <div className="pt-2 flex items-center justify-between gap-4 border-t border-[#DDD5C9]">
+                      <div className="pt-2 flex items-center justify-between gap-4 border-t border-hairline">
                         <Link
                           to={p('/galerie', '/en/gallery')}
-                          className="editorial-link text-xs font-semibold text-[#931916] hover:text-[#181413]"
+                          className="editorial-link text-xs font-semibold text-[#931916] hover:text-ink"
                         >
                           {p('Ouvrir toute la galerie', 'Explore Full Gallery')}
                         </Link>
@@ -1237,7 +1237,7 @@ export function HomePage() {
                               <TiltCard3D intensity={4.5}>
                                 <Link
                                   to={`${p('/galerie', '/en/gallery')}?item=${item.id}`}
-                                  className={`group relative block border border-[#DDD5C9] hover:border-[#931916] rounded-[4px] overflow-hidden bg-[#181413] h-full transition-colors ${
+                                  className={`group relative block border border-hairline hover:border-[#931916] rounded-[4px] overflow-hidden bg-[#181413] h-full transition-colors ${
                                     isLead ? 'min-h-[360px] lg:min-h-[430px]' : 'min-h-[260px]'
                                   }`}
                                 >

@@ -3,6 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Applique le thème AVANT le premier rendu (anti-flash).
+      // Préférence enregistrée > préférence système.
+      (function () {
+        try {
+          var t = localStorage.getItem('concam_theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.dataset.theme = t;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
     <title>CONCAM — Agence de Communication & Marketing à Conakry, Guinée</title>
     <meta
       name="description"
@@ -28,7 +43,7 @@
       rel="stylesheet"
     />
   </head>
-  <body class="bg-[#F7F4EF] text-[#181413] antialiased selection:bg-[#931916] selection:text-white">
+  <body class="bg-page text-ink antialiased selection:bg-[#931916] selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -123,7 +123,7 @@ export function GalleryPage() {
       />
 
       <ParallaxCurtainSection zIndex={20} topAccent>
-        <section className="relative py-20 bg-[#F7F4EF] text-[#181413] overflow-x-clip">
+        <section className="relative py-20 bg-page text-ink overflow-x-clip">
           <ParallaxBackdropPlate variant="light-grid" offset={115} />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-12 relative z-10">
             {/* Auto-Advancing Portfolio Reel Carousel with 3D Scroll Depth */}
@@ -142,7 +142,7 @@ export function GalleryPage() {
                 </ParallaxHorizontalTitle>
                 {reelSource.length > 1 && (
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-serif font-semibold tabular-nums text-[#574E4A] mr-1">
+                    <span className="text-xs font-serif font-semibold tabular-nums text-muted mr-1">
                       0{reelIdx + 1} / 0{reelSource.length}
                     </span>
                     <button
@@ -152,7 +152,7 @@ export function GalleryPage() {
                         setReelIdx((i) => (i - 1 + reelSource.length) % reelSource.length);
                       }}
                       aria-label={p('Projet précédent', 'Previous project')}
-                      className="bg-white border border-[#DDD5C9] p-2 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                      className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
@@ -163,7 +163,7 @@ export function GalleryPage() {
                         setReelIdx((i) => (i + 1) % reelSource.length);
                       }}
                       aria-label={p('Projet suivant', 'Next project')}
-                      className="bg-white border border-[#DDD5C9] p-2 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                      className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
                     >
                       <ChevronRight className="w-4 h-4" />
                     </button>
@@ -182,7 +182,7 @@ export function GalleryPage() {
                     transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
                     className="grid grid-cols-1 lg:grid-cols-12 items-stretch"
                   >
-                    <div className="lg:col-span-6 aspect-[16/10] lg:aspect-auto lg:min-h-[300px] bg-[#EFEAE1] overflow-hidden">
+                    <div className="lg:col-span-6 aspect-[16/10] lg:aspect-auto lg:min-h-[300px] bg-limestone overflow-hidden">
                       <ParallaxImageFrame shiftPct={6.5}>
                         <img
                           src={reelSource[reelIdx].images[0]}
@@ -201,10 +201,10 @@ export function GalleryPage() {
                           <span>·</span>
                           <span>{reelSource[reelIdx].year}</span>
                         </div>
-                        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#181413] leading-snug">
+                        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-ink leading-snug">
                           {lang === 'en' ? reelSource[reelIdx].titleEn : reelSource[reelIdx].titleFr}
                         </h2>
-                        <p className="text-sm text-[#574E4A] leading-relaxed">
+                        <p className="text-sm text-muted leading-relaxed">
                           {lang === 'en' ? reelSource[reelIdx].solutionEn : reelSource[reelIdx].solutionFr}
                         </p>
                       </div>
@@ -224,7 +224,7 @@ export function GalleryPage() {
                     </div>
                   </motion.div>
                 </AnimatePresence>
-                <div className="h-[2px] w-full bg-[#EFEAE1] relative overflow-hidden">
+                <div className="h-[2px] w-full bg-limestone relative overflow-hidden">
                   <motion.div
                     key={`galreel-prog-${reelIdx}-${reelPaused ? 'p' : 'r'}`}
                     initial={{ scaleX: 0 }}
@@ -253,7 +253,7 @@ export function GalleryPage() {
           />
 
           {/* Interactive Spring Filter Tabs */}
-          <div className="flex flex-wrap items-center gap-2 p-1.5 bg-[#EFEAE1] border border-[#DDD5C9] rounded-[4px] w-fit">
+          <div className="flex flex-wrap items-center gap-2 p-1.5 bg-limestone border border-hairline rounded-[4px] w-fit">
             {[
               { slug: 'all', label: p('Toutes les réalisations', 'All Projects') },
               ...categories.map((cat) => ({
@@ -268,7 +268,7 @@ export function GalleryPage() {
                   type="button"
                   onClick={() => setSelectedCat(tab.slug)}
                   className={`relative px-4 py-2 text-xs font-semibold rounded-[4px] transition-colors cursor-pointer whitespace-nowrap ${
-                    active ? 'text-white' : 'text-[#574E4A] hover:text-[#181413]'
+                    active ? 'text-white' : 'text-muted hover:text-ink'
                   }`}
                 >
                   {active && (
@@ -308,7 +308,7 @@ export function GalleryPage() {
                             setZoomed(false);
                           }}
                         >
-                          <div className="relative aspect-[4/3] bg-[#EFEAE1] overflow-hidden">
+                          <div className="relative aspect-[4/3] bg-limestone overflow-hidden">
                             <ParallaxImageFrame shiftPct={7}>
                               <ClipCurtainReveal direction="up" delay={idx * 0.04} className="w-full h-full">
                                 <img
@@ -328,18 +328,18 @@ export function GalleryPage() {
                           </div>
                           <div className="p-6 space-y-2.5 flex-1 flex flex-col justify-between">
                             <div className="space-y-2">
-                              <div className="flex items-center gap-2 text-xs text-[#574E4A]">
+                              <div className="flex items-center gap-2 text-xs text-muted">
                                 <span className="font-semibold text-[#931916]">
                                   {cat ? (lang === 'en' ? cat.nameEn : cat.nameFr) : ''}
                                 </span>
                                 <span>·</span>
                                 <span className="tabular-nums font-medium">{item.year}</span>
                               </div>
-                              <h2 className="font-serif text-xl font-bold text-[#181413] group-hover:text-[#931916] transition-colors leading-snug">
+                              <h2 className="font-serif text-xl font-bold text-ink group-hover:text-[#931916] transition-colors leading-snug">
                                 {lang === 'en' ? item.titleEn : item.titleFr}
                               </h2>
-                              <p className="text-xs font-medium text-[#574E4A]">{item.clientOrSector}</p>
-                              <p className="text-sm text-[#574E4A] line-clamp-2 leading-relaxed">
+                              <p className="text-xs font-medium text-muted">{item.clientOrSector}</p>
+                              <p className="text-sm text-muted line-clamp-2 leading-relaxed">
                                 {lang === 'en' ? item.solutionEn : item.solutionFr}
                               </p>
                             </div>

@@ -21,7 +21,7 @@ export function ConcamLogo({
         className={`inline-flex items-center justify-center font-serif font-bold uppercase whitespace-nowrap shrink-0 border ${padClass} ${textClass} rounded-[6px] ${
           theme === 'dark'
             ? 'border-white/40 text-white bg-transparent'
-            : 'border-[#0F0C0C] text-[#0F0C0C] bg-transparent'
+            : 'border-[#0F0C0C] text-ink bg-transparent'
         }`}
       >
         CONCAM

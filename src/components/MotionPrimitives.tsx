@@ -150,7 +150,7 @@ interface EngravedRuleRevealProps {
 export function EngravedRuleReveal({ tone = 'light', align = 'center', className = '' }: EngravedRuleRevealProps) {
   const { data } = useSite();
   const disabled = prefersReducedOrDataSaver() || data?.settings.animationsEnabled === false;
-  const lineBg = tone === 'dark' ? 'bg-white/20' : 'bg-[#DDD5C9]';
+  const lineBg = tone === 'dark' ? 'bg-white/20' : 'bg-hairline';
   const diamondColor = tone === 'dark' ? 'bg-[#E40014]' : 'bg-[#931916]';
 
   if (disabled) {
@@ -1105,9 +1105,9 @@ function ParallaxHorizontalBandActive({
   const bgClass =
     tone === 'dark'
       ? 'bg-[#110D0C] text-white border-y border-white/15'
-      : 'bg-[#EFEAE1] text-[#181413] border-y border-[#DDD5C9]';
+      : 'bg-limestone text-ink border-y border-hairline';
   const diamondClass = tone === 'dark' ? 'text-[#E40014]' : 'text-[#931916]';
-  const secondaryTextClass = tone === 'dark' ? 'text-white/75' : 'text-[#574E4A]';
+  const secondaryTextClass = tone === 'dark' ? 'text-white/75' : 'text-muted';
 
   const repeatedPrimary = [...primaryItems, ...primaryItems, ...primaryItems, ...primaryItems];
   const repeatedSecondary = secondaryItems
@@ -1135,7 +1135,7 @@ function ParallaxHorizontalBandActive({
       </div>
 
       {repeatedSecondary.length > 0 && (
-        <div className={`flex justify-center overflow-hidden pt-3 mt-3 border-t ${tone === 'dark' ? 'border-white/15' : 'border-[#DDD5C9]'}`}>
+        <div className={`flex justify-center overflow-hidden pt-3 mt-3 border-t ${tone === 'dark' ? 'border-white/15' : 'border-hairline'}`}>
           <motion.div
             style={{ x: xSecondary }}
             className="flex items-center gap-7 sm:gap-10 whitespace-nowrap shrink-0 will-change-transform"
@@ -1179,7 +1179,7 @@ export function ParallaxHorizontalBand({
     const bgClass =
       tone === 'dark'
         ? 'bg-[#110D0C] text-white border-y border-white/15'
-        : 'bg-[#EFEAE1] text-[#181413] border-y border-[#DDD5C9]';
+        : 'bg-limestone text-ink border-y border-hairline';
     const diamondClass = tone === 'dark' ? 'text-[#E40014]' : 'text-[#931916]';
     return (
       <div className={`relative overflow-x-clip py-5 px-4 ${bgClass} ${className}`}>
@@ -1460,7 +1460,7 @@ function ParallaxStickySplitActive({
       <div className={`lg:sticky lg:top-24 self-start z-10 space-y-5 ${stickyOrder} ${stickyClassName}`}>
         {stickyContent}
         <div className="hidden lg:block pt-2" aria-hidden="true">
-          <div className="h-[2px] w-28 bg-[#DDD5C9]/40 overflow-hidden relative">
+          <div className="h-[2px] w-28 bg-hairline/40 overflow-hidden relative">
             <motion.div
               style={{ scaleX: progressScale, transformOrigin: '0% 50%' }}
               className="absolute inset-0 bg-[#E40014]"

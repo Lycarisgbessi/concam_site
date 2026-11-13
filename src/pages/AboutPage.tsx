@@ -88,7 +88,7 @@ export function AboutPage() {
 
       {/* Archival Ivory Narrative & Architectural Plate with Curtain Overlap */}
       <ParallaxCurtainSection zIndex={20} topAccent>
-        <section className="bg-[#F7F4EF] text-[#181413] py-20 lg:py-28 border-b border-[#DDD5C9] relative overflow-x-clip">
+        <section className="bg-page text-ink py-20 lg:py-28 border-b border-hairline relative overflow-x-clip">
           <ParallaxBackdropPlate variant="light-grid" offset={115} />
           <ParallaxOppositeSplit
             amplitude={72}
@@ -109,13 +109,13 @@ export function AboutPage() {
                     'Allier conseil stratégique, édition de référence et production imprimée.',
                     'Uniting strategic advisory, flagship publishing and commercial print production.',
                   )}
-                  className="font-serif text-3xl sm:text-4xl font-bold text-[#181413] leading-tight"
+                  className="font-serif text-3xl sm:text-4xl font-bold text-ink leading-tight"
                 />
               </ParallaxHorizontalTitle>
-              <p className="text-base text-[#574E4A] leading-relaxed">
+              <p className="text-base text-muted leading-relaxed">
                 {lang === 'en' ? pageContent.aboutIntroEn : pageContent.aboutIntroFr}
               </p>
-              <blockquote className="text-lg sm:text-xl text-[#181413] leading-relaxed border-y border-[#DDD5C9] py-5 italic font-serif">
+              <blockquote className="text-lg sm:text-xl text-ink leading-relaxed border-y border-hairline py-5 italic font-serif">
                 {lang === 'en' ? pageContent.aboutMissionEn : pageContent.aboutMissionFr}
               </blockquote>
             </RevealBlock>
@@ -123,7 +123,7 @@ export function AboutPage() {
           right={
             <ParallaxScroll3DPlate direction={-1} tiltX={8} tiltY={6} liftY={46}>
               <TiltCard3D intensity={5}>
-                <div className="relative aspect-[4/3] rounded-[4px] overflow-hidden border border-[#DDD5C9] bg-[#EFEAE1] shadow-xl">
+                <div className="relative aspect-[4/3] rounded-[4px] overflow-hidden border border-hairline bg-limestone shadow-xl">
                   <ParallaxImageFrame shiftPct={8}>
                     <ClipCurtainReveal direction="right" className="w-full h-full">
                       <img
@@ -164,7 +164,7 @@ export function AboutPage() {
       {/* Interactive Auto-Advancing Timeline Carousel on Warm Limestone */}
       <ParallaxCurtainSection zIndex={25} topAccent>
         <section
-          className="relative py-20 lg:py-24 bg-[#EFEAE1] text-[#181413] border-b border-[#DDD5C9] overflow-x-clip"
+          className="relative py-20 lg:py-24 bg-limestone text-ink border-b border-hairline overflow-x-clip"
           onMouseEnter={() => setMilestonePaused(true)}
           onMouseLeave={() => setMilestonePaused(false)}
         >
@@ -181,13 +181,13 @@ export function AboutPage() {
                 <SplitTextReveal
                   as="h2"
                   text={p('Repères historiques', 'Our Milestones')}
-                  className="font-serif text-3xl sm:text-4xl font-bold text-[#181413]"
+                  className="font-serif text-3xl sm:text-4xl font-bold text-ink"
                 />
               </ParallaxHorizontalTitle>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs font-serif font-semibold tabular-nums text-[#574E4A] mr-1">
+              <span className="text-xs font-serif font-semibold tabular-nums text-muted mr-1">
                 0{activeMilestone + 1} / 0{pageContent.aboutTimeline.length}
               </span>
               <button
@@ -197,7 +197,7 @@ export function AboutPage() {
                   setActiveMilestone((i) => (i - 1 + pageContent.aboutTimeline.length) % pageContent.aboutTimeline.length);
                 }}
                 aria-label={p('Année précédente', 'Previous milestone')}
-                className="bg-white border border-[#DDD5C9] p-2 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -208,7 +208,7 @@ export function AboutPage() {
                   setActiveMilestone((i) => (i + 1) % pageContent.aboutTimeline.length);
                 }}
                 aria-label={p('Année suivante', 'Next milestone')}
-                className="bg-white border border-[#DDD5C9] p-2 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -234,12 +234,12 @@ export function AboutPage() {
                       </p>
                     </div>
                     <div className="lg:col-span-9 space-y-2">
-                      <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#181413]">
+                      <h3 className="font-serif text-2xl sm:text-3xl font-bold text-ink">
                         {lang === 'en'
                           ? pageContent.aboutTimeline[activeMilestone].titleEn
                           : pageContent.aboutTimeline[activeMilestone].titleFr}
                       </h3>
-                      <p className="text-base text-[#574E4A] leading-relaxed">
+                      <p className="text-base text-muted leading-relaxed">
                         {lang === 'en'
                           ? pageContent.aboutTimeline[activeMilestone].descEn
                           : pageContent.aboutTimeline[activeMilestone].descFr}
@@ -247,7 +247,7 @@ export function AboutPage() {
                     </div>
                   </motion.div>
                 </AnimatePresence>
-                <div className="h-[2px] w-full bg-[#EFEAE1] relative overflow-hidden">
+                <div className="h-[2px] w-full bg-limestone relative overflow-hidden">
                   <motion.div
                     key={`ab-prog-${activeMilestone}-${milestonePaused ? 'p' : 'r'}`}
                     initial={{ scaleX: 0 }}
@@ -277,16 +277,16 @@ export function AboutPage() {
                         className={`w-full text-left rounded-[4px] p-6 h-full space-y-3 cursor-pointer transition-all ${
                           selected
                             ? 'bg-[#931916] text-white border border-[#931916] shadow-lg'
-                            : 'archival-plate text-[#181413] hover:border-[#931916]'
+                            : 'archival-plate text-ink hover:border-[#931916]'
                         }`}
                       >
                         <p className={`font-serif text-3xl font-bold tabular-nums ${selected ? 'text-white' : 'text-[#931916]'}`}>
                           {step.year}
                         </p>
-                        <h3 className={`font-serif text-lg font-bold ${selected ? 'text-white' : 'text-[#181413]'}`}>
+                        <h3 className={`font-serif text-lg font-bold ${selected ? 'text-white' : 'text-ink'}`}>
                           {lang === 'en' ? step.titleEn : step.titleFr}
                         </h3>
-                        <p className={`text-sm leading-relaxed ${selected ? 'text-[#F6F2EA]/90' : 'text-[#574E4A]'}`}>
+                        <p className={`text-sm leading-relaxed ${selected ? 'text-[#F6F2EA]/90' : 'text-muted'}`}>
                           {lang === 'en' ? step.descEn : step.descFr}
                         </p>
                       </button>
@@ -303,7 +303,7 @@ export function AboutPage() {
       {/* Sticky Leadership Anchor + Parallax Team Poles on Archival Ivory */}
       <section
         style={{ zIndex: 30 }}
-        className="relative py-20 lg:py-28 bg-[#F7F4EF] text-[#181413] border-b border-[#DDD5C9] overflow-x-clip shadow-[0_-24px_64px_-14px_rgba(17,13,12,0.4)]"
+        className="relative py-20 lg:py-28 bg-page text-ink border-b border-hairline overflow-x-clip shadow-[0_-24px_64px_-14px_rgba(17,13,12,0.4)]"
       >
         <ParallaxBackdropPlate variant="light-grid" offset={112} />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
@@ -322,15 +322,15 @@ export function AboutPage() {
                 <SplitTextReveal
                   as="h2"
                   text={p('Pôles de direction & équipes', 'Leadership & Specialist Teams')}
-                  className="font-serif text-3xl sm:text-4xl font-bold text-[#181413]"
+                  className="font-serif text-3xl sm:text-4xl font-bold text-ink"
                 />
-                <p className="text-sm sm:text-base text-[#574E4A] leading-relaxed">
+                <p className="text-sm sm:text-base text-muted leading-relaxed">
                   {lang === 'en' ? pageContent.aboutQualityEn : pageContent.aboutQualityFr}
                 </p>
                 <EngravedRuleReveal tone="light" align="left" />
                 <div className="pt-2 flex items-center gap-5">
                   <ParallaxSealDrift size={84} tone="ink" offset={24} rotateDeg={42} />
-                  <p className="text-xs text-[#574E4A] leading-relaxed max-w-xs">
+                  <p className="text-xs text-muted leading-relaxed max-w-xs">
                     {p(
                       'Des équipes dédiées du conseil stratégique jusqu’au contrôle qualité prépresse.',
                       'Dedicated specialists from strategic advisory through pre-press quality control.',
@@ -349,11 +349,11 @@ export function AboutPage() {
                           <div className="w-10 h-10 rounded-[4px] bg-[#110D0C] border border-[#931916] text-white flex items-center justify-center font-serif font-bold text-lg">
                             {ROMAN[idx] || idx + 1}
                           </div>
-                          <h3 className="font-serif text-xl font-bold text-[#181413]">{member.name}</h3>
+                          <h3 className="font-serif text-xl font-bold text-ink">{member.name}</h3>
                           <p className="text-xs font-semibold text-[#931916]">
                             {lang === 'en' ? member.roleEn : member.roleFr}
                           </p>
-                          <p className="text-sm text-[#574E4A] leading-relaxed">
+                          <p className="text-sm text-muted leading-relaxed">
                             {lang === 'en' ? member.bioEn : member.bioFr}
                           </p>
                         </div>

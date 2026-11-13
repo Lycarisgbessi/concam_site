@@ -125,7 +125,7 @@ export function ContactPage() {
 
       <section
         style={{ zIndex: 20 }}
-        className="relative py-20 lg:py-24 bg-[#F7F4EF] text-[#181413] overflow-x-clip border-t-2 border-[#931916] shadow-[0_-28px_72px_-12px_rgba(17,13,12,0.45)]"
+        className="relative py-20 lg:py-24 bg-page text-ink overflow-x-clip border-t-2 border-[#931916] shadow-[0_-28px_72px_-12px_rgba(17,13,12,0.45)]"
       >
         <ParallaxBackdropPlate variant="light-grid" offset={112} />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
@@ -138,7 +138,7 @@ export function ContactPage() {
               <RevealBlock preset="slide-left" className="space-y-6">
                 <TiltCard3D intensity={4}>
                   <div className="archival-plate rounded-[4px] p-7 space-y-5 text-sm">
-                    <div className="flex items-center justify-between gap-3 border-b border-[#DDD5C9] pb-4">
+                    <div className="flex items-center justify-between gap-3 border-b border-hairline pb-4">
                       <ParallaxHorizontalTitle direction={-1} distance={18}>
                         <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
                           {p('Coordonnées directes', 'Direct Coordinates')}
@@ -149,18 +149,18 @@ export function ContactPage() {
                   <div className="flex items-start gap-3">
                     <MapPin className="w-5 h-5 text-[#931916] shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-[#181413]">{p('Adresse', 'Address')}</p>
-                      <p className="text-[#574E4A]">{lang === 'en' ? settings.address.en : settings.address.fr}</p>
+                      <p className="font-semibold text-ink">{p('Adresse', 'Address')}</p>
+                      <p className="text-muted">{lang === 'en' ? settings.address.en : settings.address.fr}</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
                     <Phone className="w-5 h-5 text-[#931916] shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-[#181413]">{p('Téléphones', 'Phones')}</p>
+                      <p className="font-semibold text-ink">{p('Téléphones', 'Phones')}</p>
                       <div className="space-y-1 tabular-nums text-xs sm:text-sm">
                         {settings.phones.map((ph) => (
-                          <a key={ph} href={`tel:${ph.replace(/\s+/g, '')}`} className="block text-[#181413] hover:text-[#931916] transition-colors">
+                          <a key={ph} href={`tel:${ph.replace(/\s+/g, '')}`} className="block text-ink hover:text-[#931916] transition-colors">
                             {ph}
                           </a>
                         ))}
@@ -171,11 +171,11 @@ export function ContactPage() {
                   <div className="flex items-start gap-3">
                     <Mail className="w-5 h-5 text-[#931916] shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-[#181413]">{p('Courriels', 'Emails')}</p>
+                      <p className="font-semibold text-ink">{p('Courriels', 'Emails')}</p>
                       <a href={`mailto:${settings.agencyEmail}`} className="block text-[#931916] font-medium hover:underline">
                         {settings.agencyEmail}
                       </a>
-                      <a href={`mailto:${settings.magazineEmail}`} className="block text-xs text-[#574E4A] hover:underline">
+                      <a href={`mailto:${settings.magazineEmail}`} className="block text-xs text-muted hover:underline">
                         {settings.magazineEmail} ({p('Magazine', 'Magazine')})
                       </a>
                     </div>
@@ -184,8 +184,8 @@ export function ContactPage() {
                   <div className="flex items-start gap-3">
                     <Clock className="w-5 h-5 text-[#931916] shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-[#181413]">{p('Horaires d’ouverture', 'Opening Hours')}</p>
-                      <p className="text-[#574E4A]">{lang === 'en' ? settings.hoursEn : settings.hoursFr}</p>
+                      <p className="font-semibold text-ink">{p('Horaires d’ouverture', 'Opening Hours')}</p>
+                      <p className="text-muted">{lang === 'en' ? settings.hoursEn : settings.hoursFr}</p>
                     </div>
                   </div>
 
@@ -204,8 +204,8 @@ export function ContactPage() {
                     </MagneticWrapper>
 
                     {(settings.socialFacebook || settings.socialLinkedin || settings.socialTiktok) && (
-                      <div className="pt-3 border-t border-[#DDD5C9] flex flex-wrap items-center gap-4 text-xs text-[#574E4A]">
-                        <span className="font-semibold text-[#181413]">{p('Réseaux officiels :', 'Official Channels:')}</span>
+                      <div className="pt-3 border-t border-hairline flex flex-wrap items-center gap-4 text-xs text-muted">
+                        <span className="font-semibold text-ink">{p('Réseaux officiels :', 'Official Channels:')}</span>
                         {settings.socialFacebook && (
                           <a href={settings.socialFacebook} target="_blank" rel="noopener noreferrer" className="text-[#931916] hover:underline font-medium">
                             Facebook
@@ -241,7 +241,7 @@ export function ContactPage() {
               <ParallaxScroll3DPlate direction={1} tiltX={6} tiltY={4} liftY={40}>
                 <RevealBlock preset="slide-right" delay={0.08} className="archival-plate rounded-[4px] p-7 sm:p-10 h-fit">
                   <ParallaxHorizontalTitle direction={1} distance={24}>
-                    <h2 className="font-serif text-3xl font-bold text-[#181413] mb-2">
+                    <h2 className="font-serif text-3xl font-bold text-ink mb-2">
                       {p('Formulaire de contact & demande de devis', 'Contact & Quote Inquiry')}
                     </h2>
                   </ParallaxHorizontalTitle>
@@ -250,12 +250,12 @@ export function ContactPage() {
                   </p>
 
             {status === 'success' ? (
-              <div className="bg-[#EFEAE1] border border-[#DDD5C9] rounded-[4px] p-8 text-center space-y-3">
+              <div className="bg-limestone border border-hairline rounded-[4px] p-8 text-center space-y-3">
                 <CheckCircle2 className="w-12 h-12 text-[#931916] mx-auto" />
-                <h3 className="font-serif text-xl font-bold text-[#181413]">
+                <h3 className="font-serif text-xl font-bold text-ink">
                   {p('Message envoyé avec succès', 'Message Sent Successfully')}
                 </h3>
-                <p className="text-sm text-[#574E4A]">
+                <p className="text-sm text-muted">
                   {p(
                     'Merci pour votre confiance. Un conseiller CONCAM vous répondra sous 24 heures ouvrées.',
                     'Thank you for reaching out. A CONCAM advisor will respond within 24 business hours.',
@@ -264,7 +264,7 @@ export function ContactPage() {
                 <button
                   type="button"
                   onClick={() => setStatus('idle')}
-                  className="mt-2 px-4 py-2 text-xs font-semibold border border-[#DDD5C9] bg-white text-[#181413] rounded-[4px] cursor-pointer"
+                  className="mt-2 px-4 py-2 text-xs font-semibold border border-hairline bg-surface text-ink rounded-[4px] cursor-pointer"
                 >
                   {p('Envoyer un autre message', 'Send another message')}
                 </button>
@@ -273,7 +273,7 @@ export function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-[#181413] mb-1">
+                    <label className="block text-xs font-semibold text-ink mb-1">
                       {p('Nom complet *', 'Full name *')}
                     </label>
                     <input
@@ -281,25 +281,25 @@ export function ContactPage() {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 text-sm bg-[#F7F4EF] border border-[#DDD5C9] text-[#181413] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                      className="w-full px-3.5 py-2.5 text-sm bg-page border border-hairline text-ink rounded-[4px] focus:border-[#931916] focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#181413] mb-1">
+                    <label className="block text-xs font-semibold text-ink mb-1">
                       {p('Organisation / Entreprise', 'Organization / Company')}
                     </label>
                     <input
                       type="text"
                       value={organization}
                       onChange={(e) => setOrganization(e.target.value)}
-                      className="w-full px-3.5 py-2.5 text-sm bg-[#F7F4EF] border border-[#DDD5C9] text-[#181413] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                      className="w-full px-3.5 py-2.5 text-sm bg-page border border-hairline text-ink rounded-[4px] focus:border-[#931916] focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-[#181413] mb-1">
+                    <label className="block text-xs font-semibold text-ink mb-1">
                       {p('Courriel professionnel *', 'Work email *')}
                     </label>
                     <input
@@ -307,8 +307,8 @@ export function ContactPage() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className={`w-full px-3.5 py-2.5 text-sm bg-[#F7F4EF] border text-[#181413] rounded-[4px] focus:outline-none ${
-                        emailInvalid ? 'border-[#A30013]' : 'border-[#DDD5C9] focus:border-[#931916]'
+                      className={`w-full px-3.5 py-2.5 text-sm bg-page border text-ink rounded-[4px] focus:outline-none ${
+                        emailInvalid ? 'border-[#A30013]' : 'border-hairline focus:border-[#931916]'
                       }`}
                     />
                     {emailInvalid && (
@@ -318,7 +318,7 @@ export function ContactPage() {
                     )}
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#181413] mb-1">
+                    <label className="block text-xs font-semibold text-ink mb-1">
                       {p('Téléphone / WhatsApp', 'Phone / WhatsApp')}
                     </label>
                     <input
@@ -326,19 +326,19 @@ export function ContactPage() {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+224 ..."
-                      className="w-full px-3.5 py-2.5 text-sm bg-[#F7F4EF] border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                      className="w-full px-3.5 py-2.5 text-sm bg-page border border-hairline text-ink placeholder:text-faint rounded-[4px] focus:border-[#931916] focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#181413] mb-1">
+                  <label className="block text-xs font-semibold text-ink mb-1">
                     {p('Service concerné', 'Service')}
                   </label>
                   <select
                     value={effectiveServiceSlug}
                     onChange={(e) => setServiceSlug(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-sm bg-[#F7F4EF] border border-[#DDD5C9] text-[#181413] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                    className="w-full px-3.5 py-2.5 text-sm bg-page border border-hairline text-ink rounded-[4px] focus:border-[#931916] focus:outline-none"
                   >
                     {services.map((s) => (
                       <option key={s.id} value={s.slug}>
@@ -349,7 +349,7 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#181413] mb-1">
+                  <label className="block text-xs font-semibold text-ink mb-1">
                     {p('Votre message *', 'Your message *')}
                   </label>
                   <textarea
@@ -361,11 +361,11 @@ export function ContactPage() {
                       'Précisez votre besoin, vos volumes ou échéances...',
                       'Tell us about your project scope, quantities or deadline...',
                     )}
-                    className="w-full px-3.5 py-2.5 text-sm bg-[#F7F4EF] border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                    className="w-full px-3.5 py-2.5 text-sm bg-page border border-hairline text-ink placeholder:text-faint rounded-[4px] focus:border-[#931916] focus:outline-none"
                   />
                 </div>
 
-                <label className="flex items-start gap-2.5 text-xs text-[#574E4A] cursor-pointer">
+                <label className="flex items-start gap-2.5 text-xs text-muted cursor-pointer">
                   <input
                     type="checkbox"
                     checked={consent}

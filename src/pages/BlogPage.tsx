@@ -50,7 +50,7 @@ export function BlogPage() {
     const post = data.blogPosts.find((b) => b.slug === slug);
     if (!post) {
       return (
-        <div className="max-w-4xl mx-auto px-4 py-32 text-center space-y-4 text-[#181413]">
+        <div className="max-w-4xl mx-auto px-4 py-32 text-center space-y-4 text-ink">
           <h1 className="font-serif text-3xl font-bold">{p('Article introuvable', 'Article not found')}</h1>
           <Link to={p('/actualites-conseils', '/en/insights')} className="text-[#931916] underline">
             {p('Retour aux articles', 'Back to insights')}
@@ -93,7 +93,7 @@ export function BlogPage() {
         />
 
         <ParallaxCurtainSection zIndex={20} topAccent>
-          <article className="relative py-16 lg:py-24 bg-[#F7F4EF] text-[#181413] overflow-x-clip">
+          <article className="relative py-16 lg:py-24 bg-page text-ink overflow-x-clip">
             <ParallaxBackdropPlate variant="editorial-lines" offset={106} />
           <div className="max-w-2xl mx-auto px-4 sm:px-6 space-y-10 relative z-10">
             <Link
@@ -104,7 +104,7 @@ export function BlogPage() {
               <span>{p('Tous les articles', 'All insights')}</span>
             </Link>
 
-            <div className="editorial-dropcap space-y-6 text-[17px] text-[#181413]/90 leading-[1.82] whitespace-pre-line">
+            <div className="editorial-dropcap space-y-6 text-[17px] text-ink/90 leading-[1.82] whitespace-pre-line">
               {content}
             </div>
 
@@ -189,7 +189,7 @@ export function BlogPage() {
       />
 
       <ParallaxCurtainSection zIndex={20} topAccent>
-        <section className="relative py-20 bg-[#F7F4EF] text-[#181413] overflow-x-clip">
+        <section className="relative py-20 bg-page text-ink overflow-x-clip">
           <ParallaxBackdropPlate variant="light-grid" offset={112} />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-16 relative z-10">
             {/* Auto-Advancing Broadsheet Carousel with 3D Scroll Depth */}
@@ -208,7 +208,7 @@ export function BlogPage() {
                 </ParallaxHorizontalTitle>
                 {data.blogPosts.length > 1 && (
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-serif font-semibold tabular-nums text-[#574E4A] mr-1">
+                    <span className="text-xs font-serif font-semibold tabular-nums text-muted mr-1">
                       0{postIdx + 1} / 0{data.blogPosts.length}
                     </span>
                     <button
@@ -218,7 +218,7 @@ export function BlogPage() {
                         setPostIdx((i) => (i - 1 + data.blogPosts.length) % data.blogPosts.length);
                       }}
                       aria-label={p('Article précédent', 'Previous post')}
-                      className="bg-white border border-[#DDD5C9] p-2 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                      className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
@@ -229,7 +229,7 @@ export function BlogPage() {
                         setPostIdx((i) => (i + 1) % data.blogPosts.length);
                       }}
                       aria-label={p('Article suivant', 'Next post')}
-                      className="bg-white border border-[#DDD5C9] p-2 rounded-[4px] text-[#181413] hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                      className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
                     >
                       <ChevronRight className="w-4 h-4" />
                     </button>
@@ -248,7 +248,7 @@ export function BlogPage() {
                     transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
                     className="grid grid-cols-1 lg:grid-cols-12 items-stretch"
                   >
-                    <div className="lg:col-span-6 aspect-[16/10] lg:aspect-auto lg:min-h-[320px] bg-[#EFEAE1] overflow-hidden">
+                    <div className="lg:col-span-6 aspect-[16/10] lg:aspect-auto lg:min-h-[320px] bg-limestone overflow-hidden">
                       <ParallaxImageFrame shiftPct={6.5}>
                         <img
                           src={data.blogPosts[postIdx].imageUrl}
@@ -260,7 +260,7 @@ export function BlogPage() {
                     </div>
                     <div className="lg:col-span-6 p-7 sm:p-10 flex flex-col justify-between gap-5">
                       <div className="space-y-3">
-                        <div className="flex items-center gap-2 text-xs text-[#574E4A] tabular-nums">
+                        <div className="flex items-center gap-2 text-xs text-muted tabular-nums">
                           <span className="font-semibold text-[#931916] uppercase tracking-wider">
                             {lang === 'en' ? data.blogPosts[postIdx].categoryEn : data.blogPosts[postIdx].categoryFr}
                           </span>
@@ -269,10 +269,10 @@ export function BlogPage() {
                           <span>·</span>
                           <span>{data.blogPosts[postIdx].readMinutes} min</span>
                         </div>
-                        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#181413] leading-tight">
+                        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-ink leading-tight">
                           {lang === 'en' ? data.blogPosts[postIdx].titleEn : data.blogPosts[postIdx].titleFr}
                         </h2>
-                        <p className="text-sm sm:text-base text-[#574E4A] leading-relaxed">
+                        <p className="text-sm sm:text-base text-muted leading-relaxed">
                           {lang === 'en' ? data.blogPosts[postIdx].excerptEn : data.blogPosts[postIdx].excerptFr}
                         </p>
                       </div>
@@ -282,7 +282,7 @@ export function BlogPage() {
                             ? `/en/insights/${data.blogPosts[postIdx].slug}`
                             : `/actualites-conseils/${data.blogPosts[postIdx].slug}`
                         }
-                        className="editorial-link group inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-[#181413] w-fit"
+                        className="editorial-link group inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-ink w-fit"
                       >
                         <span>{p('Lire le dossier complet', 'Read Full Article')}</span>
                         <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -290,7 +290,7 @@ export function BlogPage() {
                     </div>
                   </motion.div>
                 </AnimatePresence>
-                <div className="h-[2px] w-full bg-[#EFEAE1] relative overflow-hidden">
+                <div className="h-[2px] w-full bg-limestone relative overflow-hidden">
                   <motion.div
                     key={`blog-prog-${postIdx}-${paused ? 'p' : 'r'}`}
                     initial={{ scaleX: 0 }}
@@ -319,7 +319,7 @@ export function BlogPage() {
                   <TiltCard3D intensity={4.5}>
                     <Link
                       to={lang === 'en' ? `/en/insights/${leadPost.slug}` : `/actualites-conseils/${leadPost.slug}`}
-                      className="group block aspect-[16/10] rounded-[4px] overflow-hidden border border-[#DDD5C9] bg-[#EFEAE1] shadow-md"
+                      className="group block aspect-[16/10] rounded-[4px] overflow-hidden border border-hairline bg-limestone shadow-md"
                     >
                       <ParallaxImageFrame shiftPct={8}>
                         <ClipCurtainReveal direction="left" className="w-full h-full">
@@ -337,7 +337,7 @@ export function BlogPage() {
               }
               right={
                 <RevealBlock preset="slide-right" delay={0.08} className="space-y-4">
-                  <div className="flex items-center gap-2 text-xs text-[#574E4A] tabular-nums">
+                  <div className="flex items-center gap-2 text-xs text-muted tabular-nums">
                     <span className="font-semibold text-[#931916] uppercase tracking-wider">
                       {lang === 'en' ? leadPost.categoryEn : leadPost.categoryFr}
                     </span>
@@ -350,10 +350,10 @@ export function BlogPage() {
                     <SplitTextReveal
                       as="h2"
                       text={lang === 'en' ? leadPost.titleEn : leadPost.titleFr}
-                      className="font-serif text-3xl sm:text-4xl font-bold text-[#181413] leading-tight"
+                      className="font-serif text-3xl sm:text-4xl font-bold text-ink leading-tight"
                     />
                   </ParallaxHorizontalTitle>
-                  <p className="text-base text-[#574E4A] leading-relaxed">
+                  <p className="text-base text-muted leading-relaxed">
                     {lang === 'en' ? leadPost.excerptEn : leadPost.excerptFr}
                   </p>
                   <Link
@@ -384,7 +384,7 @@ export function BlogPage() {
       {/* Sticky Curatorial Index + Staggered Editorial Archive */}
       <section
         style={{ zIndex: 25 }}
-        className="relative py-20 lg:py-24 bg-[#EFEAE1] text-[#181413] border-t-2 border-[#931916] overflow-x-clip shadow-[0_-24px_64px_-14px_rgba(17,13,12,0.42)]"
+        className="relative py-20 lg:py-24 bg-limestone text-ink border-t-2 border-[#931916] overflow-x-clip shadow-[0_-24px_64px_-14px_rgba(17,13,12,0.42)]"
       >
         <ParallaxBackdropPlate variant="editorial-lines" offset={110} />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
@@ -401,20 +401,20 @@ export function BlogPage() {
                   </p>
                 </ParallaxHorizontalTitle>
                 <ParallaxHorizontalTitle direction={1} distance={22}>
-                  <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#181413] leading-tight">
+                  <h2 className="font-serif text-2xl sm:text-3xl font-bold text-ink leading-tight">
                     {p(
                       'Cahiers techniques & retours d’expérience en Guinée',
                       'Technical Briefs & Field Insights in Guinea',
                     )}
                   </h2>
                 </ParallaxHorizontalTitle>
-                <p className="text-sm text-[#574E4A] leading-relaxed">
+                <p className="text-sm text-muted leading-relaxed">
                   {p(
                     'Des guides concrets rédigés par nos directeurs de clientèle, maquettistes et chefs d’atelier à Kaloum.',
                     'Actionable briefs authored by our account directors, print masters and strategists in Kaloum.',
                   )}
                 </p>
-                <div className="pt-2 flex justify-end border-t border-[#DDD5C9]">
+                <div className="pt-2 flex justify-end border-t border-hairline">
                   <ParallaxSealDrift size={64} tone="ink" offset={22} rotateDeg={38} />
                 </div>
               </div>
@@ -429,7 +429,7 @@ export function BlogPage() {
                           to={lang === 'en' ? `/en/insights/${post.slug}` : `/actualites-conseils/${post.slug}`}
                           className="archival-plate group hover:border-[#931916] rounded-[4px] overflow-hidden flex flex-col h-full transition-colors"
                         >
-                          <div className="aspect-[16/10] bg-[#EFEAE1] overflow-hidden">
+                          <div className="aspect-[16/10] bg-limestone overflow-hidden">
                             <ParallaxImageFrame shiftPct={7}>
                               <img
                                 src={post.imageUrl}
@@ -441,17 +441,17 @@ export function BlogPage() {
                           </div>
                           <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                             <div className="space-y-2.5">
-                              <div className="flex items-center gap-2 text-xs text-[#574E4A] tabular-nums">
+                              <div className="flex items-center gap-2 text-xs text-muted tabular-nums">
                                 <span className="font-semibold text-[#931916]">
                                   {lang === 'en' ? post.categoryEn : post.categoryFr}
                                 </span>
                                 <span>·</span>
                                 <span>{post.publishedAt}</span>
                               </div>
-                              <h3 className="font-serif text-2xl font-bold text-[#181413] group-hover:text-[#931916] transition-colors leading-snug">
+                              <h3 className="font-serif text-2xl font-bold text-ink group-hover:text-[#931916] transition-colors leading-snug">
                                 {lang === 'en' ? post.titleEn : post.titleFr}
                               </h3>
-                              <p className="text-sm text-[#574E4A] line-clamp-3 leading-relaxed">
+                              <p className="text-sm text-muted line-clamp-3 leading-relaxed">
                                 {lang === 'en' ? post.excerptEn : post.excerptFr}
                               </p>
                             </div>

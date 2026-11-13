@@ -86,7 +86,7 @@ export function PresseEditionPage() {
       />
 
       <ParallaxCurtainSection zIndex={20} topAccent>
-        <section className="relative py-20 lg:py-24 bg-[#F7F4EF] text-[#181413] border-b border-[#DDD5C9] overflow-x-clip">
+        <section className="relative py-20 lg:py-24 bg-page text-ink border-b border-hairline overflow-x-clip">
           <ParallaxBackdropPlate variant="light-grid" offset={112} />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-12 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -95,7 +95,7 @@ export function PresseEditionPage() {
                 <RevealBlock preset="slide-left" className="h-full">
                   <TiltCard3D intensity={4.5}>
                     <article className="archival-plate hover:border-[#931916] rounded-[4px] overflow-hidden flex flex-col justify-between h-full transition-colors">
-                      <div className="relative aspect-[16/9] bg-[#110D0C] overflow-hidden border-b border-[#DDD5C9]">
+                      <div className="relative aspect-[16/9] bg-[#110D0C] overflow-hidden border-b border-hairline">
                         <ParallaxImageFrame shiftPct={8}>
                           <img
                             src={LUXURY_HEADER_IMAGES.mediaReussite}
@@ -112,12 +112,12 @@ export function PresseEditionPage() {
                             <BookOpen className="w-5 h-5" />
                           </div>
                           <ParallaxHorizontalTitle direction={-1} distance={20}>
-                            <h2 className="font-serif text-3xl font-bold text-[#181413]">Réussite Magazine</h2>
+                            <h2 className="font-serif text-3xl font-bold text-ink">Réussite Magazine</h2>
                           </ParallaxHorizontalTitle>
-                          <p className="text-sm sm:text-base text-[#574E4A] leading-relaxed">
+                          <p className="text-sm sm:text-base text-muted leading-relaxed">
                             {lang === 'en' ? mediaHub.reussiteMagazineDescEn : mediaHub.reussiteMagazineDescFr}
                           </p>
-                          <p className="text-xs font-medium text-[#931916] pt-3 border-t border-[#DDD5C9]">
+                          <p className="text-xs font-medium text-[#931916] pt-3 border-t border-hairline">
                             {p(
                               `Lancé en octobre 2016 à Conakry · Contact rédaction : ${settings.magazineEmail}`,
                               `Launched October 2016 in Conakry · Editorial desk: ${settings.magazineEmail}`,
@@ -148,7 +148,7 @@ export function PresseEditionPage() {
                 <RevealBlock preset="slide-right" delay={0.08} className="h-full">
                   <TiltCard3D intensity={4.5}>
                     <article className="archival-plate hover:border-[#931916] rounded-[4px] overflow-hidden flex flex-col justify-between h-full transition-colors">
-                      <div className="relative aspect-[16/9] bg-[#110D0C] overflow-hidden border-b border-[#DDD5C9]">
+                      <div className="relative aspect-[16/9] bg-[#110D0C] overflow-hidden border-b border-hairline">
                         <ParallaxImageFrame shiftPct={8}>
                           <img
                             src={LUXURY_HEADER_IMAGES.mediaInfopro}
@@ -165,12 +165,12 @@ export function PresseEditionPage() {
                             <Radio className="w-5 h-5" />
                           </div>
                           <ParallaxHorizontalTitle direction={1} distance={20}>
-                            <h2 className="font-serif text-3xl font-bold text-[#181413]">MediaInfoPro</h2>
+                            <h2 className="font-serif text-3xl font-bold text-ink">MediaInfoPro</h2>
                           </ParallaxHorizontalTitle>
-                          <p className="text-sm sm:text-base text-[#574E4A] leading-relaxed">
+                          <p className="text-sm sm:text-base text-muted leading-relaxed">
                             {lang === 'en' ? mediaHub.mediaInfoProDescEn : mediaHub.mediaInfoProDescFr}
                           </p>
-                          <p className="text-xs font-medium text-[#931916] pt-3 border-t border-[#DDD5C9]">
+                          <p className="text-xs font-medium text-[#931916] pt-3 border-t border-hairline">
                             {mediaHub.mediaInfoProUrl}
                           </p>
                         </div>

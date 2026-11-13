@@ -64,7 +64,7 @@ export function UnsubscribePage() {
         title={p('Désinscription de la veille économique', 'Unsubscribe from Newsletter')}
       />
 
-      <section className="relative bg-[#F7F4EF] py-16 overflow-x-clip">
+      <section className="relative bg-page py-16 overflow-x-clip">
         <ParallaxBackdropPlate variant="editorial-lines" offset={76} />
         <div className="max-w-lg mx-auto px-4 relative z-10">
           <ParallaxLayer offset={34}>
@@ -72,7 +72,7 @@ export function UnsubscribePage() {
           {status === 'done' ? (
             <div className="text-center space-y-4 py-4">
               <CheckCircle2 className="w-10 h-10 text-[#931916] mx-auto" />
-              <p className="text-sm text-[#181413] leading-relaxed">{message}</p>
+              <p className="text-sm text-ink leading-relaxed">{message}</p>
               <Link
                 to={p('/', '/en')}
                 className="inline-block px-5 py-2.5 text-xs font-semibold bg-[#110D0C] text-[#F6F2EA] rounded-[4px]"
@@ -85,12 +85,12 @@ export function UnsubscribePage() {
               <div className="flex items-center gap-3 text-[#931916]">
                 <MailX className="w-6 h-6 shrink-0" />
                 <ParallaxHorizontalTitle direction={1} distance={18}>
-                  <h2 className="font-serif text-2xl font-bold text-[#181413]">
+                  <h2 className="font-serif text-2xl font-bold text-ink">
                     {p('Retrait immédiat en un clic', 'Instant One-Click Removal')}
                   </h2>
                 </ParallaxHorizontalTitle>
               </div>
-              <p className="text-xs text-[#574E4A] leading-relaxed">
+              <p className="text-xs text-muted leading-relaxed">
                 {p(
                   'Confirmez votre adresse courriel pour supprimer vos données de diffusion de Réussite Magazine et des communications commerciales CONCAM.',
                   'Confirm your email address to remove your details from Réussite Magazine and CONCAM communications.',
@@ -98,7 +98,7 @@ export function UnsubscribePage() {
               </p>
               {!idParam && (
                 <div>
-                  <label className="block text-xs font-medium text-[#574E4A] mb-1">
+                  <label className="block text-xs font-medium text-muted mb-1">
                     {p('Adresse courriel concernée', 'Email address')}
                   </label>
                   <input
@@ -107,7 +107,7 @@ export function UnsubscribePage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="nom@organisation.gn"
-                    className="w-full px-3.5 py-2.5 text-sm bg-[#F7F4EF] border border-[#DDD5C9] rounded-[4px] text-[#181413] focus:border-[#931916] focus:outline-none"
+                    className="w-full px-3.5 py-2.5 text-sm bg-page border border-hairline rounded-[4px] text-ink focus:border-[#931916] focus:outline-none"
                   />
                 </div>
               )}

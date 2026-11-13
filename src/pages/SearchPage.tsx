@@ -80,7 +80,7 @@ export function SearchPage() {
         )}
       />
 
-      <section className="relative bg-[#F7F4EF] py-12 overflow-x-clip">
+      <section className="relative bg-page py-12 overflow-x-clip">
         <ParallaxBackdropPlate variant="light-grid" offset={82} />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8 relative z-10">
           <ParallaxLayer offset={30}>
@@ -93,7 +93,7 @@ export function SearchPage() {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder={p('Mot-clé : impression, manuels, marquage, signalétique...', 'Keyword: printing, manuals, branding, signage...')}
-                    className="w-full pl-11 pr-4 py-3 text-sm bg-white border border-[#DDD5C9] rounded-[4px] text-[#181413] focus:border-[#931916] focus:outline-none"
+                    className="w-full pl-11 pr-4 py-3 text-sm bg-surface border border-hairline rounded-[4px] text-ink focus:border-[#931916] focus:outline-none"
                   />
                 </div>
                 <button
@@ -106,7 +106,7 @@ export function SearchPage() {
             </RevealBlock>
           </ParallaxLayer>
 
-        <div className="flex flex-wrap items-center gap-2 border-b border-[#DDD5C9] pb-4">
+        <div className="flex flex-wrap items-center gap-2 border-b border-hairline pb-4">
           {(
             [
               ['all', p(`Tous (${results.length})`, `All (${results.length})`)],
@@ -122,7 +122,7 @@ export function SearchPage() {
               className={`px-3.5 py-1.5 text-xs font-medium rounded-[4px] border cursor-pointer transition-colors ${
                 filterType === key
                   ? 'bg-[#110D0C] text-[#F6F2EA] border-[#110D0C]'
-                  : 'bg-white text-[#574E4A] border-[#DDD5C9] hover:border-[#931916]'
+                  : 'bg-surface text-muted border-hairline hover:border-[#931916]'
               }`}
             >
               {label}
@@ -131,17 +131,17 @@ export function SearchPage() {
         </div>
 
         {loading ? (
-          <p className="text-sm text-[#574E4A]">{p('Recherche en cours...', 'Searching...')}</p>
+          <p className="text-sm text-muted">{p('Recherche en cours...', 'Searching...')}</p>
         ) : !searchParams.get('q') ? (
-          <div className="bg-white border border-[#DDD5C9] rounded-[4px] p-8 text-center text-sm text-[#574E4A]">
+          <div className="bg-surface border border-hairline rounded-[4px] p-8 text-center text-sm text-muted">
             {p(
               'Saisissez un terme ci-dessus pour explorer les services, réalisations et publications de CONCAM.',
               'Enter a keyword above to search CONCAM services, portfolio and publications.',
             )}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="bg-white border border-[#DDD5C9] rounded-[4px] p-8 text-center space-y-3">
-            <p className="text-sm text-[#574E4A]">
+          <div className="bg-surface border border-hairline rounded-[4px] p-8 text-center space-y-3">
+            <p className="text-sm text-muted">
               {p(
                 `Aucun document publié ne correspond à « ${searchParams.get('q')} ».`,
                 `No published document matches "${searchParams.get('q')}".`,
@@ -161,7 +161,7 @@ export function SearchPage() {
               <ParallaxColumnStagger key={`${item.type}-${item.id}`} index={idx} columns={2} amplitude={44}>
                 <Link
                   to={item.href}
-                  className="group bg-white border border-[#DDD5C9] hover:border-[#931916] rounded-[4px] overflow-hidden flex flex-col h-full transition-all"
+                  className="group bg-surface border border-hairline hover:border-[#931916] rounded-[4px] overflow-hidden flex flex-col h-full transition-all"
                 >
                   {item.imageUrl && (
                     <div className="h-44 overflow-hidden bg-[#181413]">
@@ -183,14 +183,14 @@ export function SearchPage() {
                           : item.type === 'gallery'
                           ? p('Réalisation', 'Portfolio')
                           : p('Article', 'Article')}{' '}
-                        · <span className="text-[#574E4A]">{item.subtitle}</span>
+                        · <span className="text-muted">{item.subtitle}</span>
                       </p>
                       <ParallaxHorizontalTitle direction={idx % 2 === 0 ? -1 : 1} distance={16}>
-                        <h2 className="font-serif text-xl font-bold text-[#181413] group-hover:text-[#931916] transition-colors">
+                        <h2 className="font-serif text-xl font-bold text-ink group-hover:text-[#931916] transition-colors">
                           {item.title}
                         </h2>
                       </ParallaxHorizontalTitle>
-                      <p className="text-xs text-[#574E4A] line-clamp-2 leading-relaxed">{item.excerpt}</p>
+                      <p className="text-xs text-muted line-clamp-2 leading-relaxed">{item.excerpt}</p>
                     </div>
                     <div className="pt-3 flex items-center gap-1 text-xs font-semibold text-[#931916]">
                       <span>{p('Consulter', 'Read more')}</span>

@@ -84,7 +84,7 @@ export function QuoteModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
             transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
-            className="bg-[#FFFFFF] text-[#181413] border border-[#DDD5C9] rounded-[4px] w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-[0_32px_90px_-20px_rgba(0,0,0,0.65)]"
+            className="bg-surface text-ink border border-hairline rounded-[4px] w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-[0_32px_90px_-20px_rgba(0,0,0,0.65)]"
           >
             <div className="bg-[#110D0C] text-white flex items-center justify-between px-6 py-4 border-b border-[#931916]">
               <div>
@@ -105,14 +105,14 @@ export function QuoteModal() {
               </button>
             </div>
 
-            <div className="p-6 bg-[#F7F4EF]">
+            <div className="p-6 bg-page">
               {status === 'success' ? (
                 <div className="py-6 text-center space-y-3">
                   <CheckCircle2 className="w-10 h-10 text-[#931916] mx-auto" />
-                  <h3 className="font-serif text-xl font-bold text-[#181413]">
+                  <h3 className="font-serif text-xl font-bold text-ink">
                     {p('Demande enregistrée', 'Request Received')}
                   </h3>
-                  <p className="text-sm text-[#574E4A]">
+                  <p className="text-sm text-muted">
                     {p(
                       'Un conseiller CONCAM analyse votre projet et vous transmettra une proposition graduée sous 24 heures ouvrées.',
                       'A CONCAM advisor is reviewing your brief and will send a tiered proposal within 24 business hours.',
@@ -130,7 +130,7 @@ export function QuoteModal() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-[#181413] mb-1">
+                      <label className="block text-xs font-semibold text-ink mb-1">
                         {p('Nom complet *', 'Full name *')}
                       </label>
                       <input
@@ -138,25 +138,25 @@ export function QuoteModal() {
                         required
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full px-3 py-2.5 text-sm bg-white border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                        className="w-full px-3 py-2.5 text-sm bg-surface border border-hairline text-ink placeholder:text-faint rounded-[4px] focus:border-[#931916] focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-[#181413] mb-1">
+                      <label className="block text-xs font-semibold text-ink mb-1">
                         {p('Organisation / Institution', 'Organization')}
                       </label>
                       <input
                         type="text"
                         value={organization}
                         onChange={(e) => setOrganization(e.target.value)}
-                        className="w-full px-3 py-2.5 text-sm bg-white border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                        className="w-full px-3 py-2.5 text-sm bg-surface border border-hairline text-ink placeholder:text-faint rounded-[4px] focus:border-[#931916] focus:outline-none"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-[#181413] mb-1">
+                      <label className="block text-xs font-semibold text-ink mb-1">
                         {p('Courriel professionnel *', 'Work email *')}
                       </label>
                       <input
@@ -164,11 +164,11 @@ export function QuoteModal() {
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-3 py-2.5 text-sm bg-white border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                        className="w-full px-3 py-2.5 text-sm bg-surface border border-hairline text-ink placeholder:text-faint rounded-[4px] focus:border-[#931916] focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-[#181413] mb-1">
+                      <label className="block text-xs font-semibold text-ink mb-1">
                         {p('Téléphone / WhatsApp', 'Phone / WhatsApp')}
                       </label>
                       <input
@@ -176,19 +176,19 @@ export function QuoteModal() {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+224 ..."
-                        className="w-full px-3 py-2.5 text-sm bg-white border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                        className="w-full px-3 py-2.5 text-sm bg-surface border border-hairline text-ink placeholder:text-faint rounded-[4px] focus:border-[#931916] focus:outline-none"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#181413] mb-1">
+                    <label className="block text-xs font-semibold text-ink mb-1">
                       {p('Service concerné', 'Service')}
                     </label>
                     <select
                       value={serviceSlug}
                       onChange={(e) => setServiceSlug(e.target.value)}
-                      className="w-full px-3 py-2.5 text-sm bg-white border border-[#DDD5C9] text-[#181413] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                      className="w-full px-3 py-2.5 text-sm bg-surface border border-hairline text-ink rounded-[4px] focus:border-[#931916] focus:outline-none"
                     >
                       {data?.services.map((s) => (
                         <option key={s.id} value={s.slug}>
@@ -199,7 +199,7 @@ export function QuoteModal() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#181413] mb-1">
+                    <label className="block text-xs font-semibold text-ink mb-1">
                       {p('Précisions (volumes, délais, supports souhaités)', 'Project details (volume, timeline, format)')}
                     </label>
                     <textarea
@@ -207,11 +207,11 @@ export function QuoteModal() {
                       required
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      className="w-full px-3 py-2.5 text-sm bg-white border border-[#DDD5C9] text-[#181413] placeholder:text-[#9C9188] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                      className="w-full px-3 py-2.5 text-sm bg-surface border border-hairline text-ink placeholder:text-faint rounded-[4px] focus:border-[#931916] focus:outline-none"
                     />
                   </div>
 
-                  <label className="flex items-start gap-2.5 text-xs text-[#574E4A] cursor-pointer">
+                  <label className="flex items-start gap-2.5 text-xs text-muted cursor-pointer">
                     <input
                       type="checkbox"
                       checked={consent}
@@ -240,7 +240,7 @@ export function QuoteModal() {
                     <button
                       type="button"
                       onClick={closeQuoteModal}
-                      className="px-4 py-2 text-sm font-medium text-[#574E4A] hover:text-[#181413] cursor-pointer"
+                      className="px-4 py-2 text-sm font-medium text-muted hover:text-ink cursor-pointer"
                     >
                       {p('Annuler', 'Cancel')}
                     </button>

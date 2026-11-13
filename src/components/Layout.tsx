@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { Menu, X, ChevronRight, ArrowUpRight, Mail, Phone, MapPin, Search, FileDown } from 'lucide-react';
+import { Menu, X, ChevronRight, ArrowUpRight, Mail, Phone, MapPin, Search, FileDown, Sun, Moon } from 'lucide-react';
 import { ConcamLogo } from './ConcamLogo';
 import {
   MagneticWrapper,
@@ -14,20 +14,20 @@ import { useSite } from '../context/SiteContext';
 export function Breadcrumbs({ items }: { items: Array<{ label: string; to?: string }> }) {
   const { lang } = useSite();
   return (
-    <nav aria-label={lang === 'en' ? 'Breadcrumb' : "Fil d'Ariane"} className="bg-[#EFEAE1] border-b border-[#DDD5C9]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2.5 flex items-center gap-2 text-xs text-[#574E4A] overflow-x-auto whitespace-nowrap">
+    <nav aria-label={lang === 'en' ? 'Breadcrumb' : "Fil d'Ariane"} className="bg-limestone border-b border-hairline">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2.5 flex items-center gap-2 text-xs text-muted overflow-x-auto whitespace-nowrap">
         <Link to={lang === 'en' ? '/en' : '/'} className="hover:text-[#931916] transition-colors font-medium">
           {lang === 'en' ? 'Home' : 'Accueil'}
         </Link>
         {items.map((item, idx) => (
           <React.Fragment key={idx}>
-            <ChevronRight className="w-3.5 h-3.5 text-[#9C9188] shrink-0" aria-hidden="true" />
+            <ChevronRight className="w-3.5 h-3.5 text-faint shrink-0" aria-hidden="true" />
             {item.to ? (
               <Link to={item.to} className="hover:text-[#931916] transition-colors font-medium">
                 {item.label}
               </Link>
             ) : (
-              <span className="text-[#181413] font-semibold truncate">{item.label}</span>
+              <span className="text-ink font-semibold truncate">{item.label}</span>
             )}
           </React.Fragment>
         ))}
@@ -37,7 +37,7 @@ export function Breadcrumbs({ items }: { items: Array<{ label: string; to?: stri
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { data, lang, switchLanguage, openQuoteModal, setSearchOpen, trackEvent } = useSite();
+  const { data, lang, switchLanguage, openQuoteModal, setSearchOpen, trackEvent, theme, toggleTheme } = useSite();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -125,7 +125,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   if (settings?.maintenanceMode) {
     return (
-      <div className="min-h-screen bg-[#110D0C] text-[#F6F2EA] flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-dvh bg-[#110D0C] text-[#F6F2EA] flex flex-col items-center justify-center p-6 text-center">
         <div className="max-w-lg w-full border border-white/15 bg-[#181413] rounded-[4px] p-8 sm:p-10 space-y-6 shadow-2xl">
           <div className="flex justify-center">
             <ConcamLogo size="lg" />
@@ -153,7 +153,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F7F4EF] text-[#181413] relative selection:bg-[#931916] selection:text-white">
+    <div className="min-h-dvh flex flex-col bg-page text-ink relative selection:bg-[#931916] selection:text-white">
       <ScrollProgressBar />
 
       {/* Top Bar Contract: 3 zones, sovereign chancery header with crisp hairline */}
@@ -195,8 +195,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
             })}
           </nav>
 
-          {/* Zone 3: Search button + Language switch + Single magnetic CTA */}
+          {/* Zone 3: Theme toggle + Search button + Language switch + Single magnetic CTA */}
           <div className="flex items-center gap-2.5 shrink-0">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? p('Passer en mode clair', 'Switch to light mode') : p('Passer en mode sombre', 'Switch to dark mode')}
+              title={theme === 'dark' ? p('Mode clair', 'Light mode') : p('Mode sombre', 'Dark mode')}
+              className="p-2 rounded-[4px] border border-white/20 bg-[#1A1413] text-white/85 hover:text-white hover:border-[#931916] transition-colors cursor-pointer"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4" aria-hidden="true" /> : <Moon className="w-4 h-4" aria-hidden="true" />}
+            </button>
+
             <button
               type="button"
               onClick={() => setSearchOpen(true)}
@@ -212,7 +222,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 type="button"
                 onClick={() => switchLanguage('fr')}
                 className={`px-2.5 py-1.5 transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
-                  lang === 'fr' ? 'bg-white text-[#110D0C] font-semibold' : 'hover:bg-white/10'
+                  lang === 'fr' ? 'bg-[#F6F2EA] text-[#110D0C] font-semibold' : 'hover:bg-white/10'
                 }`}
               >
                 FR
@@ -221,7 +231,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 type="button"
                 onClick={() => switchLanguage('en')}
                 className={`px-2.5 py-1.5 transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
-                  lang === 'en' ? 'bg-white text-[#110D0C] font-semibold' : 'hover:bg-white/10'
+                  lang === 'en' ? 'bg-[#F6F2EA] text-[#110D0C] font-semibold' : 'hover:bg-white/10'
                 }`}
               >
                 EN
@@ -232,7 +242,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <button
                 type="button"
                 onClick={() => openQuoteModal()}
-                className="magnetic-sheen px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-[#931916] hover:bg-[#A30013] border border-[#931916] rounded-[4px] transition-all duration-300 shadow-[0_8px_20px_-8px_rgba(147,25,22,0.65)] whitespace-nowrap shrink-0 cursor-pointer"
+                className="hidden min-[420px]:inline-flex magnetic-sheen px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-[#931916] hover:bg-[#A30013] border border-[#931916] rounded-[4px] transition-all duration-300 shadow-[0_8px_20px_-8px_rgba(147,25,22,0.65)] whitespace-nowrap shrink-0 cursor-pointer"
               >
                 {p('Demander un devis', 'Request a Quote')}
               </button>
@@ -291,7 +301,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     setMobileOpen(false);
                   }}
                   className={`px-3 py-1.5 text-xs rounded-[4px] border cursor-pointer ${
-                    lang === 'fr' ? 'bg-white text-[#110D0C] border-white font-semibold' : 'border-white/25 text-white/80'
+                    lang === 'fr' ? 'bg-[#F6F2EA] text-[#110D0C] border-white font-semibold' : 'border-white/25 text-white/80'
                   }`}
                 >
                   Français
@@ -303,12 +313,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     setMobileOpen(false);
                   }}
                   className={`px-3 py-1.5 text-xs rounded-[4px] border cursor-pointer ${
-                    lang === 'en' ? 'bg-white text-[#110D0C] border-white font-semibold' : 'border-white/25 text-white/80'
+                    lang === 'en' ? 'bg-[#F6F2EA] text-[#110D0C] border-white font-semibold' : 'border-white/25 text-white/80'
                   }`}
                 >
                   English
                 </button>
               </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileOpen(false);
+                  openQuoteModal();
+                }}
+                className="w-full mt-2 px-4 py-2.5 text-sm font-semibold text-white bg-[#931916] hover:bg-[#A30013] border border-[#931916] rounded-[4px] transition-colors cursor-pointer"
+              >
+                {p('Demander un devis', 'Request a Quote')}
+              </button>
             </motion.div>
           )}
         </AnimatePresence>

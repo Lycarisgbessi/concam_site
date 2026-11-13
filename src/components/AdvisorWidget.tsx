@@ -526,7 +526,7 @@ export function AdvisorWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.95 }}
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-            className="w-[92vw] sm:w-[395px] h-[545px] max-h-[82vh] bg-[#F7F4EF] text-[#181413] border border-[#DDD5C9] rounded-[4px] shadow-[0_28px_72px_rgba(0,0,0,0.55)] flex flex-col overflow-hidden"
+            className="w-[92vw] sm:w-[395px] h-[545px] max-h-[82vh] bg-page text-ink border border-hairline rounded-[4px] shadow-[0_28px_72px_rgba(0,0,0,0.55)] flex flex-col overflow-hidden"
             role="dialog"
             aria-label="Conseiller CONCAM"
           >
@@ -552,7 +552,7 @@ export function AdvisorWidget() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#F7F4EF]">
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-page">
               {messages.map((m) => (
                 <motion.div
                   key={m.id}
@@ -565,7 +565,7 @@ export function AdvisorWidget() {
                     className={`max-w-[85%] px-3.5 py-2.5 rounded-[4px] text-sm leading-relaxed ${
                       m.role === 'user'
                         ? 'bg-[#931916] text-white border border-[#931916]'
-                        : 'bg-[#FFFFFF] text-[#181413] border border-[#DDD5C9] shadow-xs'
+                        : 'bg-surface text-ink border border-hairline shadow-xs'
                     }`}
                   >
                     {m.mode === 'voice' && (
@@ -617,7 +617,7 @@ export function AdvisorWidget() {
                         <button
                           type="button"
                           onClick={() => setShowCallbackForm(true)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-white border border-[#DDD5C9] hover:border-[#931916] text-[#181413] rounded-[4px] transition-colors cursor-pointer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-surface border border-hairline hover:border-[#931916] text-ink rounded-[4px] transition-colors cursor-pointer"
                         >
                           <PhoneCall className="w-3.5 h-3.5 text-[#931916]" />
                           {p('Planifier un rappel', 'Schedule Callback')}
@@ -630,12 +630,12 @@ export function AdvisorWidget() {
 
               {/* Live Voice Subtitles */}
               {voiceActive && (liveUserSubtitle || liveAiSubtitle) && (
-                <div className="space-y-1.5 pt-2 border-t border-[#DDD5C9]">
+                <div className="space-y-1.5 pt-2 border-t border-hairline">
                   {liveUserSubtitle && (
-                    <p className="text-xs text-[#574E4A] italic text-right">{liveUserSubtitle}</p>
+                    <p className="text-xs text-muted italic text-right">{liveUserSubtitle}</p>
                   )}
                   {liveAiSubtitle && (
-                    <p className="text-xs text-[#181413] font-medium bg-[#EFEAE1] border border-[#931916]/35 px-3 py-2 rounded-[4px]">
+                    <p className="text-xs text-ink font-medium bg-limestone border border-[#931916]/35 px-3 py-2 rounded-[4px]">
                       {liveAiSubtitle}
                     </p>
                   )}
@@ -644,14 +644,14 @@ export function AdvisorWidget() {
 
               {/* Inline Callback Capture */}
               {showCallbackForm && (
-                <form onSubmit={handleCallbackSubmit} className="bg-white border border-[#DDD5C9] p-3.5 rounded-[4px] space-y-2.5">
+                <form onSubmit={handleCallbackSubmit} className="bg-surface border border-hairline p-3.5 rounded-[4px] space-y-2.5">
                   {cbSent ? (
                     <p className="text-xs text-[#931916] font-semibold">
                       {p('Rappel planifié ! Un conseiller vous contactera rapidement.', 'Callback scheduled! An advisor will reach out shortly.')}
                     </p>
                   ) : (
                     <>
-                      <p className="text-xs font-semibold text-[#181413]">
+                      <p className="text-xs font-semibold text-ink">
                         {p('Vos coordonnées pour rappel', 'Your callback details')}
                       </p>
                       <input
@@ -660,7 +660,7 @@ export function AdvisorWidget() {
                         value={cbName}
                         onChange={(e) => setCbName(e.target.value)}
                         placeholder={p('Nom complet', 'Full name')}
-                        className="w-full px-2.5 py-1.5 text-xs bg-[#F7F4EF] text-[#181413] placeholder:text-[#9C9188] border border-[#DDD5C9] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                        className="w-full px-2.5 py-1.5 text-xs bg-page text-ink placeholder:text-faint border border-hairline rounded-[4px] focus:border-[#931916] focus:outline-none"
                       />
                       <input
                         type="tel"
@@ -668,7 +668,7 @@ export function AdvisorWidget() {
                         value={cbPhone}
                         onChange={(e) => setCbPhone(e.target.value)}
                         placeholder="+224 ..."
-                        className="w-full px-2.5 py-1.5 text-xs bg-[#F7F4EF] text-[#181413] placeholder:text-[#9C9188] border border-[#DDD5C9] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                        className="w-full px-2.5 py-1.5 text-xs bg-page text-ink placeholder:text-faint border border-hairline rounded-[4px] focus:border-[#931916] focus:outline-none"
                       />
                       <input
                         type="email"
@@ -676,9 +676,9 @@ export function AdvisorWidget() {
                         value={cbEmail}
                         onChange={(e) => setCbEmail(e.target.value)}
                         placeholder={p('Courriel', 'Email')}
-                        className="w-full px-2.5 py-1.5 text-xs bg-[#F7F4EF] text-[#181413] placeholder:text-[#9C9188] border border-[#DDD5C9] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                        className="w-full px-2.5 py-1.5 text-xs bg-page text-ink placeholder:text-faint border border-hairline rounded-[4px] focus:border-[#931916] focus:outline-none"
                       />
-                      <label className="flex items-start gap-1.5 text-[11px] text-[#574E4A]">
+                      <label className="flex items-start gap-1.5 text-[11px] text-muted">
                         <input type="checkbox" checked={cbConsent} onChange={(e) => setCbConsent(e.target.checked)} required className="mt-0.5 accent-[#931916]" />
                         <span>{p('Accord RGPD pour ce rappel', 'Consent for callback')}</span>
                       </label>
@@ -703,7 +703,7 @@ export function AdvisorWidget() {
 
             {/* Voice Status / Error Strip */}
             {(voiceActive || voiceError) && (
-              <div className="px-3 py-2 bg-[#EFEAE1] border-t border-[#931916]/35 text-[11px] text-[#181413] flex items-center justify-between gap-2">
+              <div className="px-3 py-2 bg-limestone border-t border-[#931916]/35 text-[11px] text-ink flex items-center justify-between gap-2">
                 <span className="truncate font-medium">
                   {voiceError ||
                     (voiceStatus === 'connecting'
@@ -728,7 +728,7 @@ export function AdvisorWidget() {
 
             {/* Satisfaction strip after 3+ messages */}
             {messages.length >= 4 && rating === null && (
-              <div className="px-3 py-1.5 bg-[#EFEAE1] border-t border-[#DDD5C9] flex items-center justify-between text-[11px] text-[#574E4A]">
+              <div className="px-3 py-1.5 bg-limestone border-t border-hairline flex items-center justify-between text-[11px] text-muted">
                 <span>{p('Échange utile ?', 'Helpful chat?')}</span>
                 <div className="flex items-center gap-1">
                   {[1, 2, 3, 4, 5].map((n) => (
@@ -737,7 +737,7 @@ export function AdvisorWidget() {
                       type="button"
                       onClick={() => handleRating(n)}
                       aria-label={`${n} étoiles`}
-                      className="p-0.5 text-[#9C9188] hover:text-[#931916] transition-colors cursor-pointer"
+                      className="p-0.5 text-faint hover:text-[#931916] transition-colors cursor-pointer"
                     >
                       <Star className="w-3.5 h-3.5" />
                     </button>
@@ -752,7 +752,7 @@ export function AdvisorWidget() {
                 e.preventDefault();
                 sendTextMessage();
               }}
-              className="p-3 bg-[#FFFFFF] border-t border-[#DDD5C9] flex items-center gap-2 shrink-0"
+              className="p-3 bg-surface border-t border-hairline flex items-center gap-2 shrink-0"
             >
               <button
                 type="button"
@@ -762,7 +762,7 @@ export function AdvisorWidget() {
                 className={`p-2.5 rounded-[4px] border transition-colors cursor-pointer shrink-0 ${
                   voiceActive
                     ? 'bg-[#931916] text-white border-[#931916]'
-                    : 'bg-[#F7F4EF] text-[#181413] border-[#DDD5C9] hover:border-[#931916]'
+                    : 'bg-page text-ink border-hairline hover:border-[#931916]'
                 }`}
               >
                 {voiceActive ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
@@ -772,7 +772,7 @@ export function AdvisorWidget() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={p('Décrivez votre besoin...', 'Describe your project...')}
-                className="flex-1 px-3 py-2 text-sm bg-[#F7F4EF] text-[#181413] placeholder:text-[#9C9188] border border-[#DDD5C9] rounded-[4px] focus:border-[#931916] focus:outline-none"
+                className="flex-1 px-3 py-2 text-sm bg-page text-ink placeholder:text-faint border border-hairline rounded-[4px] focus:border-[#931916] focus:outline-none"
               />
               <button
                 type="submit"

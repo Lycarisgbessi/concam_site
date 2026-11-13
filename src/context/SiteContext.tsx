@@ -12,6 +12,9 @@ interface SiteContextValue {
   loading: boolean;
   lang: Lang;
   switchLanguage: (target: Lang) => void;
+  theme: 'light' | 'dark';
+  setTheme: (theme: 'light' | 'dark') => void;
+  toggleTheme: () => void;
   refreshSiteData: () => Promise<void>;
   quoteModalOpen: boolean;
   quotePrefill: QuotePrefill;
@@ -68,6 +71,29 @@ export function SiteProvider({ children }: { children: React.ReactNode }) {
   });
 
   const lang: Lang = location.pathname.startsWith('/en') ? 'en' : 'fr';
+
+  // ---- Thème clair / sombre ----
+  // L'attribut data-theme est déjà posé avant l'hydratation par le script de
+  // index.html (anti-flash) ; on se synchronise dessus puis on le pilote.
+  const [theme, setThemeState] = useState<'light' | 'dark'>(() =>
+    typeof document !== 'undefined' && document.documentElement.dataset.theme === 'dark'
+      ? 'dark'
+      : 'light',
+  );
+
+  const setTheme = useCallback((next: 'light' | 'dark') => {
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem('concam_theme', next);
+    } catch {
+      // stockage indisponible : le thème reste actif pour la session
+    }
+    setThemeState(next);
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+  }, [setTheme]);
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -278,6 +304,9 @@ export function SiteProvider({ children }: { children: React.ReactNode }) {
         loading,
         lang,
         switchLanguage,
+        theme,
+        setTheme,
+        toggleTheme,
         refreshSiteData,
         quoteModalOpen,
         quotePrefill,

@@ -1,5 +1,34 @@
 @import "tailwindcss";
 
+/* ============================================================
+   THÈME CLAIR / SOMBRE — palette sémantique commutable
+   Les neutrals passent par des variables CSS ; les plaques
+   « sovereign » sombres et les accents grenat restent constants.
+   ============================================================ */
+:root {
+  color-scheme: light;
+  --c-page: #F7F4EF;
+  --c-limestone: #EFEAE1;
+  --c-surface: #FFFFFF;
+  --c-ink: #181413;
+  --c-muted: #574E4A;
+  --c-faint: #9C9188;
+  --c-hairline: #DDD5C9;
+  --c-plate-shadow: rgba(24, 20, 19, 0.22);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --c-page: #141010;
+  --c-limestone: #1B1614;
+  --c-surface: #251E1B;
+  --c-ink: #F1EBE3;
+  --c-muted: #BFB3A9;
+  --c-faint: #92867D;
+  --c-hairline: #39302B;
+  --c-plate-shadow: rgba(0, 0, 0, 0.55);
+}
+
 @theme {
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -19,14 +48,36 @@
   --color-concam-surface: #F5F3F3;
 }
 
+/* Tokens dynamiques : les utilitaires générés référencent les variables
+   directement, donc basculent instantanément avec [data-theme]. */
+@theme inline {
+  --color-page: var(--c-page);
+  --color-limestone: var(--c-limestone);
+  --color-surface: var(--c-surface);
+  --color-ink: var(--c-ink);
+  --color-muted: var(--c-muted);
+  --color-faint: var(--c-faint);
+  --color-hairline: var(--c-hairline);
+}
+
 @layer base {
   html {
     font-family: var(--font-sans);
-    color: #181413;
-    background-color: #F7F4EF;
+    color: var(--c-ink);
+    background-color: var(--c-page);
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Garde anti-débordement horizontal universelle (parallaxe, marquees) */
+    overflow-x: clip;
+    /* Transition douce lors de la bascule clair/sombre */
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  body {
+    background-color: var(--c-page);
+    color: var(--c-ink);
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   h1, h2, h3, h4, .font-editorial {
@@ -46,14 +97,16 @@
 
 /* Archival editorial plates — crisp solid contrast, zero neon/glassmorphism */
 .archival-plate {
-  background-color: #FFFFFF;
-  border: 1px solid #DDD5C9;
-  box-shadow: 0 12px 34px -22px rgba(24, 20, 19, 0.22);
+  background-color: var(--c-surface);
+  border: 1px solid var(--c-hairline);
+  box-shadow: 0 12px 34px -22px var(--c-plate-shadow);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
 .archival-plate-warm {
-  background-color: #EFEAE1;
-  border: 1px solid #D8CFC2;
+  background-color: var(--c-limestone);
+  border: 1px solid var(--c-hairline);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
 /* Sovereign dark official plates with crisp white hairlines */

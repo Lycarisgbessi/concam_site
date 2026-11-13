@@ -32,14 +32,14 @@ export function LegalNoticePage() {
         title={p('Mentions légales', 'Legal Notice')}
       />
 
-      <section className="relative py-16 lg:py-20 bg-[#F7F4EF] text-[#181413] overflow-x-clip">
+      <section className="relative py-16 lg:py-20 bg-page text-ink overflow-x-clip">
         <ParallaxBackdropPlate variant="editorial-lines" offset={78} />
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-6 text-sm text-[#574E4A] leading-relaxed relative z-10">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-6 text-sm text-muted leading-relaxed relative z-10">
           <ParallaxLayer offset={34}>
             <RevealBlock preset="fade-up">
               <TiltCard3D intensity={3.5}>
                 <div className="archival-plate space-y-3 p-7 rounded-[4px] relative">
-                  <div className="flex items-center justify-between gap-4 border-b border-[#DDD5C9] pb-3 mb-2">
+                  <div className="flex items-center justify-between gap-4 border-b border-hairline pb-3 mb-2">
                     <ParallaxHorizontalTitle direction={1} distance={20}>
                       <span className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
                         {p('Fiche légale officielle', 'Official Legal Registry')}
@@ -48,25 +48,25 @@ export function LegalNoticePage() {
                     <ParallaxSealDrift size={52} tone="ink" offset={16} rotateDeg={34} />
                   </div>
                   <p>
-                    <strong className="text-[#181413]">{p('Éditeur du site :', 'Publisher:')}</strong> {settings.companyName} ({settings.brandAlias})
+                    <strong className="text-ink">{p('Éditeur du site :', 'Publisher:')}</strong> {settings.companyName} ({settings.brandAlias})
                   </p>
                   <p>
-                    <strong className="text-[#181413]">{p('Forme juridique :', 'Legal Form:')}</strong> {settings.legalForm}
+                    <strong className="text-ink">{p('Forme juridique :', 'Legal Form:')}</strong> {settings.legalForm}
                   </p>
                   <p>
-                    <strong className="text-[#181413]">RCCM :</strong>{' '}
+                    <strong className="text-ink">RCCM :</strong>{' '}
                     <span className="font-semibold text-[#931916] tabular-nums">{settings.rccm}</span>
                   </p>
                   <p>
-                    <strong className="text-[#181413]">{p('Identifiants fiscaux :', 'Tax Registration:')}</strong>{' '}
-                    <span className="tabular-nums font-medium text-[#181413]">NCC {settings.ncc} · NIF {settings.nif}</span> ({settings.taxCategory})
+                    <strong className="text-ink">{p('Identifiants fiscaux :', 'Tax Registration:')}</strong>{' '}
+                    <span className="tabular-nums font-medium text-ink">NCC {settings.ncc} · NIF {settings.nif}</span> ({settings.taxCategory})
                   </p>
                   <p>
-                    <strong className="text-[#181413]">{p('Siège social :', 'Headquarters:')}</strong>{' '}
+                    <strong className="text-ink">{p('Siège social :', 'Headquarters:')}</strong>{' '}
                     {lang === 'en' ? settings.address.en : settings.address.fr}
                   </p>
                   <p>
-                    <strong className="text-[#181413]">{p('Contact :', 'Contact:')}</strong> {settings.agencyEmail} · {settings.phones.join(' / ')}
+                    <strong className="text-ink">{p('Contact :', 'Contact:')}</strong> {settings.agencyEmail} · {settings.phones.join(' / ')}
                   </p>
                 </div>
               </TiltCard3D>
@@ -105,9 +105,9 @@ export function PrivacyPolicyPage() {
         title={p('Politique de protection des données personnelles', 'Personal Data & Privacy Policy')}
       />
 
-      <section className="relative py-16 lg:py-20 bg-[#F7F4EF] text-[#181413] overflow-x-clip">
+      <section className="relative py-16 lg:py-20 bg-page text-ink overflow-x-clip">
         <ParallaxBackdropPlate variant="editorial-lines" offset={78} />
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-6 text-sm text-[#574E4A] leading-relaxed relative z-10">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-6 text-sm text-muted leading-relaxed relative z-10">
           <ParallaxLayer offset={32}>
             <div className="archival-plate rounded-[4px] p-7 sm:p-9 space-y-6">
               <p>
@@ -117,7 +117,7 @@ export function PrivacyPolicyPage() {
                 )}
               </p>
 
-              <h2 className="font-serif text-2xl font-bold text-[#181413] pt-4 border-t border-[#DDD5C9]">
+              <h2 className="font-serif text-2xl font-bold text-ink pt-4 border-t border-hairline">
                 {p('1. Finalités & minimisation', '1. Purposes & Data Minimization')}
               </h2>
               <p>
@@ -127,7 +127,7 @@ export function PrivacyPolicyPage() {
                 )}
               </p>
 
-              <h2 className="font-serif text-2xl font-bold text-[#181413] pt-4 border-t border-[#DDD5C9]">
+              <h2 className="font-serif text-2xl font-bold text-ink pt-4 border-t border-hairline">
                 {p('2. Durée de conservation & purge', '2. Retention & Automatic Purge')}
               </h2>
               <p>
@@ -137,7 +137,7 @@ export function PrivacyPolicyPage() {
                 )}
               </p>
 
-              <h2 className="font-serif text-2xl font-bold text-[#181413] pt-4 border-t border-[#DDD5C9]">
+              <h2 className="font-serif text-2xl font-bold text-ink pt-4 border-t border-hairline">
                 {p('3. Vos droits (accès, rectification, suppression)', '3. Your Rights (Access, Rectification, Erasure)')}
               </h2>
               <p>
