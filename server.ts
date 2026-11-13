@@ -72,6 +72,7 @@ import {
   ensureDailyBackup,
   restoreDatabaseBackup,
   rebuildRagIndex,
+  pool,
 } from './server/db.ts';
 import {
   buildAdvisorSystemInstruction,
@@ -122,10 +123,20 @@ app.use(async (_req, res, next) => {
     next();
   } catch (err) {
     console.error('Database bootstrap error:', err);
-    res.status(500).json({ error: 'Initialisation de la base de données impossible.' });
+    res.status(500).json({
+      error: 'Initialisation de la base de données impossible.',
+      detail: err instanceof Error ? err.message : String(err),
+    });
   }
 });
-const SESSION_SECRET = getOrCreateSessionSecret();
+// Session secret is resolved lazily (memoized) so a missing SESSION_SECRET on
+// Vercel surfaces as a readable per-request error instead of crashing the whole
+// serverless function at import time (opaque FUNCTION_INVOCATION_FAILED).
+let sessionSecretMemo: string | null = null;
+function sessionSecret(): string {
+  if (!sessionSecretMemo) sessionSecretMemo = getOrCreateSessionSecret();
+  return sessionSecretMemo;
+}
 const COOKIE_NAME = 'concam_session';
 
 // Security & compression middleware
@@ -199,14 +210,14 @@ interface SessionPayload {
 
 function signSession(payload: SessionPayload): string {
   const data = Buffer.from(JSON.stringify(payload)).toString('base64url');
-  const sig = crypto.createHmac('sha256', SESSION_SECRET).update(data).digest('base64url');
+  const sig = crypto.createHmac('sha256', sessionSecret()).update(data).digest('base64url');
   return `${data}.${sig}`;
 }
 
 function verifySession(token: string | undefined): SessionPayload | null {
   if (!token || !token.includes('.')) return null;
   const [data, sig] = token.split('.');
-  const expected = crypto.createHmac('sha256', SESSION_SECRET).update(data).digest('base64url');
+  const expected = crypto.createHmac('sha256', sessionSecret()).update(data).digest('base64url');
   if (sig.length !== expected.length || !crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) {
     return null;
   }
@@ -264,8 +275,21 @@ app.use(async (req, res, next) => {
 
 // ==================== PUBLIC ROUTES ====================
 
-app.get('/api/health', (_req, res) => {
-  res.json({ ok: true, service: 'concam-web', timestamp: new Date().toISOString() });
+app.get('/api/health', async (_req, res) => {
+  // Diagnostic probe: reports the exact bootstrap/database failure reason so
+  // misconfiguration is identifiable from outside the hosting platform.
+  try {
+    await dbReady();
+    await pool.query('SELECT 1');
+    res.json({ ok: true, service: 'concam-web', db: 'connected', timestamp: new Date().toISOString() });
+  } catch (err) {
+    res.status(503).json({
+      ok: false,
+      service: 'concam-web',
+      db: 'error',
+      detail: err instanceof Error ? err.message : String(err),
+    });
+  }
 });
 
 app.get('/api/public/site-data', async (_req, res) => {
@@ -684,14 +708,14 @@ interface Pending2faPayload {
 function signPending2fa(userId: string): string {
   const payload: Pending2faPayload = { userId, purpose: '2fa_login', exp: Date.now() + 5 * 60 * 1000 };
   const data = Buffer.from(JSON.stringify(payload)).toString('base64url');
-  const sig = crypto.createHmac('sha256', SESSION_SECRET).update(data).digest('base64url');
+  const sig = crypto.createHmac('sha256', sessionSecret()).update(data).digest('base64url');
   return `${data}.${sig}`;
 }
 
 function verifyPending2fa(token: string): Pending2faPayload | null {
   if (!token || !token.includes('.')) return null;
   const [data, sig] = token.split('.');
-  const expected = crypto.createHmac('sha256', SESSION_SECRET).update(data).digest('base64url');
+  const expected = crypto.createHmac('sha256', sessionSecret()).update(data).digest('base64url');
   if (sig.length !== expected.length || !crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) {
     return null;
   }

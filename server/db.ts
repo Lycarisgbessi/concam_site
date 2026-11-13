@@ -39,15 +39,10 @@ import type {
 // ==================== POSTGRESQL (Neon) CONNECTION ====================
 // All persistence goes through this pool. DATABASE_URL is required, e.g.:
 // postgresql://user:pass@host/dbname?sslmode=require
-const DATABASE_URL = process.env.DATABASE_URL;
-if (!DATABASE_URL) {
-  throw new Error(
-    'DATABASE_URL manquante : définissez la chaîne de connexion PostgreSQL (voir .env.example).',
-  );
-}
-
+// The check itself is deferred to initDatabase() so a missing variable surfaces
+// as a readable per-request error instead of an opaque module-load crash.
 export const pool = new pg.Pool({
-  connectionString: DATABASE_URL,
+  connectionString: process.env.DATABASE_URL || '',
   // Small pool: Neon (serverless) rewards few long-lived pooled connections.
   max: Number(process.env.PG_POOL_MAX || 5),
   idleTimeoutMillis: 30_000,
@@ -91,6 +86,11 @@ const TABLES = [
 ] as const;
 
 export async function initDatabase(): Promise<void> {
+  if (!process.env.DATABASE_URL) {
+    throw new Error(
+      'DATABASE_URL manquante : définissez la chaîne de connexion PostgreSQL dans les variables d’environnement (voir .env.example).',
+    );
+  }
   await q(`
     CREATE TABLE IF NOT EXISTS kv_store (
       key TEXT PRIMARY KEY,
