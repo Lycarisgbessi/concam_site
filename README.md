@@ -4,25 +4,56 @@ Site institutionnel bilingue FR/EN, galerie de réalisations, Conseiller commerc
 plaquette PDF générée à la volée et tableau de bord d'administration complet de l'agence
 **CONCAM** (Com'Com), Manquepas — Kaloum, Conakry.
 
-## Stack
+## Architecture de déploiement
+
+| Brique | Service |
+|---|---|
+| Code source | **GitHub** — `Lycarisgbessi/concam_site` |
+| Base de données | **Neon** (PostgreSQL serverless) |
+| Hébergement | **Vercel** (SPA statique + fonctions serverless `api/`) |
 
 | Couche | Technologie |
 |---|---|
-| Frontend | React 19 · react-router 7 · Tailwind CSS 4 · Motion (Framer) |
-| Backend | Node 20+ · Express · WebSocket (`ws`) · `tsx` |
-| Base de données | **PostgreSQL** (Neon) via `pg` — 14 tables, seed automatique |
-| IA | Google Gemini (RAG lexical, JSON structuré, Live API vocale) — repli déterministe sans clé |
+| Frontend | React 19 · react-router 7 · Tailwind CSS 4 · Motion (Framer) — build Vite dans `dist/` |
+| API | Fonction serverless Vercel `api/index.ts` exécutant l'app Express complète |
+| Base | PostgreSQL via `pg` (pool Neon) — 14 tables + `system_snapshots`, seed automatique |
+| IA | Google Gemini (RAG lexical, JSON structuré) — repli déterministe sans clé |
+| Sauvegardes | Snapshots JSON stockés **dans PostgreSQL**, créés/restaurés depuis `/admin` + cron Vercel quotidien |
 
-## Démarrage local
+## Déploiement sur Vercel (une seule fois)
+
+1. **Vercel → Add New → Project** → importer le dépôt GitHub `Lycarisgbessi/concam_site`.
+2. Variables d'environnement (Project → Settings → Environment Variables) :
+
+   | Variable | Obligatoire | Description |
+   |---|---|---|
+   | `DATABASE_URL` | ✅ | Chaîne Neon (`postgresql://…?sslmode=require`) |
+   | `SESSION_SECRET` | ✅ | ≥ 24 caractères (signature des sessions admin) |
+   | `GEMINI_API_KEY` | — | Clé Google AI Studio (sans elle : chatbot en mode scripté) |
+   | `BLOB_READ_WRITE_TOKEN` | — | Vercel Blob pour les médias téléversés (Storage → Create Blob) |
+   | `APP_URL` | — | URL publique finale (sitemap) |
+   | `SEED_ADMIN_PASSWORD` / `SEED_EDITOR_PASSWORD` / `SEED_SALES_PASSWORD` | — | Mots de passe initiaux (avant 1er démarrage) |
+
+3. **Deploy** — build automatique (`vite build`), SPA servie depuis `dist/`, API via `api/index.ts`
+   (règles `vercel.json`), cron de sauvegarde quotidien à 03:00 UTC (`/api/cron/backup`).
+
+> Note : le mode vocal temps réel (WebSocket Gemini Live) n'est pas disponible sur fonctions
+> serverless — le Conseiller IA bascule automatiquement sur le mode vocal par tour (HTTP).
+
+## Développement local
 
 ```bash
 npm install                # ou : bun install
 cp .env.example .env       # renseigner DATABASE_URL (obligatoire)
-npm run dev                # http://localhost:3000
+npm run dev                # http://localhost:3000 — serveur local complet (WS vocal inclus)
 ```
 
-Le premier démarrage crée le schéma et injecte tout le contenu initial (4 pôles de services,
-galerie, blog, SEO, playbooks commerciaux RAG, 3 comptes admin).
+Build et test production locaux :
+
+```bash
+npm run build
+NODE_ENV=production npm start
+```
 
 ## Comptes d'administration (`/admin`)
 
@@ -33,39 +64,7 @@ galerie, blog, SEO, playbooks commerciaux RAG, 3 comptes admin).
 | Commercial | `commercial@concam.gn` | `ConcamSales2026!` |
 
 > ⚠️ **Changez ces mots de passe** (module Utilisateurs & Audit) ou définissez
-> `SEED_ADMIN_PASSWORD` / `SEED_EDITOR_PASSWORD` / `SEED_SALES_PASSWORD` avant le
-> premier démarrage. Détails : `GUIDE_EXPLOITATION_CONCAM.md`.
-
-## Déploiement
-
-### Option A — Render.com (recommandé, `render.yaml` inclus)
-
-1. Sur [Neon](https://neon.tech) : créer un projet PostgreSQL et copier la chaîne
-   `DATABASE_URL` (avec `?sslmode=require`).
-2. Sur [Render](https://render.com) : **New → Blueprint**, sélectionner ce dépôt.
-3. Renseigner les variables sensibles :
-   - `DATABASE_URL` → la chaîne Neon
-   - `GEMINI_API_KEY` → clé Google AI Studio (optionnelle)
-   - `APP_URL` → l'URL publique Render (après le premier déploiement)
-4. Déployer. Health check : `/api/health`.
-
-### Option B — toute plateforme Node (Railway, Fly.io, VPS…)
-
-```bash
-npm install
-npm run build      # génère dist/ (SPA)
-NODE_ENV=production npm start
-```
-
-Variables requises : `DATABASE_URL` (obligatoire), `SESSION_SECRET` (recommandé),
-`GEMINI_API_KEY` / `APP_URL` (optionnels).
-
-## Sauvegardes
-
-- Instantanés **JSON** quotidiens de toute la base PostgreSQL dans `data/backups/`
-  (rétention 30 fichiers) + création manuelle, téléchargement et restauration
-  transactionnelle (avec filet de sécurité pré-restauration) depuis `/admin`.
-- Retention automatique : analytics 180 jours, journaux d'audit 365 jours.
+> `SEED_ADMIN_PASSWORD` etc. avant le premier démarrage. Détails : `GUIDE_EXPLOITATION_CONCAM.md`.
 
 ## Documentation
 

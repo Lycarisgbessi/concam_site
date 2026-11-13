@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import pg from 'pg';
 import bcrypt from 'bcryptjs';
 import {
@@ -74,10 +72,6 @@ async function all<T = Record<string, unknown>>(text: string, params: unknown[] 
   const res = await pool.query(text, params as never[]);
   return res.rows as T[];
 }
-
-// Local JSON snapshot directory (backup files live on the app host's disk).
-const backupDir = path.join(process.cwd(), 'data', 'backups');
-fs.mkdirSync(backupDir, { recursive: true });
 
 const TABLES = [
   'kv_store',
@@ -233,6 +227,13 @@ export async function initDatabase(): Promise<void> {
       entity TEXT NOT NULL,
       field TEXT NOT NULL,
       summary TEXT NOT NULL,
+      created_at TEXT NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS system_snapshots (
+      filename TEXT PRIMARY KEY,
+      size_bytes INTEGER NOT NULL,
+      content TEXT NOT NULL,
       created_at TEXT NOT NULL
     );
 
@@ -1437,28 +1438,12 @@ export async function searchPublishedContent(rawQuery: string, lang: Lang): Prom
   return results.slice(0, 24);
 }
 
-// ==================== JSON SNAPSHOT BACKUPS & RESTORE ====================
-// PostgreSQL cannot VACUUM INTO a file: backups are full JSON snapshots of every
-// table, stored on the app host (data/backups/*.json), restorable transactionally.
+// ==================== DATABASE-STORED JSON SNAPSHOT BACKUPS & RESTORE ====================
+// Snapshots are stored inside PostgreSQL (system_snapshots) so the feature works
+// identically on serverless hosts (Vercel) with no writable filesystem.
+// Format: full dump of every business table, restorable transactionally.
 
-function pruneOldBackups(maxKeep = 30): void {
-  const files = fs
-    .readdirSync(backupDir)
-    .filter((f) => f.endsWith('.json'))
-    .map((f) => ({
-      name: f,
-      mtime: fs.statSync(path.join(backupDir, f)).mtimeMs,
-    }))
-    .sort((a, b) => b.mtime - a.mtime);
-
-  for (const old of files.slice(maxKeep)) {
-    try {
-      fs.unlinkSync(path.join(backupDir, old.name));
-    } catch {
-      // Ignore cleanup error
-    }
-  }
-}
+const SNAPSHOT_RETENTION = 30;
 
 const COLUMN_NAMES: Record<(typeof TABLES)[number], string[]> = {
   kv_store: ['key', 'value', 'updated_at'],
@@ -1508,7 +1493,6 @@ export async function createDatabaseBackup(reason = 'manual'): Promise<BackupSna
   const safeReason = reason.replace(/[^a-z0-9_-]/gi, '-').slice(0, 24) || 'manual';
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
   const filename = `concam-${safeReason}-${stamp}.json`;
-  const targetPath = path.join(backupDir, filename);
 
   const snapshot: Record<string, unknown[]> = {};
   for (const tbl of TABLES) {
@@ -1516,43 +1500,48 @@ export async function createDatabaseBackup(reason = 'manual'): Promise<BackupSna
     // Drop the analytics bigserial id column: it must not be re-inserted on restore.
     snapshot[tbl] = tbl === 'analytics_events' ? rows.map(({ id: _drop, ...rest }) => rest) : rows;
   }
-  fs.writeFileSync(targetPath, JSON.stringify({ format: 'concam-snapshot-v1', createdAt: new Date().toISOString(), tables: snapshot }), 'utf8');
-  pruneOldBackups(30);
-  const stat = fs.statSync(targetPath);
-  return {
-    filename,
-    sizeBytes: stat.size,
-    createdAt: stat.mtime.toISOString(),
-  };
+  const content = JSON.stringify({ format: 'concam-snapshot-v1', createdAt: new Date().toISOString(), tables: snapshot });
+  const sizeBytes = Buffer.byteLength(content, 'utf8');
+
+  await q(
+    `INSERT INTO system_snapshots (filename, size_bytes, content, created_at)
+     VALUES ($1, $2, $3, $4)
+     ON CONFLICT(filename) DO UPDATE SET size_bytes = excluded.size_bytes, content = excluded.content, created_at = excluded.created_at`,
+    [filename, sizeBytes, content, new Date().toISOString()],
+  );
+
+  // Retention: keep only the newest snapshots.
+  await q(
+    `DELETE FROM system_snapshots
+     WHERE filename NOT IN (
+       SELECT filename FROM system_snapshots ORDER BY created_at DESC LIMIT $1
+     )`,
+    [SNAPSHOT_RETENTION],
+  );
+
+  return { filename, sizeBytes, createdAt: new Date().toISOString() };
 }
 
-export function listDatabaseBackups(): BackupSnapshotInfo[] {
-  if (!fs.existsSync(backupDir)) return [];
-  return fs
-    .readdirSync(backupDir)
-    .filter((f) => f.endsWith('.json'))
-    .map((f) => {
-      const stat = fs.statSync(path.join(backupDir, f));
-      return {
-        filename: f,
-        sizeBytes: stat.size,
-        createdAt: stat.mtime.toISOString(),
-      };
-    })
-    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+export async function listDatabaseBackups(): Promise<BackupSnapshotInfo[]> {
+  const rows = await all<{ filename: string; size_bytes: number; created_at: string }>(
+    'SELECT filename, size_bytes, created_at FROM system_snapshots ORDER BY created_at DESC',
+  );
+  return rows.map((r) => ({
+    filename: r.filename,
+    sizeBytes: Number(r.size_bytes),
+    createdAt: r.created_at,
+  }));
 }
 
-export function getBackupFilePath(filename: string): string | null {
-  const clean = path.basename(filename);
-  if (!clean.endsWith('.json')) return null;
-  const full = path.join(backupDir, clean);
-  if (!fs.existsSync(full)) return null;
-  return full;
+export async function getBackupContent(filename: string): Promise<string | null> {
+  const clean = filename.replace(/[/\\]/g, '');
+  const row = await one<{ content: string }>('SELECT content FROM system_snapshots WHERE filename = $1', [clean]);
+  return row?.content || null;
 }
 
 export async function ensureDailyBackup(): Promise<void> {
   const today = new Date().toISOString().slice(0, 10);
-  const existing = listDatabaseBackups().find((b) => b.filename.includes(`concam-daily-${today}`));
+  const existing = (await listDatabaseBackups()).find((b) => b.filename.includes(`concam-daily-${today}`));
   if (!existing) {
     try {
       await createDatabaseBackup('daily');
@@ -1581,14 +1570,14 @@ export async function purgeExpiredAuditLogs(retentionDays = AUDIT_RETENTION_DAYS
 }
 
 export async function restoreDatabaseBackup(filename: string): Promise<{ preRestoreSnapshot: string }> {
-  const full = getBackupFilePath(filename);
-  if (!full) {
+  const content = await getBackupContent(filename);
+  if (!content) {
     throw new Error('Archive de sauvegarde introuvable.');
   }
 
   let parsed: { format?: string; tables?: Record<string, Array<Record<string, unknown>>> };
   try {
-    parsed = JSON.parse(fs.readFileSync(full, 'utf8'));
+    parsed = JSON.parse(content);
   } catch {
     throw new Error('Fichier de sauvegarde corrompu ou JSON invalide.');
   }

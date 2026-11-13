@@ -10,7 +10,6 @@ import bcrypt from 'bcryptjs';
 import QRCode from 'qrcode';
 import { WebSocketServer, WebSocket } from 'ws';
 import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
-import { createServer as createViteServer } from 'vite';
 import {
   initDatabase,
   getPublicSiteData,
@@ -69,7 +68,7 @@ import {
   searchPublishedContent,
   createDatabaseBackup,
   listDatabaseBackups,
-  getBackupFilePath,
+  getBackupContent,
   ensureDailyBackup,
   restoreDatabaseBackup,
   rebuildRagIndex,
@@ -90,24 +89,42 @@ import {
 import { generateInstitutionalBrochurePdf } from './server/pdfBrochure.ts';
 import type { AdminRole, Lang, MediaHeadline } from './src/types/concam.ts';
 
-async function bootstrap() {
-  await initDatabase();
-  await ensureDailyBackup();
-  setInterval(() => {
-    ensureDailyBackup().catch((err) => console.error('Backup interval error:', err));
-  }, 12 * 60 * 60 * 1000).unref();
-  await startServer();
+const IS_VERCEL = Boolean(process.env.VERCEL);
+
+// Lazy one-time database bootstrap (schema + seed), shared by the classic server
+// boot and the Vercel serverless handler — runs once per warm instance.
+let dbReadyPromise: Promise<void> | null = null;
+export function dbReady(): Promise<void> {
+  if (!dbReadyPromise) {
+    dbReadyPromise = initDatabase().catch((err) => {
+      dbReadyPromise = null;
+      throw err;
+    });
+  }
+  return dbReadyPromise;
 }
 
-const uploadsDir = path.join(process.cwd(), 'data', 'uploads');
+// Local scratch directory for uploaded media (fallback when no blob storage).
+// Serverless hosts only expose /tmp as writable.
+const uploadsDir = IS_VERCEL ? '/tmp/concam-uploads' : path.join(process.cwd(), 'data', 'uploads');
 fs.mkdirSync(uploadsDir, { recursive: true });
 
 const app = express();
-// Derive the real client IP when running behind exactly one reverse proxy (nginx, Cloud Run…).
+// Derive the real client IP when running behind exactly one reverse proxy (nginx, Vercel…).
 // Without this, req.ip is the proxy address and every visitor shares one rate-limit bucket.
 app.set('trust proxy', 1);
-const server = http.createServer(app);
 const PORT = Number(process.env.PORT || 3000);
+
+// Every request waits for the one-time schema/seed bootstrap (per warm instance).
+app.use(async (_req, res, next) => {
+  try {
+    await dbReady();
+    next();
+  } catch (err) {
+    console.error('Database bootstrap error:', err);
+    res.status(500).json({ error: 'Initialisation de la base de données impossible.' });
+  }
+});
 const SESSION_SECRET = getOrCreateSessionSecret();
 const COOKIE_NAME = 'concam_session';
 
@@ -140,13 +157,16 @@ app.use(
 );
 
 // Simple in-memory rate limiter with periodic cleanup
+// (cleanup timer only on classic servers — timers block serverless freezing).
 const rateBuckets = new Map<string, { count: number; resetAt: number }>();
-setInterval(() => {
-  const now = Date.now();
-  for (const [k, b] of rateBuckets.entries()) {
-    if (b.resetAt < now) rateBuckets.delete(k);
-  }
-}, 5 * 60 * 1000).unref();
+if (!IS_VERCEL) {
+  setInterval(() => {
+    const now = Date.now();
+    for (const [k, b] of rateBuckets.entries()) {
+      if (b.resetAt < now) rateBuckets.delete(k);
+    }
+  }, 5 * 60 * 1000).unref();
+}
 
 function rateLimit(maxPerMinute: number) {
   return (req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -852,9 +872,29 @@ app.post(
       .replace(/[^a-zA-Z0-9_-]/g, '-')
       .slice(0, 48) || 'media';
     const filename = `${Date.now()}-${baseName}${ext}`;
+    const mediaType = contentType.startsWith('video/') ? 'video' : 'image';
+
+    // On serverless hosts the filesystem is ephemeral: store media in Vercel Blob
+    // when a token is configured, otherwise fall back to the local disk.
+    if (process.env.BLOB_READ_WRITE_TOKEN) {
+      const { put } = await import('@vercel/blob');
+      const blob = await put(`concam/${filename}`, body, {
+        access: 'public',
+        contentType,
+        addRandomSuffix: false,
+      });
+      await addAuditLog(req.adminUser!.email, req.adminUser!.role, 'UPLOAD', 'media', filename, `Téléversement média blob (${mediaType}, ${(body.length / 1024).toFixed(0)} Ko)`);
+      res.json({
+        ok: true,
+        url: blob.url,
+        mediaType,
+        sizeBytes: body.length,
+      });
+      return;
+    }
+
     const targetPath = path.join(uploadsDir, filename);
     fs.writeFileSync(targetPath, body);
-    const mediaType = contentType.startsWith('video/') ? 'video' : 'image';
     await addAuditLog(req.adminUser!.email, req.adminUser!.role, 'UPLOAD', 'media', filename, `Téléversement média (${mediaType}, ${(body.length / 1024).toFixed(0)} Ko)`);
     res.json({
       ok: true,
@@ -1154,10 +1194,13 @@ app.post('/api/admin/backups', requireRole(['admin']), async (req, res) => {
   res.json({ ok: true, backup, backups: listDatabaseBackups() });
 });
 
-app.get('/api/admin/backups/:filename', requireRole(['admin']), (req, res) => {
-  const full = getBackupFilePath(req.params.filename);
-  if (!full) return res.status(404).json({ error: 'Archive introuvable.' });
-  res.download(full, path.basename(full));
+app.get('/api/admin/backups/:filename', requireRole(['admin']), async (req, res) => {
+  const content = await getBackupContent(req.params.filename);
+  if (!content) return res.status(404).json({ error: 'Archive introuvable.' });
+  const cleanName = path.basename(String(req.params.filename || 'backup.json')).replace(/[/\\]/g, '');
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="${cleanName}"`);
+  res.send(content);
 });
 
 app.post('/api/admin/backups/:filename/restore', requireRole(['admin']), async (req, res) => {
@@ -1202,59 +1245,70 @@ app.delete('/api/admin/redirects/:id', requireRole(['admin']), async (req, res) 
   res.json({ ok: true, redirects: await getRedirects() });
 });
 
-// ==================== REAL-TIME VOICE LIVE API WEBSOCKET ====================
-const wss = new WebSocketServer({ noServer: true });
-
-// Gemini Live guard rails: per-IP concurrent connections, connection rate,
-// maximum session duration and inbound message budget. Each session consumes a
-// streaming Live API slot, so unbounded access would be a cost/abuse vector.
-const VOICE_MAX_CONCURRENT_PER_IP = 3;
-const VOICE_MAX_CONNECTIONS_PER_MINUTE = 10;
-const VOICE_MAX_SESSION_MS = 10 * 60 * 1000;
-const VOICE_MAX_INBOUND_MESSAGES = 6000;
-const voiceConnectionsByIp = new Map<string, { count: number }>();
-const voiceConnectionTimestamps = new Map<string, number[]>();
-
-function voiceConnectionAllowed(ip: string): { allowed: boolean; reason?: string } {
-  const now = Date.now();
-  const timestamps = (voiceConnectionTimestamps.get(ip) || []).filter((t) => now - t < 60_000);
-  if (timestamps.length >= VOICE_MAX_CONNECTIONS_PER_MINUTE) {
-    voiceConnectionTimestamps.set(ip, timestamps);
-    return { allowed: false, reason: 'voice_rate_limited' };
-  }
-  timestamps.push(now);
-  voiceConnectionTimestamps.set(ip, timestamps);
-  const entry = voiceConnectionsByIp.get(ip);
-  if (entry && entry.count >= VOICE_MAX_CONCURRENT_PER_IP) {
-    return { allowed: false, reason: 'voice_busy' };
-  }
-  return { allowed: true };
-}
-
-function voiceConnectionOpen(ip: string) {
-  const entry = voiceConnectionsByIp.get(ip) || { count: 0 };
-  entry.count += 1;
-  voiceConnectionsByIp.set(ip, entry);
-}
-
-function voiceConnectionClose(ip: string) {
-  const entry = voiceConnectionsByIp.get(ip);
-  if (entry) {
-    entry.count = Math.max(0, entry.count - 1);
-    if (entry.count === 0) voiceConnectionsByIp.delete(ip);
-  }
-}
-
-server.on('upgrade', (request, socket, head) => {
-  const url = new URL(request.url || '/', `http://${request.headers.host}`);
-  if (url.pathname === '/api/live-voice') {
-    wss.handleUpgrade(request, socket, head, (ws) => {
-      wss.emit('connection', ws, url);
-    });
-  }
+// Unknown API paths must return JSON 404 — registered after all routes so it
+// applies in every runtime (local server and Vercel serverless handler alike).
+app.use('/api', (_req, res) => {
+  res.status(404).json({ error: 'Route API introuvable.' });
 });
 
-wss.on('connection', async (clientWs: WebSocket, url: URL) => {
+// ==================== REAL-TIME VOICE LIVE API WEBSOCKET ====================
+// WebSocket upgrade is impossible on serverless hosts (Vercel): the client's
+// AdvisorWidget automatically falls back to the per-turn HTTP voice mode.
+// This section only runs on the classic local/standalone server.
+
+function attachRealtimeVoice(server: http.Server) {
+  const wss = new WebSocketServer({ noServer: true });
+
+  // Gemini Live guard rails: per-IP concurrent connections, connection rate,
+  // maximum session duration and inbound message budget. Each session consumes a
+  // streaming Live API slot, so unbounded access would be a cost/abuse vector.
+  const VOICE_MAX_CONCURRENT_PER_IP = 3;
+  const VOICE_MAX_CONNECTIONS_PER_MINUTE = 10;
+  const VOICE_MAX_SESSION_MS = 10 * 60 * 1000;
+  const VOICE_MAX_INBOUND_MESSAGES = 6000;
+  const voiceConnectionsByIp = new Map<string, { count: number }>();
+  const voiceConnectionTimestamps = new Map<string, number[]>();
+
+  function voiceConnectionAllowed(ip: string): { allowed: boolean; reason?: string } {
+    const now = Date.now();
+    const timestamps = (voiceConnectionTimestamps.get(ip) || []).filter((t) => now - t < 60_000);
+    if (timestamps.length >= VOICE_MAX_CONNECTIONS_PER_MINUTE) {
+      voiceConnectionTimestamps.set(ip, timestamps);
+      return { allowed: false, reason: 'voice_rate_limited' };
+    }
+    timestamps.push(now);
+    voiceConnectionTimestamps.set(ip, timestamps);
+    const entry = voiceConnectionsByIp.get(ip);
+    if (entry && entry.count >= VOICE_MAX_CONCURRENT_PER_IP) {
+      return { allowed: false, reason: 'voice_busy' };
+    }
+    return { allowed: true };
+  }
+
+  function voiceConnectionOpen(ip: string) {
+    const entry = voiceConnectionsByIp.get(ip) || { count: 0 };
+    entry.count += 1;
+    voiceConnectionsByIp.set(ip, entry);
+  }
+
+  function voiceConnectionClose(ip: string) {
+    const entry = voiceConnectionsByIp.get(ip);
+    if (entry) {
+      entry.count = Math.max(0, entry.count - 1);
+      if (entry.count === 0) voiceConnectionsByIp.delete(ip);
+    }
+  }
+
+  server.on('upgrade', (request, socket, head) => {
+    const url = new URL(request.url || '/', `http://${request.headers.host}`);
+    if (url.pathname === '/api/live-voice') {
+      wss.handleUpgrade(request, socket, head, (ws) => {
+        wss.emit('connection', ws, url);
+      });
+    }
+  });
+
+  wss.on('connection', async (clientWs: WebSocket, url: URL) => {
   const clientIp = (clientWs as unknown as { _socket?: { remoteAddress?: string } })._socket?.remoteAddress || 'unknown';
   const guard = voiceConnectionAllowed(clientIp);
   if (!guard.allowed) {
@@ -1399,35 +1453,50 @@ wss.on('connection', async (clientWs: WebSocket, url: URL) => {
       // Ignore
     }
   });
-});
+  });
+}
 
-// ==================== VITE / STATIC SERVING ====================
+// ==================== LOCAL / STANDALONE SERVER ====================
+// On Vercel the Express app runs as a serverless handler (api/index.ts) and this
+// whole section is skipped: no HTTP listener, no WebSocket, no Vite middleware.
 
-async function startServer() {
+async function startLocalServer() {
+  await dbReady();
+  await ensureDailyBackup().catch(() => {});
+  setInterval(() => {
+    ensureDailyBackup().catch((err) => console.error('Backup interval error:', err));
+  }, 12 * 60 * 60 * 1000).unref();
+
+  const server = http.createServer(app);
+  attachRealtimeVoice(server);
+
   if (process.env.NODE_ENV !== 'production') {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
     app.use(vite.middlewares);
-  } else {
+  } else if (!IS_VERCEL) {
     const distDir = path.join(process.cwd(), 'dist');
     app.use(express.static(distDir, { maxAge: '7d' }));
-    // Unknown API paths must return JSON 404, not the SPA index.html payload.
-    app.use('/api', (_req, res) => {
-      res.status(404).json({ error: 'Route API introuvable.' });
-    });
     app.get('*', (_req, res) => {
       res.sendFile(path.join(distDir, 'index.html'));
     });
   }
+  // NOTE: the /api JSON-404 catch-all and the Vercel rewrites are registered at
+  // module scope and in vercel.json respectively — nothing else needed here.
 
   server.listen(PORT, '0.0.0.0', () => {
     console.log(`CONCAM institutional server running on http://0.0.0.0:${PORT}`);
   });
 }
 
-bootstrap().catch((err) => {
-  console.error('Fatal boot error:', err);
-  process.exit(1);
-});
+if (!IS_VERCEL) {
+  startLocalServer().catch((err) => {
+    console.error('Fatal boot error:', err);
+    process.exit(1);
+  });
+}
+
+export { app };

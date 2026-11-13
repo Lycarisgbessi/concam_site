@@ -6,11 +6,18 @@ const BASE32_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
 
 /**
  * Resolves a persistent cryptographic session secret without falling back to a hardcoded string.
+ * On serverless hosts (Vercel) the filesystem is ephemeral, so SESSION_SECRET (>= 24 chars)
+ * MUST be configured — otherwise each cold start would invalidate admin session cookies.
  */
 export function getOrCreateSessionSecret(): string {
   const envSecret = process.env.SESSION_SECRET?.trim();
   if (envSecret && envSecret.length >= 24) {
     return envSecret;
+  }
+  if (process.env.VERCEL) {
+    throw new Error(
+      'SESSION_SECRET manquant : définissez une variable d’environnement SESSION_SECRET (24 caractères minimum) dans le dashboard Vercel.',
+    );
   }
   const secretFile = path.join(process.cwd(), 'data', '.session_secret');
   fs.mkdirSync(path.dirname(secretFile), { recursive: true });
