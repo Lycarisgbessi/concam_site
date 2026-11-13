@@ -1,0 +1,270 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --color-concam-logo: #931916;
+  --color-concam-primary: #931916;
+  --color-concam-crimson: #A30013;
+  --color-concam-dark: #110D0C;
+  --color-concam-ebony: #1A1312;
+  --color-concam-ivory: #F7F4EF;
+  --color-concam-limestone: #EFEAE1;
+  --color-concam-ink: #181413;
+  --color-concam-muted: #574E4A;
+  --color-concam-border: #DDD5C9;
+  --color-concam-crimson-bright: #E40014;
+  --color-concam-surface: #F5F3F3;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: #181413;
+    background-color: #F7F4EF;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, .font-editorial {
+    font-family: var(--font-serif);
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid #931916;
+    outline-offset: 3px;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Archival editorial plates — crisp solid contrast, zero neon/glassmorphism */
+.archival-plate {
+  background-color: #FFFFFF;
+  border: 1px solid #DDD5C9;
+  box-shadow: 0 12px 34px -22px rgba(24, 20, 19, 0.22);
+}
+
+.archival-plate-warm {
+  background-color: #EFEAE1;
+  border: 1px solid #D8CFC2;
+}
+
+/* Sovereign dark official plates with crisp white hairlines */
+.sovereign-plate {
+  background: linear-gradient(180deg, #181312 0%, #110D0C 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 24px 54px -26px rgba(0, 0, 0, 0.72);
+}
+
+.sovereign-plate-subtle {
+  background-color: #1A1413;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* Solemn animated blood-red link underline sweep */
+.editorial-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.editorial-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, #931916, #E40014);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial-link:hover::after,
+.editorial-link[data-active="true"]::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* Measured ceremonial sheen on primary sovereign CTA buttons */
+.magnetic-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.magnetic-sheen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 24%,
+    rgba(255, 255, 255, 0.22) 48%,
+    rgba(255, 255, 255, 0.32) 52%,
+    transparent 78%
+  );
+  transform: translate3d(-135%, 0, 0);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.magnetic-sheen:hover::before {
+  transform: translate3d(135%, 0, 0);
+}
+
+/* Architectural plate elevation */
+.luxury-card {
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.luxury-card:hover {
+  transform: translate3d(0, -4px, 0);
+  box-shadow: 0 22px 46px -22px rgba(24, 20, 19, 0.28);
+}
+
+/* Ken Burns GPU-only header background animations */
+@keyframes kenburns-pan-zoom {
+  0% {
+    transform: scale3d(1, 1, 1) translate3d(0%, 0%, 0);
+  }
+  100% {
+    transform: scale3d(1.11, 1.11, 1) translate3d(-1.8%, -1.2%, 0);
+  }
+}
+
+@keyframes kenburns-pan-reverse {
+  0% {
+    transform: scale3d(1.1, 1.1, 1) translate3d(1.5%, 1%, 0);
+  }
+  100% {
+    transform: scale3d(1, 1, 1) translate3d(-1%, -0.6%, 0);
+  }
+}
+
+.animate-kenburns-forward {
+  animation: kenburns-pan-zoom 13s cubic-bezier(0.25, 0.1, 0.25, 1) infinite alternate;
+  will-change: transform;
+}
+
+.animate-kenburns-reverse {
+  animation: kenburns-pan-reverse 15s cubic-bezier(0.25, 0.1, 0.25, 1) infinite alternate;
+  will-change: transform;
+}
+
+/* Counter-rotating engraved institutional seal */
+@keyframes seal-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes seal-spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-seal-spin {
+  animation: seal-spin 46s linear infinite;
+  will-change: transform;
+}
+
+.animate-seal-spin-reverse {
+  animation: seal-spin-reverse 62s linear infinite;
+  will-change: transform;
+}
+
+/* Dual-direction continuous horizontal marquees (strictly single-line) */
+@keyframes concam-marquee-ltr {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+@keyframes concam-marquee-rtl {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-concam-marquee {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: max-content;
+  white-space: nowrap;
+  animation: concam-marquee-ltr 38s linear infinite;
+  will-change: transform;
+}
+
+.animate-concam-marquee-reverse {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: max-content;
+  white-space: nowrap;
+  animation: concam-marquee-rtl 34s linear infinite;
+  will-change: transform;
+}
+
+.animate-concam-marquee:hover,
+.animate-concam-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+
+/* Crimson shimmer beam on rule lines */
+@keyframes hairline-beam {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(200%, 0, 0);
+  }
+}
+
+.animate-hairline-beam {
+  animation: hairline-beam 6.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+/* Architectural vertical column ruling on dark headers */
+.editorial-hairline-grid {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.065) 1px, transparent 1px);
+  background-size: 25% 100%;
+}
+
+/* Editorial drop cap for institutional broadsheet reading */
+.editorial-dropcap::first-letter {
+  font-family: var(--font-serif);
+  float: left;
+  font-size: 3.35rem;
+  line-height: 0.86;
+  font-weight: 700;
+  color: #931916;
+  padding-right: 0.55rem;
+  padding-top: 0.2rem;
+}

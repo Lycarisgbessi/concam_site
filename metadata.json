@@ -1,0 +1,10 @@
+{
+  "name": "Remix CONCAM — Agence de Communication \u0026 Marketing (Conakry)",
+  "description": "Site web institutionnel, galerie de réalisations, assistant commercial IA texte et voix, et tableau de bord d\u0027administration de l\u0027agence CONCAM (Com\u0027Com) à Conakry, Guinée.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

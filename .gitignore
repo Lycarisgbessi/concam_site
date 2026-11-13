@@ -1,0 +1,16 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+
+# Local data: PostgreSQL Neon holds the real data; snapshots/uploads stay on the host
+data/
+
+# AI Studio internal artifacts
+.aistudio/
+public/assets/aistudio/
