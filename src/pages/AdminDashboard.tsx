@@ -943,7 +943,7 @@ export function AdminDashboard() {
                           </label>
                           <select
                             id="admin-parallax-intensity"
-                            value={settingsDraft.parallaxIntensity || 'ultra'}
+                            value={settingsDraft.parallaxIntensity || 'cinematic'}
                             onChange={(e) =>
                               setSettingsDraft({
                                 ...settingsDraft,
@@ -1657,7 +1657,7 @@ export function AdminDashboard() {
                                   ['ultra', 'Ultra-Intense'],
                                 ] as const
                               ).map(([val, label]) => {
-                                const active = (settingsDraft.parallaxIntensity || 'ultra') === val;
+                                const active = (settingsDraft.parallaxIntensity || 'cinematic') === val;
                                 return (
                                   <button
                                     key={val}

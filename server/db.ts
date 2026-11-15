@@ -296,6 +296,39 @@ export async function initDatabase(): Promise<void> {
     ]);
   }
 
+  // One-time recalibration (2026-11): the forced "ultra" default from the v3
+  // migration was recalibrated — factors were halved, so "cinematic" becomes the
+  // balanced default. Only downgrades installations still sitting on the forced
+  // ultra; any explicit admin choice made after this point is respected.
+  const recalibrated = await one('SELECT key FROM kv_store WHERE key = $1', [
+    'parallax_recalibration_v4',
+  ]);
+  if (!recalibrated) {
+    const row = await one<{ value: string }>('SELECT value FROM kv_store WHERE key = $1', [
+      'site_settings',
+    ]);
+    if (row) {
+      try {
+        const parsed = JSON.parse(row.value) as SiteSettings;
+        if (parsed.parallaxIntensity === 'ultra') {
+          parsed.parallaxIntensity = 'cinematic';
+          await q('UPDATE kv_store SET value = $1, updated_at = $2 WHERE key = $3', [
+            JSON.stringify(parsed),
+            now,
+            'site_settings',
+          ]);
+        }
+      } catch {
+        // ignore parse errors
+      }
+    }
+    await q('INSERT INTO kv_store (key, value, updated_at) VALUES ($1, $2, $3)', [
+      'parallax_recalibration_v4',
+      '1',
+      now,
+    ]);
+  }
+
   // One-time migration from legacy /src/assets/images/* placeholders to curated /images/real/* photographs
   const realPhotosMigrated = await one('SELECT key FROM kv_store WHERE key = $1', [
     'real_photography_v1',

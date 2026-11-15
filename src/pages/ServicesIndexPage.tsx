@@ -18,6 +18,7 @@ import {
   TiltCard3D,
 } from '../components/MotionPrimitives';
 import { AnimatedPageHeader, LUXURY_HEADER_IMAGES } from '../components/AnimatedPageHeader';
+import { useAutoRotate } from '../hooks/useAutoRotate';
 
 const ROMAN = ['I', 'II', 'III', 'IV'];
 
@@ -30,14 +31,15 @@ export function ServicesIndexPage() {
   const p = (fr: string, en: string) => (lang === 'en' ? en : fr);
   const servicesCount = data?.services.length || 0;
 
-  useEffect(() => {
-    if (paused || servicesCount <= 1) return;
-    const id = window.setInterval(() => {
+
+  // Rotation disciplinée : 6 s, pause au survol / hors écran / au toucher.
+  const carouselRef = useAutoRotate<HTMLDivElement>(
+    () => {
       setSlideDir(1);
       setSlideIdx((prev) => (prev + 1) % servicesCount);
-    }, 4500);
-    return () => window.clearInterval(id);
-  }, [paused, servicesCount]);
+    },
+    { intervalMs: 6000, enabled: !paused && servicesCount > 1 },
+  );
 
   if (!data) return null;
 
@@ -118,6 +120,7 @@ export function ServicesIndexPage() {
           {activeSrv && (
             <ParallaxScroll3DPlate direction={1} tiltX={7} tiltY={5} liftY={44}>
               <div
+                ref={carouselRef}
                 onMouseEnter={() => setPaused(true)}
                 onMouseLeave={() => setPaused(false)}
                 className="space-y-4"

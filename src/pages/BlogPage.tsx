@@ -24,6 +24,7 @@ import {
   TiltCard3D,
 } from '../components/MotionPrimitives';
 import { AnimatedPageHeader, LUXURY_HEADER_IMAGES } from '../components/AnimatedPageHeader';
+import { useAutoRotate } from '../hooks/useAutoRotate';
 
 export function BlogPage() {
   const { slug } = useParams<{ slug?: string }>();
@@ -35,14 +36,14 @@ export function BlogPage() {
   const p = (fr: string, en: string) => (lang === 'en' ? en : fr);
   const postsCount = data?.blogPosts.length || 0;
 
-  useEffect(() => {
-    if (slug || paused || postsCount <= 1) return;
-    const id = window.setInterval(() => {
+  // Rotation disciplinée : 6 s, desktop uniquement, pause au survol / hors écran / au toucher.
+  const carouselRef = useAutoRotate<HTMLDivElement>(
+    () => {
       setPostDir(1);
       setPostIdx((prev) => (prev + 1) % postsCount);
-    }, 5200);
-    return () => window.clearInterval(id);
-  }, [slug, paused, postsCount]);
+    },
+    { intervalMs: 6000, desktopOnly: true, enabled: !slug && !paused && postsCount > 1 },
+  );
 
   if (!data) return null;
 
@@ -196,6 +197,7 @@ export function BlogPage() {
             {data.blogPosts[postIdx] && (
               <ParallaxScroll3DPlate direction={1} tiltX={7} tiltY={5} liftY={42}>
               <div
+                ref={carouselRef}
                 onMouseEnter={() => setPaused(true)}
                 onMouseLeave={() => setPaused(false)}
                 className="space-y-4 pb-12"

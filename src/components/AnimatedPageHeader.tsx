@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAutoRotate } from '../hooks/useAutoRotate';
 import {
   AnimatePresence,
   motion,
@@ -187,16 +188,19 @@ export function AnimatedPageHeader({
     else setInternalIndex(idx);
   };
 
-  useEffect(() => {
-    if (reduced || paused || slides.length <= 1) return;
-    const timer = window.setInterval(() => {
+  // Rotation disciplinée : 6.5 s, pause au survol (existant), pause hors écran
+  // et au toucher (hook) — le hero reste le seul carrousel actif sur mobile.
+  const autoRef = useAutoRotate<HTMLElement>(
+    () => {
       setDirection(1);
-      const next = (activeIdx + 1) % slides.length;
+      const next = (activeIdxRef.current + 1) % slides.length;
       if (onSlideChange) onSlideChange(next);
       else setInternalIndex(next);
-    }, 5000);
-    return () => window.clearInterval(timer);
-  }, [activeIdx, slides.length, reduced, paused, onSlideChange]);
+    },
+    { intervalMs: 6500, enabled: !reduced && !paused && slides.length > 1 },
+  );
+  const activeIdxRef = useRef(activeIdx);
+  activeIdxRef.current = activeIdx;
 
   const currentSlide = slides[activeIdx] || slides[0];
   const hasDeckCard = Boolean(
@@ -205,7 +209,10 @@ export function AnimatedPageHeader({
 
   return (
     <section
-      ref={sectionRef}
+      ref={(el) => {
+        sectionRef.current = el;
+        autoRef.current = el;
+      }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={handlePointerLeave}
       onPointerMove={handlePointerMove}

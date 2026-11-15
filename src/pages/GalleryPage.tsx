@@ -18,6 +18,7 @@ import {
   TiltCard3D,
 } from '../components/MotionPrimitives';
 import { AnimatedPageHeader, LUXURY_HEADER_IMAGES } from '../components/AnimatedPageHeader';
+import { useAutoRotate } from '../hooks/useAutoRotate';
 
 export function GalleryPage() {
   const { data, lang, openQuoteModal } = useSite();
@@ -39,14 +40,14 @@ export function GalleryPage() {
   const featuredList = items.filter((it) => it.featured);
   const reelSource = featuredList.length > 0 ? featuredList : items;
 
-  useEffect(() => {
-    if (reelPaused || reelSource.length <= 1) return;
-    const id = window.setInterval(() => {
+  // Rotation disciplinée : 6 s, desktop uniquement, pause au survol / hors écran / au toucher.
+  const reelRef = useAutoRotate<HTMLDivElement>(
+    () => {
       setReelDir(1);
       setReelIdx((prev) => (prev + 1) % reelSource.length);
-    }, 4800);
-    return () => window.clearInterval(id);
-  }, [reelPaused, reelSource.length]);
+    },
+    { intervalMs: 6000, desktopOnly: true, enabled: !reelPaused && reelSource.length > 1 },
+  );
 
   useEffect(() => {
     const targetId = searchParams.get('item');
@@ -130,6 +131,7 @@ export function GalleryPage() {
             {reelSource[reelIdx] && (
               <ParallaxScroll3DPlate direction={1} tiltX={7} tiltY={5} liftY={44}>
               <div
+                ref={reelRef}
                 onMouseEnter={() => setReelPaused(true)}
                 onMouseLeave={() => setReelPaused(false)}
                 className="space-y-4"

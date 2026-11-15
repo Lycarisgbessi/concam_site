@@ -14,3 +14,6 @@ data/
 # AI Studio internal artifacts
 .aistudio/
 public/assets/aistudio/
+
+.vercel
+.env*

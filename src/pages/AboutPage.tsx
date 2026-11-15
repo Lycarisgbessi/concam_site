@@ -23,6 +23,7 @@ import {
   TiltCard3D,
 } from '../components/MotionPrimitives';
 import { AnimatedPageHeader, LUXURY_HEADER_IMAGES } from '../components/AnimatedPageHeader';
+import { useAutoRotate } from '../hooks/useAutoRotate';
 
 const ROMAN = ['I', 'II', 'III', 'IV'];
 
@@ -34,14 +35,14 @@ export function AboutPage() {
   const p = (fr: string, en: string) => (lang === 'en' ? en : fr);
 
   const timelineLen = data?.pageContent.aboutTimeline.length || 0;
-  useEffect(() => {
-    if (milestonePaused || timelineLen <= 1) return;
-    const id = window.setInterval(() => {
+  // Rotation disciplinée : 6 s, desktop uniquement, pause au survol / hors écran / au toucher.
+  const timelineRef = useAutoRotate<HTMLElement>(
+    () => {
       setMilestoneDir(1);
       setActiveMilestone((prev) => (prev + 1) % timelineLen);
-    }, 4500);
-    return () => window.clearInterval(id);
-  }, [milestonePaused, timelineLen]);
+    },
+    { intervalMs: 6000, desktopOnly: true, enabled: !milestonePaused && timelineLen > 1 },
+  );
 
   if (!data) return null;
   const { settings, pageContent } = data;
@@ -164,6 +165,7 @@ export function AboutPage() {
       {/* Interactive Auto-Advancing Timeline Carousel on Warm Limestone */}
       <ParallaxCurtainSection zIndex={25} topAccent>
         <section
+          ref={timelineRef}
           className="relative py-20 lg:py-24 bg-limestone text-ink border-b border-hairline overflow-x-clip"
           onMouseEnter={() => setMilestonePaused(true)}
           onMouseLeave={() => setMilestonePaused(false)}

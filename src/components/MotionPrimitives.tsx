@@ -24,10 +24,10 @@ export function isFinePointer(): boolean {
 }
 
 const PARALLAX_INTENSITY_FACTOR: Record<ParallaxIntensity, number> = {
-  subtle: 0.7,
-  cinematic: 1.4,
-  intense: 2.1,
-  ultra: 2.9,
+  subtle: 0.35,
+  cinematic: 0.8,
+  intense: 1.5,
+  ultra: 2.4,
 };
 
 export function useParallaxScale(): {
@@ -50,10 +50,12 @@ export function useParallaxScale(): {
     return () => mq.removeEventListener('change', update);
   }, []);
 
-  const intensity: ParallaxIntensity = data?.settings.parallaxIntensity || 'ultra';
+  const intensity: ParallaxIntensity = data?.settings.parallaxIntensity || 'cinematic';
   const enabled = !prefersReducedOrDataSaver() && data?.settings.animationsEnabled !== false;
-  const cmsFactor = PARALLAX_INTENSITY_FACTOR[intensity] ?? 2.9;
-  const viewportFactor = isMobile ? 0.78 : 1.0;
+  const cmsFactor = PARALLAX_INTENSITY_FACTOR[intensity] ?? 0.8;
+  // Mobile : atténuation forte (0.40×, conforme au plan de design d'origine) —
+  // le scroll tactile a de l'inertie ; une parallaxe amplifiée y devient flottante.
+  const viewportFactor = isMobile ? 0.4 : 1.0;
 
   return {
     enabled,
@@ -493,6 +495,17 @@ export function MagneticWrapper({ children, className = '', strength = 0.22 }: M
 
 const PARALLAX_SPRING = { stiffness: 320, damping: 28, mass: 0.16 };
 
+/**
+ * Ressort adapté au pointeur : sur mobile (scroll tactile avec inertie), on
+ * durcit l'amortissement pour supprimer tout dépassement — l'élément s'arrête
+ * net avec le doigt au lieu de « flotter » après le relâché.
+ */
+function parallaxSpringConfig() {
+  const isMobile =
+    typeof window !== 'undefined' && window.matchMedia?.('(max-width: 767px)').matches;
+  return isMobile ? { stiffness: 420, damping: 42, mass: 0.2 } : PARALLAX_SPRING;
+}
+
 function ParallaxLayerActive({
   children,
   offset,
@@ -517,7 +530,7 @@ function ParallaxLayerActive({
     target: ref,
     offset: ['start end', 'end start'],
   });
-  const smoothProgress = useSpring(scrollYProgress, PARALLAX_SPRING);
+  const smoothProgress = useSpring(scrollYProgress, parallaxSpringConfig());
   const y = useTransform(smoothProgress, [0, 1], [offset, -offset]);
   const x = useTransform(smoothProgress, [0, 1], [xOffset || 0, -(xOffset || 0)]);
   const scale = useTransform(smoothProgress, [0, 0.5, 1], scaleRange || [1, 1, 1]);
@@ -609,7 +622,7 @@ function ParallaxOppositeSplitActive({
     target: ref,
     offset: ['start end', 'end start'],
   });
-  const smoothProgress = useSpring(scrollYProgress, PARALLAX_SPRING);
+  const smoothProgress = useSpring(scrollYProgress, parallaxSpringConfig());
   const leftY = useTransform(smoothProgress, [0, 0.5, 1], [amplitude, 0, -amplitude]);
   const rightY = useTransform(smoothProgress, [0, 0.5, 1], [-amplitude * 1.18, 0, amplitude * 1.18]);
 
@@ -645,7 +658,8 @@ export function ParallaxOppositeSplit({
 }) {
   const { enabled, multiplier, isMobile } = useParallaxScale();
 
-  if (!enabled) {
+  // Mobile : colonnes ancrées — le texte ne doit pas glisser sous le doigt.
+  if (!enabled || isMobile) {
     return (
       <div className={className}>
         <div className={leftClassName}>{left}</div>
@@ -654,7 +668,7 @@ export function ParallaxOppositeSplit({
     );
   }
 
-  const effectiveAmp = isMobile ? amplitude * 0.52 * multiplier : amplitude * multiplier;
+  const effectiveAmp = amplitude * multiplier;
 
   return (
     <ParallaxOppositeSplitActive
@@ -696,7 +710,7 @@ function ParallaxColumnStaggerActive({
     target: ref,
     offset: ['start end', 'end start'],
   });
-  const smoothProgress = useSpring(scrollYProgress, PARALLAX_SPRING);
+  const smoothProgress = useSpring(scrollYProgress, parallaxSpringConfig());
   const y = useTransform(smoothProgress, [0, 0.5, 1], [offset, 0, -offset]);
   const rotateX = useTransform(smoothProgress, [0, 0.42, 0.58, 1], [5, 0, 0, -5]);
   const rotateY = useTransform(smoothProgress, [0, 0.42, 0.58, 1], [tiltSign * 4, 0, 0, -tiltSign * 4]);
@@ -730,10 +744,12 @@ export function ParallaxColumnStagger({
   amplitude?: number;
   className?: string;
 }) {
-  const { enabled, multiplier } = useParallaxScale();
+  const { enabled, multiplier, isMobile } = useParallaxScale();
   const factor = getColumnVelocityFactor(index, columns);
 
-  if (!enabled) {
+  // Mobile : vitesse uniforme — les grilles multi-vitesses n'ont de sens qu'au
+  // pointeur (grand viewport) ; sur téléphone elles semblent désordonnées.
+  if (!enabled || isMobile) {
     return <div className={`h-full ${className}`}>{children}</div>;
   }
 
@@ -840,7 +856,7 @@ function ParallaxBackdropPlateActive({
     target: ref,
     offset: ['start end', 'end start'],
   });
-  const smoothProgress = useSpring(scrollYProgress, PARALLAX_SPRING);
+  const smoothProgress = useSpring(scrollYProgress, parallaxSpringConfig());
   const y = useTransform(smoothProgress, [0, 1], [-offset, offset]);
   const xDrift = variant === 'crimson-bands' || variant === 'editorial-lines' ? offset * 0.42 : offset * 0.16;
   const x = useTransform(smoothProgress, [0, 1], [-xDrift, xDrift]);
@@ -911,7 +927,7 @@ function ParallaxSealDriftActive({
     target: ref,
     offset: ['start end', 'end start'],
   });
-  const smoothProgress = useSpring(scrollYProgress, PARALLAX_SPRING);
+  const smoothProgress = useSpring(scrollYProgress, parallaxSpringConfig());
   const y = useTransform(smoothProgress, [0, 1], [offset, -offset]);
   const rotate = useTransform(smoothProgress, [0, 1], [-rotateDeg, rotateDeg]);
   const rotateY = useTransform(smoothProgress, [0, 0.5, 1], [-18, 0, 18]);
@@ -979,7 +995,7 @@ function ParallaxImageFrameActive({
     target: ref,
     offset: ['start end', 'end start'],
   });
-  const smoothProgress = useSpring(scrollYProgress, PARALLAX_SPRING);
+  const smoothProgress = useSpring(scrollYProgress, parallaxSpringConfig());
   const y = useTransform(smoothProgress, [0, 1], [`-${shiftPct}%`, `${shiftPct}%`]);
   const scale = useTransform(smoothProgress, [0, 0.5, 1], scaleRange);
 
@@ -1039,7 +1055,7 @@ function ParallaxHorizontalTitleActive({
     target: ref,
     offset: ['start end', 'end start'],
   });
-  const smoothProgress = useSpring(scrollYProgress, PARALLAX_SPRING);
+  const smoothProgress = useSpring(scrollYProgress, parallaxSpringConfig());
   const x = useTransform(smoothProgress, [0, 0.42, 0.58, 1], [-drift, 0, 0, drift]);
 
   return (
@@ -1098,7 +1114,7 @@ function ParallaxHorizontalBandActive({
     target: ref,
     offset: ['start end', 'end start'],
   });
-  const smoothProgress = useSpring(scrollYProgress, PARALLAX_SPRING);
+  const smoothProgress = useSpring(scrollYProgress, parallaxSpringConfig());
   const xPrimary = useTransform(smoothProgress, [0, 1], [-travel, travel]);
   const xSecondary = useTransform(smoothProgress, [0, 1], [travel * 0.85, -travel * 0.85]);
 
@@ -1226,7 +1242,7 @@ function ParallaxCurtainSectionActive({
     target: ref,
     offset: ['start end', 'start start'],
   });
-  const smoothProgress = useSpring(scrollYProgress, PARALLAX_SPRING);
+  const smoothProgress = useSpring(scrollYProgress, parallaxSpringConfig());
   const scale = useTransform(smoothProgress, [0, 0.85, 1], [0.975, 1, 1]);
 
   return (
@@ -1258,9 +1274,11 @@ export function ParallaxCurtainSection({
   topAccent?: boolean;
   className?: string;
 }) {
-  const { enabled } = useParallaxScale();
+  const { enabled, isMobile } = useParallaxScale();
 
-  if (!enabled) {
+  // Mobile : sections à plat, sans chevauchement en rideau — les marges
+  // négatives pensées pour un grand écran avalent le viewport d'un téléphone.
+  if (!enabled || isMobile) {
     return (
       <div style={{ zIndex }} className={`relative ${className}`}>
         {children}
@@ -1293,7 +1311,7 @@ function ParallaxScroll3DPlateActive({
     target: ref,
     offset: ['start end', 'end start'],
   });
-  const smoothProgress = useSpring(scrollYProgress, PARALLAX_SPRING);
+  const smoothProgress = useSpring(scrollYProgress, parallaxSpringConfig());
   const y = useTransform(smoothProgress, [0, 0.5, 1], [liftY, 0, -liftY]);
   const rotateX = useTransform(smoothProgress, [0, 0.4, 0.6, 1], [tiltX, 0, 0, -tiltX]);
   const rotateY = useTransform(smoothProgress, [0, 0.4, 0.6, 1], [tiltY, 0, 0, -tiltY]);
@@ -1365,7 +1383,7 @@ function ParallaxStackCardItem({
     target: ref,
     offset: ['start 25%', 'end start'],
   });
-  const smoothProgress = useSpring(scrollYProgress, PARALLAX_SPRING);
+  const smoothProgress = useSpring(scrollYProgress, parallaxSpringConfig());
   const targetMinScale = 1 - Math.max(0, total - 1 - index) * 0.032;
   const scale = useTransform(smoothProgress, [0, 1], [1, targetMinScale]);
   const rotateX = useTransform(smoothProgress, [0, 1], [0, -2.2]);
@@ -1403,9 +1421,11 @@ export function ParallaxStackDeck({
   renderItem: (index: number) => React.ReactNode;
   className?: string;
 }) {
-  const { enabled } = useParallaxScale();
+  const { enabled, isMobile } = useParallaxScale();
 
-  if (!enabled) {
+  // Mobile : pile linéaire, sans épinglage — l'épinglage conçu pour un viewport
+  // haut monopolise l'écran d'un téléphone et fait « sauter » les transitions.
+  if (!enabled || isMobile) {
     return (
       <div className={`space-y-14 ${className}`}>
         {items.map((_, idx) => (
@@ -1448,7 +1468,7 @@ function ParallaxStickySplitActive({
     target: ref,
     offset: ['start start', 'end end'],
   });
-  const smoothProgress = useSpring(scrollYProgress, PARALLAX_SPRING);
+  const smoothProgress = useSpring(scrollYProgress, parallaxSpringConfig());
   const progressScale = useTransform(smoothProgress, [0, 1], [0.08, 1]);
   const stackY = useTransform(smoothProgress, [0, 1], [amplitude, -amplitude]);
 

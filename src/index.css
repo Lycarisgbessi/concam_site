@@ -182,6 +182,35 @@
   }
 }
 
+/* Mobile : zoom Ken Burns réduit (1.06 au lieu de 1.11) — amplitude discrète
+   qui ne « respire » pas sous le pouce. */
+@keyframes kenburns-pan-zoom-soft {
+  0% {
+    transform: scale3d(1, 1, 1) translate3d(0%, 0%, 0);
+  }
+  100% {
+    transform: scale3d(1.06, 1.06, 1) translate3d(-1.2%, -0.8%, 0);
+  }
+}
+
+@keyframes kenburns-pan-reverse-soft {
+  0% {
+    transform: scale3d(1.06, 1.06, 1) translate3d(1%, 0.7%, 0);
+  }
+  100% {
+    transform: scale3d(1, 1, 1) translate3d(-0.8%, -0.5%, 0);
+  }
+}
+
+@media (max-width: 767px) {
+  .animate-kenburns-forward {
+    animation-name: kenburns-pan-zoom-soft;
+  }
+  .animate-kenburns-reverse {
+    animation-name: kenburns-pan-reverse-soft;
+  }
+}
+
 .animate-kenburns-forward {
   animation: kenburns-pan-zoom 13s cubic-bezier(0.25, 0.1, 0.25, 1) infinite alternate;
   will-change: transform;

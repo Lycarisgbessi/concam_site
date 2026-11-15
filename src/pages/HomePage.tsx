@@ -35,6 +35,7 @@ import {
   TiltCard3D,
 } from '../components/MotionPrimitives';
 import { AnimatedPageHeader, LUXURY_HEADER_IMAGES } from '../components/AnimatedPageHeader';
+import { useAutoRotate } from '../hooks/useAutoRotate';
 import type { MediaHeadline, ServiceItem } from '../types/concam';
 
 const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI'];
@@ -43,19 +44,17 @@ function ServiceOfferingTicker({ service, lang }: { service: ServiceItem; lang: 
   const [idx, setIdx] = useState(0);
   const offerings = service.offerings || [];
 
-  useEffect(() => {
-    if (offerings.length <= 1) return;
-    const id = window.setInterval(() => {
-      setIdx((prev) => (prev + 1) % offerings.length);
-    }, 3600);
-    return () => window.clearInterval(id);
-  }, [offerings.length]);
+  // Rotation disciplinée : 7 s, desktop uniquement, pause hors écran / au toucher.
+  const tickerRef = useAutoRotate<HTMLDivElement>(
+    () => setIdx((prev) => (prev + 1) % offerings.length),
+    { intervalMs: 7000, desktopOnly: true, enabled: offerings.length > 1 },
+  );
 
   if (offerings.length === 0) return null;
   const active = offerings[idx] || offerings[0];
 
   return (
-    <div className="archival-plate-warm rounded-[4px] px-4 py-3.5 overflow-hidden">
+    <div ref={tickerRef} className="archival-plate-warm rounded-[4px] px-4 py-3.5 overflow-hidden">
       <div className="flex items-center justify-between text-[11px] font-sans font-semibold uppercase tracking-[0.14em] text-accent mb-1.5">
         <span>{lang === 'en' ? 'Active Deliverable' : 'Prestation dédiée'}</span>
         <span className="tabular-nums font-serif text-xs">
@@ -110,33 +109,29 @@ export function HomePage() {
       .catch(() => {});
   }, []);
 
-  useEffect(() => {
-    if (carouselPaused || headlines.length <= 1) return;
-    const id = window.setInterval(() => {
-      setCarouselIdx((prev) => (prev + 1) % headlines.length);
-    }, 4800);
-    return () => window.clearInterval(id);
-  }, [carouselPaused, headlines.length]);
-
   const servicesCount = data?.services.length || 0;
-  useEffect(() => {
-    if (srvPaused || servicesCount <= 1) return;
-    const id = window.setInterval(() => {
+  const featuredGalleryCount = data?.galleryItems.filter((g) => g.featured).slice(0, 5).length || 0;
+
+  // Rotations disciplinées : rythme unique 6 s, pause au survol (états existants),
+  // pause hors écran / au toucher ; dépêches et reel galerie en desktop uniquement.
+  const mediaRef = useAutoRotate<HTMLElement>(
+    () => setCarouselIdx((prev) => (prev + 1) % Math.max(headlines.length, 1)),
+    { intervalMs: 6000, desktopOnly: true, enabled: !carouselPaused && headlines.length > 1 },
+  );
+  const servicesRef = useAutoRotate<HTMLElement>(
+    () => {
       setSrvDir(1);
       setSrvSlideIdx((prev) => (prev + 1) % servicesCount);
-    }, 4600);
-    return () => window.clearInterval(id);
-  }, [srvPaused, servicesCount]);
-
-  const featuredGalleryCount = data?.galleryItems.filter((g) => g.featured).slice(0, 5).length || 0;
-  useEffect(() => {
-    if (galPaused || featuredGalleryCount <= 1) return;
-    const id = window.setInterval(() => {
+    },
+    { intervalMs: 6000, enabled: !srvPaused && servicesCount > 1 },
+  );
+  const galleryRef = useAutoRotate<HTMLDivElement>(
+    () => {
       setGalDir(1);
       setGalSlideIdx((prev) => (prev + 1) % featuredGalleryCount);
-    }, 5000);
-    return () => window.clearInterval(id);
-  }, [galPaused, featuredGalleryCount]);
+    },
+    { intervalMs: 6000, desktopOnly: true, enabled: !galPaused && featuredGalleryCount > 1 },
+  );
 
   if (!data) {
     return (
@@ -341,6 +336,7 @@ export function HomePage() {
         return (
           <section
             key="services"
+            ref={servicesRef}
             style={{ zIndex: 25 }}
             className="relative py-24 lg:py-28 bg-page text-ink overflow-x-clip border-t-2 border-[#931916] shadow-[0_-28px_72px_-12px_rgba(17,13,12,0.42)]"
           >
@@ -775,7 +771,10 @@ export function HomePage() {
           headlines.length > 0 ? [...headlines, ...headlines, ...headlines] : [];
         return (
           <ParallaxCurtainSection key="media_hub" zIndex={35} topAccent>
-            <section className="relative pt-20 lg:pt-28 bg-limestone text-ink border-b border-hairline overflow-x-clip">
+            <section
+              ref={mediaRef}
+              className="relative pt-20 lg:pt-28 bg-limestone text-ink border-b border-hairline overflow-x-clip"
+            >
               <ParallaxBackdropPlate variant="editorial-lines" offset={108} />
             <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-12 relative z-10">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -1033,7 +1032,7 @@ export function HomePage() {
 
       case 'gallery':
         return (
-          <div key="gallery" style={{ zIndex: 40 }} className="relative shadow-[0_-28px_72px_-12px_rgba(17,13,12,0.45)] border-t-2 border-[#931916]">
+          <div key="gallery" ref={galleryRef} style={{ zIndex: 40 }} className="relative shadow-[0_-28px_72px_-12px_rgba(17,13,12,0.45)] border-t-2 border-[#931916]">
             <ParallaxHorizontalBand
               tone="light"
               travel={175}
