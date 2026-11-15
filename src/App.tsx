@@ -25,38 +25,85 @@ const UnsubscribePage = lazy(() => import('./pages/UnsubscribePage').then((m) =>
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard').then((m) => ({ default: m.AdminDashboard })));
 
 /** Écran d'attente neutre pendant le chargement d'un segment de route :
- *  fond de page du thème actif, sans flash blanc ni saut de mise en page. */
+ *  fond du thème actif + lueur éditoriale discrète, sans flash ni saut. */
 function RouteFallback() {
   return (
     <div
       aria-hidden="true"
-      style={{ minHeight: '60vh', background: 'var(--c-page, #F7F4EF)' }}
-    />
+      style={{ minHeight: '55vh', background: 'var(--c-page, #F7F4EF)' }}
+      className="relative overflow-hidden"
+    >
+      <div
+        style={{
+          position: 'absolute',
+          inset: '18% 12%',
+          background: 'linear-gradient(100deg, transparent 30%, var(--c-hairline, #DDD5C9) 50%, transparent 70%)',
+          opacity: 0.25,
+          animation: 'concam-fallback-sweep 1.2s ease-in-out infinite',
+        }}
+      />
+    </div>
   );
 }
 
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // 'instant' est crucial : le CSS global applique scroll-behavior:smooth,
+    // qui transformerait ce reset en long défilement animé à chaque navigation
+    // (source majeure de la sensation de navigation « saccadée »).
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
   }, [pathname]);
   return null;
+}
+
+/** Précharge tous les segments de routes pendant l'inactivité : la première
+ *  navigation vers une page devient instantanée (chunk déjà en cache), ce qui
+ *  supprime l'impression de « plantage » au premier clic sur un lien. */
+function useRoutePreload() {
+  useEffect(() => {
+    const preload = () => {
+      void Promise.all([
+        import('./pages/HomePage'),
+        import('./pages/AboutPage'),
+        import('./pages/ServicesIndexPage'),
+        import('./pages/ServiceDetailPage'),
+        import('./pages/PresseEditionPage'),
+        import('./pages/GalleryPage'),
+        import('./pages/BlogPage'),
+        import('./pages/ContactPage'),
+        import('./pages/SearchPage'),
+        import('./pages/UnsubscribePage'),
+        import('./pages/AdminDashboard'),
+      ]).catch(() => {});
+    };
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+    if (typeof w.requestIdleCallback === 'function') {
+      w.requestIdleCallback(preload, { timeout: 2500 });
+    } else {
+      const t = window.setTimeout(preload, 1800);
+      return () => window.clearTimeout(t);
+    }
+  }, []);
 }
 
 function PublicRoutes() {
   const location = useLocation();
   const reduced = prefersReducedOrDataSaver();
+  useRoutePreload();
 
   return (
     <Layout>
       <Suspense fallback={<RouteFallback />}>
         <AnimatePresence mode="wait" initial={false}>
+          {/* Transition resserrée : sortie en fondu pur très bref (0.15 s),
+              entrée douce 0.26 s — la navigation paraît immédiate. */}
           <motion.div
             key={location.pathname}
-            initial={reduced ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduced ? undefined : { opacity: 0, y: -10 }}
-            transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
+            initial={reduced ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={reduced ? undefined : { opacity: 0, transition: { duration: 0.15 } }}
+            transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
           >
             <Routes location={location}>
             {/* French Default Routes */}

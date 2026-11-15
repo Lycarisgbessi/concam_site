@@ -581,7 +581,7 @@ export function ParallaxLayer({
   rotateYRange?: [number, number, number];
   className?: string;
 }) {
-  const { enabled, multiplier } = useParallaxScale();
+  const { enabled, multiplier, isMobile } = useParallaxScale();
 
   if (!enabled) {
     return <div className={className}>{children}</div>;
@@ -890,9 +890,9 @@ export function ParallaxBackdropPlate({
   offset?: number;
   className?: string;
 }) {
-  const { enabled, multiplier } = useParallaxScale();
+  const { enabled, multiplier, isMobile } = useParallaxScale();
 
-  if (!enabled) {
+  if (!enabled || isMobile) {
     return (
       <div aria-hidden="true" className={`pointer-events-none absolute inset-0 overflow-hidden z-0 ${className}`}>
         <BackdropPatternContent variant={variant} />
@@ -958,9 +958,9 @@ export function ParallaxSealDrift({
   rotateDeg?: number;
   className?: string;
 }) {
-  const { enabled, multiplier } = useParallaxScale();
+  const { enabled, multiplier, isMobile } = useParallaxScale();
 
-  if (!enabled) {
+  if (!enabled || isMobile) {
     return (
       <div className={`inline-block ${className}`}>
         <InstitutionalSeal size={size} tone={tone} />
@@ -1020,9 +1020,9 @@ export function ParallaxImageFrame({
   shiftPct?: number;
   className?: string;
 }) {
-  const { enabled, multiplier } = useParallaxScale();
+  const { enabled, multiplier, isMobile } = useParallaxScale();
 
-  if (!enabled) {
+  if (!enabled || isMobile) {
     return <div className={`relative w-full h-full overflow-hidden ${className}`}>{children}</div>;
   }
 
@@ -1083,7 +1083,7 @@ export function ParallaxHorizontalTitle({
 }) {
   const { enabled, multiplier, isMobile } = useParallaxScale();
 
-  if (!enabled) {
+  if (!enabled || isMobile) {
     return <div className={className}>{children}</div>;
   }
 
@@ -1189,7 +1189,7 @@ export function ParallaxHorizontalBand({
   travel?: number;
   className?: string;
 }) {
-  const { enabled, multiplier } = useParallaxScale();
+  const { enabled, multiplier, isMobile } = useParallaxScale();
 
   if (!enabled) {
     const bgClass =
@@ -1349,7 +1349,7 @@ export function ParallaxScroll3DPlate({
 }) {
   const { enabled, multiplier, isMobile } = useParallaxScale();
 
-  if (!enabled) {
+  if (!enabled || isMobile) {
     return <div className={className}>{children}</div>;
   }
 

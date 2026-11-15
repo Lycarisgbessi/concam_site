@@ -280,7 +280,7 @@ export function AnimatedPageHeader({
                 className={`w-full h-full object-cover ${
                   activeIdx % 2 === 0 ? 'animate-kenburns-forward' : 'animate-kenburns-reverse'
                 }`}
-              />
+               decoding="async" />
             )}
           </motion.div>
         </AnimatePresence>
@@ -469,7 +469,7 @@ export function AnimatedPageHeader({
                           alt={lang === 'en' ? currentSlide.cardTitleEn || '' : currentSlide.cardTitleFr || ''}
                           referrerPolicy="no-referrer"
                           className="w-full h-full object-cover"
-                        />
+                         decoding="async" />
                       </div>
                       <div className="space-y-2 min-w-0 flex-1">
                         <h2 className="font-serif text-xl sm:text-2xl font-bold text-white leading-snug">
