@@ -125,7 +125,7 @@ export function SearchOverlay() {
             <div className="max-h-[60vh] overflow-y-auto divide-y divide-hairline">
               {!query.trim() ? (
                 <div className="p-6 text-xs text-muted space-y-3">
-                  <p className="uppercase tracking-[0.16em] font-semibold text-[#931916]">
+                  <p className="uppercase tracking-[0.16em] font-semibold text-accent">
                     {p('Recherches fréquentes', 'Suggested topics')}
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -168,20 +168,20 @@ export function SearchOverlay() {
                         alt=""
                         referrerPolicy="no-referrer"
                         className="w-14 h-12 object-cover rounded-[4px] border border-hairline shrink-0 hidden sm:block"
-                      />
+                       loading="lazy" decoding="async" />
                     )}
                     <div className="min-w-0 flex-1 space-y-1">
-                      <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-[#931916] font-semibold">
+                      <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-accent font-semibold">
                         <span>{typeLabel(item.type)}</span>
                         <span className="text-faint">·</span>
                         <span className="text-muted truncate">{item.subtitle}</span>
                       </div>
-                      <p className="font-serif text-lg font-bold text-ink group-hover:text-[#931916] transition-colors truncate">
+                      <p className="font-serif text-lg font-bold text-ink group-hover:text-accent transition-colors truncate">
                         {item.title}
                       </p>
                       <p className="text-xs text-muted line-clamp-1">{item.excerpt}</p>
                     </div>
-                    <ArrowUpRight className="w-4 h-4 text-[#931916] shrink-0 mt-1 opacity-60 group-hover:opacity-100" />
+                    <ArrowUpRight className="w-4 h-4 text-accent shrink-0 mt-1 opacity-60 group-hover:opacity-100" />
                   </Link>
                 ))
               )}
@@ -195,7 +195,7 @@ export function SearchOverlay() {
                 <button
                   type="button"
                   onClick={() => goFullSearch({ preventDefault: () => {} } as React.FormEvent)}
-                  className="font-semibold text-[#931916] hover:underline cursor-pointer"
+                  className="font-semibold text-accent hover:underline cursor-pointer"
                 >
                   {p(`Voir tous les résultats (${results.length})`, `View all results (${results.length})`)}
                 </button>

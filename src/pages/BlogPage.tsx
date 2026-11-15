@@ -52,7 +52,7 @@ export function BlogPage() {
       return (
         <div className="max-w-4xl mx-auto px-4 py-32 text-center space-y-4 text-ink">
           <h1 className="font-serif text-3xl font-bold">{p('Article introuvable', 'Article not found')}</h1>
-          <Link to={p('/actualites-conseils', '/en/insights')} className="text-[#931916] underline">
+          <Link to={p('/actualites-conseils', '/en/insights')} className="text-accent underline">
             {p('Retour aux articles', 'Back to insights')}
           </Link>
         </div>
@@ -98,7 +98,7 @@ export function BlogPage() {
           <div className="max-w-2xl mx-auto px-4 sm:px-6 space-y-10 relative z-10">
             <Link
               to={p('/actualites-conseils', '/en/insights')}
-              className="editorial-link inline-flex items-center gap-1.5 text-xs font-semibold text-[#931916]"
+              className="editorial-link inline-flex items-center gap-1.5 text-xs font-semibold text-accent"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>{p('Tous les articles', 'All insights')}</span>
@@ -202,7 +202,7 @@ export function BlogPage() {
               >
               <div className="flex items-center justify-between gap-4">
                 <ParallaxHorizontalTitle direction={-1} distance={20}>
-                  <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                  <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                     {p('Sélection éditoriale dynamique', 'Featured Insights Carousel')}
                   </p>
                 </ParallaxHorizontalTitle>
@@ -218,7 +218,7 @@ export function BlogPage() {
                         setPostIdx((i) => (i - 1 + data.blogPosts.length) % data.blogPosts.length);
                       }}
                       aria-label={p('Article précédent', 'Previous post')}
-                      className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                      className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
@@ -229,7 +229,7 @@ export function BlogPage() {
                         setPostIdx((i) => (i + 1) % data.blogPosts.length);
                       }}
                       aria-label={p('Article suivant', 'Next post')}
-                      className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                      className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
                     >
                       <ChevronRight className="w-4 h-4" />
                     </button>
@@ -255,13 +255,13 @@ export function BlogPage() {
                           alt={lang === 'en' ? data.blogPosts[postIdx].titleEn : data.blogPosts[postIdx].titleFr}
                           referrerPolicy="no-referrer"
                           className="w-full h-full object-cover"
-                        />
+                         loading="lazy" decoding="async" />
                       </ParallaxImageFrame>
                     </div>
                     <div className="lg:col-span-6 p-7 sm:p-10 flex flex-col justify-between gap-5">
                       <div className="space-y-3">
                         <div className="flex items-center gap-2 text-xs text-muted tabular-nums">
-                          <span className="font-semibold text-[#931916] uppercase tracking-wider">
+                          <span className="font-semibold text-accent uppercase tracking-wider">
                             {lang === 'en' ? data.blogPosts[postIdx].categoryEn : data.blogPosts[postIdx].categoryFr}
                           </span>
                           <span>·</span>
@@ -282,7 +282,7 @@ export function BlogPage() {
                             ? `/en/insights/${data.blogPosts[postIdx].slug}`
                             : `/actualites-conseils/${data.blogPosts[postIdx].slug}`
                         }
-                        className="editorial-link group inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-ink w-fit"
+                        className="editorial-link group inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-ink w-fit"
                       >
                         <span>{p('Lire le dossier complet', 'Read Full Article')}</span>
                         <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -328,7 +328,7 @@ export function BlogPage() {
                             alt={lang === 'en' ? leadPost.titleEn : leadPost.titleFr}
                             referrerPolicy="no-referrer"
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-                          />
+                           loading="lazy" decoding="async" />
                         </ClipCurtainReveal>
                       </ParallaxImageFrame>
                     </Link>
@@ -338,7 +338,7 @@ export function BlogPage() {
               right={
                 <RevealBlock preset="slide-right" delay={0.08} className="space-y-4">
                   <div className="flex items-center gap-2 text-xs text-muted tabular-nums">
-                    <span className="font-semibold text-[#931916] uppercase tracking-wider">
+                    <span className="font-semibold text-accent uppercase tracking-wider">
                       {lang === 'en' ? leadPost.categoryEn : leadPost.categoryFr}
                     </span>
                     <span>·</span>
@@ -358,7 +358,7 @@ export function BlogPage() {
                   </p>
                   <Link
                     to={lang === 'en' ? `/en/insights/${leadPost.slug}` : `/actualites-conseils/${leadPost.slug}`}
-                    className="editorial-link group inline-flex items-center gap-2 text-sm font-semibold text-[#931916] pt-2"
+                    className="editorial-link group inline-flex items-center gap-2 text-sm font-semibold text-accent pt-2"
                   >
                     <span>{p('Lire le dossier complet', 'Read Full Article')}</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -396,7 +396,7 @@ export function BlogPage() {
             stickyContent={
               <div className="archival-plate rounded-[4px] p-7 space-y-5">
                 <ParallaxHorizontalTitle direction={-1} distance={18}>
-                  <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                  <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                     {p('Bibliothèque conseil', 'Advisory Library')}
                   </p>
                 </ParallaxHorizontalTitle>
@@ -436,26 +436,26 @@ export function BlogPage() {
                                 alt={lang === 'en' ? post.titleEn : post.titleFr}
                                 referrerPolicy="no-referrer"
                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                              />
+                               loading="lazy" decoding="async" />
                             </ParallaxImageFrame>
                           </div>
                           <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                             <div className="space-y-2.5">
                               <div className="flex items-center gap-2 text-xs text-muted tabular-nums">
-                                <span className="font-semibold text-[#931916]">
+                                <span className="font-semibold text-accent">
                                   {lang === 'en' ? post.categoryEn : post.categoryFr}
                                 </span>
                                 <span>·</span>
                                 <span>{post.publishedAt}</span>
                               </div>
-                              <h3 className="font-serif text-2xl font-bold text-ink group-hover:text-[#931916] transition-colors leading-snug">
+                              <h3 className="font-serif text-2xl font-bold text-ink group-hover:text-accent transition-colors leading-snug">
                                 {lang === 'en' ? post.titleEn : post.titleFr}
                               </h3>
                               <p className="text-sm text-muted line-clamp-3 leading-relaxed">
                                 {lang === 'en' ? post.excerptEn : post.excerptFr}
                               </p>
                             </div>
-                            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#931916]">
+                            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent">
                               <span>{p('Lire l’article', 'Read article')}</span>
                               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                             </span>

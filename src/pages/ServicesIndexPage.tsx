@@ -164,7 +164,7 @@ export function ServicesIndexPage() {
                       setSlideIdx((i) => (i - 1 + data.services.length) % data.services.length);
                     }}
                     aria-label={p('Pôle précédent', 'Previous service')}
-                    className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                    className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
@@ -175,7 +175,7 @@ export function ServicesIndexPage() {
                       setSlideIdx((i) => (i + 1) % data.services.length);
                     }}
                     aria-label={p('Pôle suivant', 'Next service')}
-                    className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                    className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>
@@ -200,12 +200,12 @@ export function ServicesIndexPage() {
                           alt={lang === 'en' ? activeSrv.titleEn : activeSrv.titleFr}
                           referrerPolicy="no-referrer"
                           className="w-full h-full object-cover"
-                        />
+                         loading="lazy" decoding="async" />
                       </ParallaxImageFrame>
                     </div>
                     <div className="lg:col-span-7 p-7 sm:p-10 flex flex-col justify-between gap-5">
                       <div className="space-y-3">
-                        <p className="text-xs font-sans font-semibold uppercase tracking-[0.16em] text-[#931916]">
+                        <p className="text-xs font-sans font-semibold uppercase tracking-[0.16em] text-accent">
                           {p('Pôle', 'Pillar')} {ROMAN[slideIdx] || slideIdx + 1} · {lang === 'en' ? activeSrv.taglineEn : activeSrv.taglineFr}
                         </p>
                         <h2 className="font-serif text-2xl sm:text-3xl font-bold text-ink">
@@ -276,7 +276,7 @@ export function ServicesIndexPage() {
                               alt={lang === 'en' ? srv.titleEn : srv.titleFr}
                               referrerPolicy="no-referrer"
                               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                            />
+                             loading="lazy" decoding="async" />
                           </ParallaxImageFrame>
                           <div className="absolute inset-0 bg-gradient-to-t from-[#110D0C]/80 via-transparent to-transparent pointer-events-none" />
                           <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[#F6F2EA]">
@@ -294,7 +294,7 @@ export function ServicesIndexPage() {
 
                     <div className={`lg:col-span-7 space-y-4 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
                       <ParallaxHorizontalTitle direction={isEven ? 1 : -1} distance={18}>
-                        <div className="flex items-center gap-3 text-xs font-sans font-semibold text-[#931916]">
+                        <div className="flex items-center gap-3 text-xs font-sans font-semibold text-accent">
                           <span className="font-serif text-base">{ROMAN[idx] || idx + 1}.</span>
                           <span className="h-[1px] w-8 bg-[#931916]" aria-hidden="true" />
                           <span className="uppercase tracking-[0.14em] truncate">{lang === 'en' ? srv.taglineEn : srv.taglineFr}</span>
@@ -314,7 +314,7 @@ export function ServicesIndexPage() {
                       <ul className="divide-y divide-hairline border-y border-hairline">
                         {benefits.map((b, bIdx) => (
                           <li key={bIdx} className="py-2 flex items-start gap-2.5 text-xs sm:text-sm text-ink">
-                            <Check className="w-4 h-4 text-[#931916] shrink-0 mt-0.5" />
+                            <Check className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                             <span>{b}</span>
                           </li>
                         ))}
@@ -323,7 +323,7 @@ export function ServicesIndexPage() {
                       <div className="pt-2 flex flex-wrap items-center gap-4">
                         <Link
                           to={lang === 'en' ? `/en/services/${srv.slug}` : `/services/${srv.slug}`}
-                          className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-ink py-1"
+                          className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-ink py-1"
                         >
                           <span>{p('Voir la fiche complète', 'View Full Service')}</span>
                           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

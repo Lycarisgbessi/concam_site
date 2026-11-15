@@ -87,7 +87,7 @@ export function SearchPage() {
             <RevealBlock>
               <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
                 <div className="relative flex-1">
-                  <Search className="w-4 h-4 text-[#931916] absolute left-4 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                  <Search className="w-4 h-4 text-accent absolute left-4 top-1/2 -translate-y-1/2" aria-hidden="true" />
                   <input
                     type="search"
                     value={query}
@@ -149,7 +149,7 @@ export function SearchPage() {
             </p>
             <Link
               to={p('/services', '/en/services')}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#931916] hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent hover:underline"
             >
               <span>{p('Parcourir nos 4 pôles métiers', 'Browse our 4 expertise pillars')}</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -161,7 +161,7 @@ export function SearchPage() {
               <ParallaxColumnStagger key={`${item.type}-${item.id}`} index={idx} columns={2} amplitude={44}>
                 <Link
                   to={item.href}
-                  className="group bg-surface border border-hairline hover:border-[#931916] rounded-[4px] overflow-hidden flex flex-col h-full transition-all"
+                  className="group bg-surface border border-hairline hover:border-[#931916] rounded-[4px] overflow-hidden flex flex-col h-full transition-colors"
                 >
                   {item.imageUrl && (
                     <div className="h-44 overflow-hidden bg-[#181413]">
@@ -171,13 +171,13 @@ export function SearchPage() {
                           alt={item.title}
                           referrerPolicy="no-referrer"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
+                         loading="lazy" decoding="async" />
                       </ParallaxImageFrame>
                     </div>
                   )}
                   <div className="p-5 space-y-2 flex-1 flex flex-col justify-between">
                     <div className="space-y-1.5">
-                      <p className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[#931916]">
+                      <p className="text-[11px] uppercase tracking-[0.15em] font-semibold text-accent">
                         {item.type === 'service'
                           ? p('Service', 'Service')
                           : item.type === 'gallery'
@@ -186,13 +186,13 @@ export function SearchPage() {
                         · <span className="text-muted">{item.subtitle}</span>
                       </p>
                       <ParallaxHorizontalTitle direction={idx % 2 === 0 ? -1 : 1} distance={16}>
-                        <h2 className="font-serif text-xl font-bold text-ink group-hover:text-[#931916] transition-colors">
+                        <h2 className="font-serif text-xl font-bold text-ink group-hover:text-accent transition-colors">
                           {item.title}
                         </h2>
                       </ParallaxHorizontalTitle>
                       <p className="text-xs text-muted line-clamp-2 leading-relaxed">{item.excerpt}</p>
                     </div>
-                    <div className="pt-3 flex items-center gap-1 text-xs font-semibold text-[#931916]">
+                    <div className="pt-3 flex items-center gap-1 text-xs font-semibold text-accent">
                       <span>{p('Consulter', 'Read more')}</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </div>

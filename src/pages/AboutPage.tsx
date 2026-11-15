@@ -98,7 +98,7 @@ export function AboutPage() {
           left={
             <RevealBlock preset="slide-left" className="space-y-6">
               <ParallaxHorizontalTitle direction={-1} distance={20}>
-                <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                   {p('Notre vocation', 'Our Mission')}
                 </p>
               </ParallaxHorizontalTitle>
@@ -131,7 +131,7 @@ export function AboutPage() {
                         alt={p('Quartier des affaires et siège CONCAM à Kaloum, Conakry', 'Business district and CONCAM headquarters in Kaloum, Conakry')}
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-cover"
-                      />
+                       loading="lazy" decoding="async" />
                     </ClipCurtainReveal>
                   </ParallaxImageFrame>
                   <div className="absolute inset-0 bg-gradient-to-t from-[#110D0C]/80 via-transparent to-transparent pointer-events-none" />
@@ -173,7 +173,7 @@ export function AboutPage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-2">
               <ParallaxHorizontalTitle direction={-1} distance={20}>
-                <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                   {p('Chronologie de l’agence', 'Agency Chronology')}
                 </p>
               </ParallaxHorizontalTitle>
@@ -197,7 +197,7 @@ export function AboutPage() {
                   setActiveMilestone((i) => (i - 1 + pageContent.aboutTimeline.length) % pageContent.aboutTimeline.length);
                 }}
                 aria-label={p('Année précédente', 'Previous milestone')}
-                className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -208,7 +208,7 @@ export function AboutPage() {
                   setActiveMilestone((i) => (i + 1) % pageContent.aboutTimeline.length);
                 }}
                 aria-label={p('Année suivante', 'Next milestone')}
-                className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -229,7 +229,7 @@ export function AboutPage() {
                     className="p-7 sm:p-9 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center"
                   >
                     <div className="lg:col-span-3">
-                      <p className="font-serif text-5xl sm:text-6xl font-bold text-[#931916] tabular-nums">
+                      <p className="font-serif text-5xl sm:text-6xl font-bold text-accent tabular-nums">
                         {pageContent.aboutTimeline[activeMilestone].year}
                       </p>
                     </div>
@@ -274,13 +274,13 @@ export function AboutPage() {
                           setMilestoneDir(i >= activeMilestone ? 1 : -1);
                           setActiveMilestone(i);
                         }}
-                        className={`w-full text-left rounded-[4px] p-6 h-full space-y-3 cursor-pointer transition-all ${
+                        className={`w-full text-left rounded-[4px] p-6 h-full space-y-3 cursor-pointer transition-colors ${
                           selected
                             ? 'bg-[#931916] text-white border border-[#931916] shadow-lg'
                             : 'archival-plate text-ink hover:border-[#931916]'
                         }`}
                       >
-                        <p className={`font-serif text-3xl font-bold tabular-nums ${selected ? 'text-white' : 'text-[#931916]'}`}>
+                        <p className={`font-serif text-3xl font-bold tabular-nums ${selected ? 'text-white' : 'text-accent'}`}>
                           {step.year}
                         </p>
                         <h3 className={`font-serif text-lg font-bold ${selected ? 'text-white' : 'text-ink'}`}>
@@ -315,7 +315,7 @@ export function AboutPage() {
             stickyContent={
               <div className="space-y-5">
                 <ParallaxHorizontalTitle direction={-1} distance={20}>
-                  <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                  <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                     {p('Gouvernance & métiers', 'Governance & Craft')}
                   </p>
                 </ParallaxHorizontalTitle>
@@ -350,7 +350,7 @@ export function AboutPage() {
                             {ROMAN[idx] || idx + 1}
                           </div>
                           <h3 className="font-serif text-xl font-bold text-ink">{member.name}</h3>
-                          <p className="text-xs font-semibold text-[#931916]">
+                          <p className="text-xs font-semibold text-accent">
                             {lang === 'en' ? member.roleEn : member.roleFr}
                           </p>
                           <p className="text-sm text-muted leading-relaxed">

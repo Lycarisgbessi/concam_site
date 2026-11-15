@@ -260,7 +260,7 @@ export function WhatsAppAndPopups() {
                   </div>
                 ) : pStatus === 'success' ? (
                   <div className="py-4 text-center space-y-3">
-                    <CheckCircle2 className="w-9 h-9 text-[#931916] mx-auto" />
+                    <CheckCircle2 className="w-9 h-9 text-accent mx-auto" />
                     <p className="text-sm text-ink font-medium">
                       {activePopup === 'popup_brochure'
                         ? p('Merci ! Votre plaquette institutionnelle est prête.', 'Thank you! Your agency profile is ready.')
@@ -368,7 +368,7 @@ export function WhatsAppAndPopups() {
                       </span>
                     </label>
 
-                    {pStatus === 'error' && <p className="text-xs text-[#931916] font-medium">{pError}</p>}
+                    {pStatus === 'error' && <p className="text-xs text-accent font-medium">{pError}</p>}
 
                     <button
                       type="submit"

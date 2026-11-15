@@ -140,14 +140,14 @@ export function ContactPage() {
                   <div className="archival-plate rounded-[4px] p-7 space-y-5 text-sm">
                     <div className="flex items-center justify-between gap-3 border-b border-hairline pb-4">
                       <ParallaxHorizontalTitle direction={-1} distance={18}>
-                        <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                        <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                           {p('Coordonnées directes', 'Direct Coordinates')}
                         </p>
                       </ParallaxHorizontalTitle>
                       <ParallaxSealDrift size={56} tone="ink" offset={18} rotateDeg={36} />
                     </div>
                   <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-[#931916] shrink-0 mt-0.5" />
+                    <MapPin className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold text-ink">{p('Adresse', 'Address')}</p>
                       <p className="text-muted">{lang === 'en' ? settings.address.en : settings.address.fr}</p>
@@ -155,12 +155,12 @@ export function ContactPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <Phone className="w-5 h-5 text-[#931916] shrink-0 mt-0.5" />
+                    <Phone className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold text-ink">{p('Téléphones', 'Phones')}</p>
                       <div className="space-y-1 tabular-nums text-xs sm:text-sm">
                         {settings.phones.map((ph) => (
-                          <a key={ph} href={`tel:${ph.replace(/\s+/g, '')}`} className="block text-ink hover:text-[#931916] transition-colors">
+                          <a key={ph} href={`tel:${ph.replace(/\s+/g, '')}`} className="block text-ink hover:text-accent transition-colors">
                             {ph}
                           </a>
                         ))}
@@ -169,10 +169,10 @@ export function ContactPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <Mail className="w-5 h-5 text-[#931916] shrink-0 mt-0.5" />
+                    <Mail className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold text-ink">{p('Courriels', 'Emails')}</p>
-                      <a href={`mailto:${settings.agencyEmail}`} className="block text-[#931916] font-medium hover:underline">
+                      <a href={`mailto:${settings.agencyEmail}`} className="block text-accent font-medium hover:underline">
                         {settings.agencyEmail}
                       </a>
                       <a href={`mailto:${settings.magazineEmail}`} className="block text-xs text-muted hover:underline">
@@ -182,7 +182,7 @@ export function ContactPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-[#931916] shrink-0 mt-0.5" />
+                    <Clock className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold text-ink">{p('Horaires d’ouverture', 'Opening Hours')}</p>
                       <p className="text-muted">{lang === 'en' ? settings.hoursEn : settings.hoursFr}</p>
@@ -196,7 +196,7 @@ export function ContactPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => trackEvent('whatsapp_click', 'contact_page')}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold bg-[#25D366] hover:brightness-95 text-[#110D0C] rounded-[4px] transition-all"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold bg-[#25D366] hover:brightness-95 text-[#110D0C] rounded-[4px] transition-[filter]"
                       >
                         <MessageCircle className="w-4 h-4" />
                         <span>{p('Écrire sur WhatsApp', 'Message on WhatsApp')}</span>
@@ -207,17 +207,17 @@ export function ContactPage() {
                       <div className="pt-3 border-t border-hairline flex flex-wrap items-center gap-4 text-xs text-muted">
                         <span className="font-semibold text-ink">{p('Réseaux officiels :', 'Official Channels:')}</span>
                         {settings.socialFacebook && (
-                          <a href={settings.socialFacebook} target="_blank" rel="noopener noreferrer" className="text-[#931916] hover:underline font-medium">
+                          <a href={settings.socialFacebook} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline font-medium">
                             Facebook
                           </a>
                         )}
                         {settings.socialLinkedin && (
-                          <a href={settings.socialLinkedin} target="_blank" rel="noopener noreferrer" className="text-[#931916] hover:underline font-medium">
+                          <a href={settings.socialLinkedin} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline font-medium">
                             LinkedIn
                           </a>
                         )}
                         {settings.socialTiktok && (
-                          <a href={settings.socialTiktok} target="_blank" rel="noopener noreferrer" className="text-[#931916] hover:underline font-medium">
+                          <a href={settings.socialTiktok} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline font-medium">
                             TikTok
                           </a>
                         )}
@@ -245,13 +245,13 @@ export function ContactPage() {
                       {p('Formulaire de contact & demande de devis', 'Contact & Quote Inquiry')}
                     </h2>
                   </ParallaxHorizontalTitle>
-                  <p className="text-xs font-medium text-[#931916] mb-6">
+                  <p className="text-xs font-medium text-accent mb-6">
                     {p('Tous les champs marqués * sont obligatoires.', 'Fields marked * are required.')}
                   </p>
 
             {status === 'success' ? (
               <div className="bg-limestone border border-hairline rounded-[4px] p-8 text-center space-y-3">
-                <CheckCircle2 className="w-12 h-12 text-[#931916] mx-auto" />
+                <CheckCircle2 className="w-12 h-12 text-accent mx-auto" />
                 <h3 className="font-serif text-xl font-bold text-ink">
                   {p('Message envoyé avec succès', 'Message Sent Successfully')}
                 </h3>
@@ -312,7 +312,7 @@ export function ContactPage() {
                       }`}
                     />
                     {emailInvalid && (
-                      <p className="text-[11px] text-[#931916] font-medium mt-1">
+                      <p className="text-[11px] text-accent font-medium mt-1">
                         {p('Format de courriel invalide.', 'Invalid email format.')}
                       </p>
                     )}
@@ -377,14 +377,14 @@ export function ContactPage() {
                       'J’accepte que CONCAM utilise ces coordonnées pour traiter ma demande, conformément à la ',
                       'I consent to CONCAM using these details to process my request under our ',
                     )}
-                    <Link to={p('/confidentialite', '/en/privacy')} className="underline text-[#931916] font-medium">
+                    <Link to={p('/confidentialite', '/en/privacy')} className="underline text-accent font-medium">
                       {p('politique de confidentialité', 'privacy policy')}
                     </Link>
                     .
                   </span>
                 </label>
 
-                {status === 'error' && <p className="text-xs text-[#931916] font-semibold">{errMsg}</p>}
+                {status === 'error' && <p className="text-xs text-accent font-semibold">{errMsg}</p>}
 
                 <MagneticWrapper strength={0.2}>
                   <button

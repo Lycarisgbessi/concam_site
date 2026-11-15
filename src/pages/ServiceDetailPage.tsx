@@ -50,7 +50,7 @@ export function ServiceDetailPage() {
     return (
       <div className="max-w-4xl mx-auto px-4 py-32 text-center space-y-4 text-ink">
         <h1 className="font-serif text-3xl font-bold">{p('Service introuvable', 'Service not found')}</h1>
-        <Link to={p('/services', '/en/services')} className="text-[#931916] font-semibold underline">
+        <Link to={p('/services', '/en/services')} className="text-accent font-semibold underline">
           {p('Retour au catalogue des services', 'Back to services')}
         </Link>
       </div>
@@ -193,7 +193,7 @@ export function ServiceDetailPage() {
           left={
             <RevealBlock preset="slide-left" className="space-y-6">
               <ParallaxHorizontalTitle direction={-1} distance={22}>
-                <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                   {p('Notre approche métier', 'Strategic Methodology')}
                 </p>
               </ParallaxHorizontalTitle>
@@ -201,7 +201,7 @@ export function ServiceDetailPage() {
               <ul className="divide-y divide-hairline border-y border-hairline">
                 {benefits.map((b, i) => (
                   <li key={i} className="py-3.5 flex items-start gap-3 text-sm text-ink">
-                    <Check className="w-4 h-4 text-[#931916] shrink-0 mt-0.5" />
+                    <Check className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                     <span>{b}</span>
                   </li>
                 ))}
@@ -219,7 +219,7 @@ export function ServiceDetailPage() {
                         alt={title}
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-cover"
-                      />
+                       loading="lazy" decoding="async" />
                     </ClipCurtainReveal>
                   </ParallaxImageFrame>
                 </div>
@@ -237,7 +237,7 @@ export function ServiceDetailPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8 relative z-10">
           <div className="space-y-2">
             <ParallaxHorizontalTitle direction={-1} distance={20}>
-              <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+              <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                 {p('Architecture de l’offre', 'Deliverables Architecture')}
               </p>
             </ParallaxHorizontalTitle>
@@ -288,7 +288,7 @@ export function ServiceDetailPage() {
                   transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                   className="archival-plate rounded-[4px] p-7 sm:p-9 space-y-3"
                 >
-                  <p className="font-serif text-xs font-semibold text-[#931916] uppercase tracking-wider">
+                  <p className="font-serif text-xs font-semibold text-accent uppercase tracking-wider">
                     {ROMAN[activeOfferingIdx] || activeOfferingIdx + 1} · {title}
                   </p>
                   <h3 className="font-serif text-2xl font-bold text-ink">
@@ -324,7 +324,7 @@ export function ServiceDetailPage() {
             stickyContent={
               <div className="space-y-5">
                 <ParallaxHorizontalTitle direction={-1} distance={20}>
-                  <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                  <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                     {p('Méthode d’exécution', 'Execution Protocol')}
                   </p>
                 </ParallaxHorizontalTitle>
@@ -421,7 +421,7 @@ export function ServiceDetailPage() {
                             alt={lang === 'en' ? g.titleEn : g.titleFr}
                             referrerPolicy="no-referrer"
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                          />
+                           loading="lazy" decoding="async" />
                         </ParallaxImageFrame>
                       </div>
                       <div className="p-5 space-y-1.5">
@@ -494,7 +494,7 @@ export function ServiceDetailPage() {
                       >
                         <span>{lang === 'en' ? faq.questionEn : faq.questionFr}</span>
                         <ChevronDown
-                          className={`w-4 h-4 shrink-0 text-[#931916] transition-transform duration-300 ${
+                          className={`w-4 h-4 shrink-0 text-accent transition-transform duration-300 ${
                             open ? 'rotate-180' : ''
                           }`}
                         />
@@ -525,7 +525,7 @@ export function ServiceDetailPage() {
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-ink mb-1">
               {p(`Demander un devis — ${title}`, `Request a Quote — ${title}`)}
             </h2>
-            <p className="text-xs font-medium text-[#931916] mb-6">
+            <p className="text-xs font-medium text-accent mb-6">
               {p(
                 'Service pré-sélectionné · Réponse graduée sous 24 heures ouvrées',
                 'Pre-selected service · Tiered proposal within 24 business hours',
@@ -534,7 +534,7 @@ export function ServiceDetailPage() {
 
             {status === 'success' ? (
               <div className="bg-limestone border border-hairline rounded-[4px] p-6 text-center space-y-3">
-                <CheckCircle2 className="w-10 h-10 text-[#931916] mx-auto" />
+                <CheckCircle2 className="w-10 h-10 text-accent mx-auto" />
                 <h3 className="font-serif text-lg font-bold text-ink">{p('Demande envoyée', 'Request Sent')}</h3>
                 <p className="text-sm text-muted">
                   {p(
@@ -611,7 +611,7 @@ export function ServiceDetailPage() {
                     )}
                   </span>
                 </label>
-                {status === 'error' && <p className="text-xs text-[#931916] font-semibold">{errMsg}</p>}
+                {status === 'error' && <p className="text-xs text-accent font-semibold">{errMsg}</p>}
                 <button
                   type="submit"
                   disabled={status === 'submitting'}

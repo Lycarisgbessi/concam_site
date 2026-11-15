@@ -56,7 +56,7 @@ function ServiceOfferingTicker({ service, lang }: { service: ServiceItem; lang: 
 
   return (
     <div className="archival-plate-warm rounded-[4px] px-4 py-3.5 overflow-hidden">
-      <div className="flex items-center justify-between text-[11px] font-sans font-semibold uppercase tracking-[0.14em] text-[#931916] mb-1.5">
+      <div className="flex items-center justify-between text-[11px] font-sans font-semibold uppercase tracking-[0.14em] text-accent mb-1.5">
         <span>{lang === 'en' ? 'Active Deliverable' : 'Prestation dédiée'}</span>
         <span className="tabular-nums font-serif text-xs">
           0{idx + 1} / 0{offerings.length}
@@ -246,7 +246,7 @@ export function HomePage() {
                 <button
                   type="button"
                   onClick={() => openQuoteModal()}
-                  className="magnetic-sheen group inline-flex items-center gap-2.5 px-6 py-3.5 text-sm font-semibold bg-[#931916] hover:bg-[#A30013] border border-[#931916] text-white rounded-[4px] transition-all duration-300 shadow-[0_16px_38px_-12px_rgba(147,25,22,0.75)] cursor-pointer whitespace-nowrap"
+                  className="magnetic-sheen group inline-flex items-center gap-2.5 px-6 py-3.5 text-sm font-semibold bg-[#931916] hover:bg-[#A30013] border border-[#931916] text-white rounded-[4px] transition-colors duration-300 shadow-[0_16px_38px_-12px_rgba(147,25,22,0.75)] cursor-pointer whitespace-nowrap"
                 >
                   <span>{p('Demander un devis', 'Request a Quote')}</span>
                   <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
@@ -260,7 +260,7 @@ export function HomePage() {
                     setChatOpen(true);
                     trackEvent('chatbot_open', 'hero_cta');
                   }}
-                  className="sovereign-plate-subtle group inline-flex items-center gap-2.5 px-6 py-3.5 text-sm font-semibold hover:border-[#931916] text-white rounded-[4px] transition-all duration-300 cursor-pointer whitespace-nowrap"
+                  className="sovereign-plate-subtle group inline-flex items-center gap-2.5 px-6 py-3.5 text-sm font-semibold hover:border-[#931916] text-white rounded-[4px] transition-colors duration-300 cursor-pointer whitespace-nowrap"
                 >
                   <MessageSquareText className="w-4 h-4 text-[#E40014] transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
                   <span>{p('Discuter avec notre conseiller IA', 'Chat with our AI Advisor')}</span>
@@ -350,7 +350,7 @@ export function HomePage() {
                 <div className="max-w-2xl space-y-3">
                   <ParallaxHorizontalTitle direction={-1} distance={24}>
                     <RevealBlock preset="slide-left">
-                      <p className="text-xs font-sans font-semibold tracking-[0.2em] uppercase text-[#931916]">
+                      <p className="text-xs font-sans font-semibold tracking-[0.2em] uppercase text-accent">
                         {p('Expertise intégrée 360°', 'Integrated 360° Capabilities')}
                       </p>
                     </RevealBlock>
@@ -369,7 +369,7 @@ export function HomePage() {
                 <MagneticWrapper strength={0.18}>
                   <Link
                     to={p('/services', '/en/services')}
-                    className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-ink whitespace-nowrap shrink-0 pb-1"
+                    className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-ink whitespace-nowrap shrink-0 pb-1"
                   >
                     <span>{p('Explorer tous les services', 'Explore all services')}</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -431,7 +431,7 @@ export function HomePage() {
                           setSrvSlideIdx((i) => (i - 1 + services.length) % services.length);
                         }}
                         aria-label={p('Pôle précédent', 'Previous pillar')}
-                        className="bg-surface border border-hairline p-2.5 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                        className="bg-surface border border-hairline p-2.5 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
                       >
                         <ChevronLeft className="w-4 h-4" />
                       </button>
@@ -442,7 +442,7 @@ export function HomePage() {
                           setSrvSlideIdx((i) => (i + 1) % services.length);
                         }}
                         aria-label={p('Pôle suivant', 'Next pillar')}
-                        className="bg-surface border border-hairline p-2.5 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                        className="bg-surface border border-hairline p-2.5 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
                       >
                         <ChevronRight className="w-4 h-4" />
                       </button>
@@ -482,7 +482,7 @@ export function HomePage() {
 
                         <div className="lg:col-span-7 p-7 sm:p-10 flex flex-col justify-between gap-6">
                           <div className="space-y-4">
-                            <p className="text-xs font-sans font-semibold uppercase tracking-[0.16em] text-[#931916]">
+                            <p className="text-xs font-sans font-semibold uppercase tracking-[0.16em] text-accent">
                               {lang === 'en' ? activeSrv.taglineEn : activeSrv.taglineFr}
                             </p>
                             <h3 className="font-serif text-3xl sm:text-4xl font-bold text-ink leading-snug">
@@ -566,7 +566,7 @@ export function HomePage() {
                                   alt={lang === 'en' ? srv.titleEn : srv.titleFr}
                                   referrerPolicy="no-referrer"
                                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                                />
+                                 loading="lazy" decoding="async" />
                               </ParallaxImageFrame>
                               <div className="absolute inset-0 bg-gradient-to-t from-[#110D0C]/80 via-transparent to-transparent pointer-events-none" />
                               <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-white">
@@ -584,7 +584,7 @@ export function HomePage() {
 
                         <div className={`lg:col-span-7 space-y-4 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
                           <ParallaxHorizontalTitle direction={isEven ? 1 : -1} distance={18}>
-                            <div className="flex items-center gap-3 text-xs font-sans font-semibold uppercase tracking-[0.14em] text-[#931916]">
+                            <div className="flex items-center gap-3 text-xs font-sans font-semibold uppercase tracking-[0.14em] text-accent">
                               <span className="w-8 h-8 rounded-[4px] bg-[#110D0C] border border-[#931916] flex items-center justify-center font-serif font-bold text-white shrink-0">
                                 {ROMAN[index] || index + 1}
                               </span>
@@ -608,7 +608,7 @@ export function HomePage() {
                           <ul className="divide-y divide-hairline border-y border-hairline">
                             {benefits.map((b, i) => (
                               <li key={i} className="py-2 flex items-start gap-2.5 text-xs sm:text-sm text-ink">
-                                <Check className="w-4 h-4 text-[#931916] shrink-0 mt-0.5" aria-hidden="true" />
+                                <Check className="w-4 h-4 text-accent shrink-0 mt-0.5" aria-hidden="true" />
                                 <span>{b}</span>
                               </li>
                             ))}
@@ -617,7 +617,7 @@ export function HomePage() {
                           <div className="pt-1 flex flex-wrap items-center gap-4">
                             <Link
                               to={lang === 'en' ? `/en/services/${srv.slug}` : `/services/${srv.slug}`}
-                              className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-ink py-1"
+                              className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-ink py-1"
                             >
                               <span>{p('Découvrir l’offre complète', 'View Full Service')}</span>
                               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -627,7 +627,7 @@ export function HomePage() {
                               <button
                                 type="button"
                                 onClick={() => openQuoteModal({ serviceSlug: srv.slug })}
-                                className="bg-page border border-hairline hover:border-[#931916] hover:bg-[#931916] hover:text-white px-4 py-2 text-xs font-semibold text-ink rounded-[4px] transition-all cursor-pointer"
+                                className="bg-page border border-hairline hover:border-[#931916] hover:bg-[#931916] hover:text-white px-4 py-2 text-xs font-semibold text-ink rounded-[4px] transition-colors cursor-pointer"
                               >
                                 {p('Devis rapide', 'Quick Quote')}
                               </button>
@@ -781,7 +781,7 @@ export function HomePage() {
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div className="space-y-2.5">
                   <ParallaxHorizontalTitle direction={-1} distance={22}>
-                    <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                    <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                       {p('Écosystème éditorial du groupe', 'Group Media Ecosystem')}
                     </p>
                   </ParallaxHorizontalTitle>
@@ -804,7 +804,7 @@ export function HomePage() {
                         type="button"
                         onClick={() => setCarouselIdx((i) => (i - 1 + headlines.length) % headlines.length)}
                         aria-label={p('Dépêche précédente', 'Previous headline')}
-                        className="bg-surface border border-hairline p-2.5 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                        className="bg-surface border border-hairline p-2.5 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
                       >
                         <ChevronLeft className="w-4 h-4" />
                       </button>
@@ -812,7 +812,7 @@ export function HomePage() {
                         type="button"
                         onClick={() => setCarouselIdx((i) => (i + 1) % headlines.length)}
                         aria-label={p('Dépêche suivante', 'Next headline')}
-                        className="bg-surface border border-hairline p-2.5 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                        className="bg-surface border border-hairline p-2.5 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
                       >
                         <ChevronRight className="w-4 h-4" />
                       </button>
@@ -820,7 +820,7 @@ export function HomePage() {
                   )}
                   <Link
                     to={p('/presse-edition', '/en/press-publishing')}
-                    className="editorial-link text-sm font-semibold text-[#931916] hover:text-ink whitespace-nowrap"
+                    className="editorial-link text-sm font-semibold text-accent hover:text-ink whitespace-nowrap"
                   >
                     {p('Pôle Presse & Édition', 'Press & Publishing')}
                   </Link>
@@ -845,7 +845,7 @@ export function HomePage() {
                         <div className="archival-plate rounded-[4px] p-7 sm:p-11 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                           <div className="lg:col-span-8 space-y-4">
                             <div className="flex items-center gap-3 text-xs tabular-nums text-muted">
-                              <span className="font-bold uppercase tracking-wider text-[#931916]">
+                              <span className="font-bold uppercase tracking-wider text-accent">
                                 {h.sourceName}
                               </span>
                               <span aria-hidden="true">·</span>
@@ -932,24 +932,24 @@ export function HomePage() {
                                 alt={p('Réussite Magazine — Presse économique en Guinée', 'Réussite Magazine — Business Press in Guinea')}
                                 referrerPolicy="no-referrer"
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                              />
+                               loading="lazy" decoding="async" />
                             </ParallaxImageFrame>
                             <div className="absolute inset-0 bg-gradient-to-t from-[#110D0C]/70 via-transparent to-transparent pointer-events-none" />
                           </div>
                           <div className="p-7 flex items-start justify-between gap-5 flex-1">
                             <div className="space-y-2.5">
-                              <div className="flex items-center gap-2.5 text-[#931916]">
+                              <div className="flex items-center gap-2.5 text-accent">
                                 <Newspaper className="w-5 h-5" aria-hidden="true" />
-                                <span className="font-serif text-2xl font-bold text-ink group-hover:text-[#931916] transition-colors">
+                                <span className="font-serif text-2xl font-bold text-ink group-hover:text-accent transition-colors">
                                   Réussite Magazine
                                 </span>
                               </div>
                               <p className="text-sm text-muted leading-relaxed">
                                 {lang === 'en' ? mediaHub.reussiteMagazineDescEn : mediaHub.reussiteMagazineDescFr}
                               </p>
-                              <p className="text-xs font-medium text-[#931916] pt-1">{mediaHub.reussiteMagazineUrl}</p>
+                              <p className="text-xs font-medium text-accent pt-1">{mediaHub.reussiteMagazineUrl}</p>
                             </div>
-                            <ArrowUpRight className="w-5 h-5 text-[#931916] shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                            <ArrowUpRight className="w-5 h-5 text-accent shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                           </div>
                         </a>
                       </TiltCard3D>
@@ -975,24 +975,24 @@ export function HomePage() {
                                 alt={p('MediaInfoPro — Fil d’information économique et presse', 'MediaInfoPro — Business Press & News Wire')}
                                 referrerPolicy="no-referrer"
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                              />
+                               loading="lazy" decoding="async" />
                             </ParallaxImageFrame>
                             <div className="absolute inset-0 bg-gradient-to-t from-[#110D0C]/70 via-transparent to-transparent pointer-events-none" />
                           </div>
                           <div className="p-7 flex items-start justify-between gap-5 flex-1">
                             <div className="space-y-2.5">
-                              <div className="flex items-center gap-2.5 text-[#931916]">
+                              <div className="flex items-center gap-2.5 text-accent">
                                 <Newspaper className="w-5 h-5" aria-hidden="true" />
-                                <span className="font-serif text-2xl font-bold text-ink group-hover:text-[#931916] transition-colors">
+                                <span className="font-serif text-2xl font-bold text-ink group-hover:text-accent transition-colors">
                                   MediaInfoPro
                                 </span>
                               </div>
                               <p className="text-sm text-muted leading-relaxed">
                                 {lang === 'en' ? mediaHub.mediaInfoProDescEn : mediaHub.mediaInfoProDescFr}
                               </p>
-                              <p className="text-xs font-medium text-[#931916] pt-1">{mediaHub.mediaInfoProUrl}</p>
+                              <p className="text-xs font-medium text-accent pt-1">{mediaHub.mediaInfoProUrl}</p>
                             </div>
-                            <ArrowUpRight className="w-5 h-5 text-[#931916] shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                            <ArrowUpRight className="w-5 h-5 text-accent shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                           </div>
                         </a>
                       </TiltCard3D>
@@ -1049,7 +1049,7 @@ export function HomePage() {
                 <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8">
                   <div className="space-y-2.5">
                     <ParallaxHorizontalTitle direction={-1} distance={22}>
-                      <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                      <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                         {p('Preuves par l’exemple', 'Selected Portfolio')}
                       </p>
                     </ParallaxHorizontalTitle>
@@ -1064,7 +1064,7 @@ export function HomePage() {
                   <MagneticWrapper strength={0.18}>
                     <Link
                       to={p('/galerie', '/en/gallery')}
-                      className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-[#931916] hover:text-ink whitespace-nowrap"
+                      className="group editorial-link inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-ink whitespace-nowrap"
                     >
                       <span>{p('Voir toute la galerie', 'View Full Portfolio')}</span>
                       <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -1095,7 +1095,7 @@ export function HomePage() {
                           <div className="lg:col-span-6 p-7 sm:p-10 flex flex-col justify-between gap-6 order-2 lg:order-1">
                             <div className="space-y-3">
                               <div className="flex items-center justify-between gap-3">
-                                <span className="text-xs font-semibold uppercase tracking-wider text-[#931916] tabular-nums">
+                                <span className="text-xs font-semibold uppercase tracking-wider text-accent tabular-nums">
                                   {activeGal.clientOrSector} · {activeGal.year}
                                 </span>
                                 <div className="flex items-center gap-1.5">
@@ -1106,7 +1106,7 @@ export function HomePage() {
                                       setGalSlideIdx((i) => (i - 1 + featuredGallery.length) % featuredGallery.length);
                                     }}
                                     aria-label={p('Projet précédent', 'Previous case study')}
-                                    className="bg-page border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                                    className="bg-page border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
                                   >
                                     <ChevronLeft className="w-3.5 h-3.5" />
                                   </button>
@@ -1117,7 +1117,7 @@ export function HomePage() {
                                       setGalSlideIdx((i) => (i + 1) % featuredGallery.length);
                                     }}
                                     aria-label={p('Projet suivant', 'Next case study')}
-                                    className="bg-page border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                                    className="bg-page border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
                                   >
                                     <ChevronRight className="w-3.5 h-3.5" />
                                   </button>
@@ -1132,7 +1132,7 @@ export function HomePage() {
                                 {lang === 'en' ? activeGal.needEn : activeGal.needFr}
                               </p>
                               <p className="text-sm text-muted leading-relaxed">
-                                <strong className="text-[#931916]">{p('Déploiement :', 'Solution:')} </strong>
+                                <strong className="text-accent">{p('Déploiement :', 'Solution:')} </strong>
                                 {lang === 'en' ? activeGal.solutionEn : activeGal.solutionFr}
                               </p>
                             </div>
@@ -1140,7 +1140,7 @@ export function HomePage() {
                             <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-hairline">
                               <Link
                                 to={`${p('/galerie', '/en/gallery')}?item=${activeGal.id}`}
-                                className="editorial-link inline-flex items-center gap-1.5 text-xs font-semibold text-[#931916] hover:text-ink"
+                                className="editorial-link inline-flex items-center gap-1.5 text-xs font-semibold text-accent hover:text-ink"
                               >
                                 <span>{p('Ouvrir la fiche projet', 'Inspect Case Study')}</span>
                                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -1191,7 +1191,7 @@ export function HomePage() {
                   scrollingClassName="lg:col-span-8"
                   stickyContent={
                     <div className="archival-plate rounded-[4px] p-7 space-y-5">
-                      <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                      <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                         {p('Archives de production', 'Production Archive')}
                       </p>
                       <h3 className="font-serif text-2xl sm:text-3xl font-bold text-ink leading-tight">
@@ -1209,7 +1209,7 @@ export function HomePage() {
                       <div className="pt-2 flex items-center justify-between gap-4 border-t border-hairline">
                         <Link
                           to={p('/galerie', '/en/gallery')}
-                          className="editorial-link text-xs font-semibold text-[#931916] hover:text-ink"
+                          className="editorial-link text-xs font-semibold text-accent hover:text-ink"
                         >
                           {p('Ouvrir toute la galerie', 'Explore Full Gallery')}
                         </Link>
@@ -1248,7 +1248,7 @@ export function HomePage() {
                                         alt={lang === 'en' ? item.titleEn : item.titleFr}
                                         referrerPolicy="no-referrer"
                                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                                      />
+                                       loading="lazy" decoding="async" />
                                     </ClipCurtainReveal>
                                   </ParallaxImageFrame>
                                   <div className="absolute inset-0 bg-gradient-to-t from-[#110D0C]/92 via-[#110D0C]/35 to-transparent pointer-events-none" />
@@ -1337,7 +1337,7 @@ export function HomePage() {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => trackEvent('whatsapp_click', 'home_banner')}
-                          className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold bg-[#25D366] hover:brightness-95 text-[#110D0C] rounded-[4px] transition-all whitespace-nowrap"
+                          className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold bg-[#25D366] hover:brightness-95 text-[#110D0C] rounded-[4px] transition-[filter] whitespace-nowrap"
                         >
                           <MessageCircle className="w-4 h-4" />
                           <span>WhatsApp</span>

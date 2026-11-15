@@ -41,7 +41,7 @@ export function LegalNoticePage() {
                 <div className="archival-plate space-y-3 p-7 rounded-[4px] relative">
                   <div className="flex items-center justify-between gap-4 border-b border-hairline pb-3 mb-2">
                     <ParallaxHorizontalTitle direction={1} distance={20}>
-                      <span className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                      <span className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                         {p('Fiche légale officielle', 'Official Legal Registry')}
                       </span>
                     </ParallaxHorizontalTitle>
@@ -55,7 +55,7 @@ export function LegalNoticePage() {
                   </p>
                   <p>
                     <strong className="text-ink">RCCM :</strong>{' '}
-                    <span className="font-semibold text-[#931916] tabular-nums">{settings.rccm}</span>
+                    <span className="font-semibold text-accent tabular-nums">{settings.rccm}</span>
                   </p>
                   <p>
                     <strong className="text-ink">{p('Identifiants fiscaux :', 'Tax Registration:')}</strong>{' '}

@@ -12,8 +12,9 @@
   --c-surface: #FFFFFF;
   --c-ink: #181413;
   --c-muted: #574E4A;
-  --c-faint: #9C9188;
+  --c-faint: #82766C;
   --c-hairline: #DDD5C9;
+  --c-accent: #931916;
   --c-plate-shadow: rgba(24, 20, 19, 0.22);
 }
 
@@ -26,6 +27,7 @@
   --c-muted: #BFB3A9;
   --c-faint: #92867D;
   --c-hairline: #39302B;
+  --c-accent: #FF6B62;
   --c-plate-shadow: rgba(0, 0, 0, 0.55);
 }
 
@@ -33,19 +35,6 @@
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-
-  --color-concam-logo: #931916;
-  --color-concam-primary: #931916;
-  --color-concam-crimson: #A30013;
-  --color-concam-dark: #110D0C;
-  --color-concam-ebony: #1A1312;
-  --color-concam-ivory: #F7F4EF;
-  --color-concam-limestone: #EFEAE1;
-  --color-concam-ink: #181413;
-  --color-concam-muted: #574E4A;
-  --color-concam-border: #DDD5C9;
-  --color-concam-crimson-bright: #E40014;
-  --color-concam-surface: #F5F3F3;
 }
 
 /* Tokens dynamiques : les utilitaires générés référencent les variables
@@ -58,6 +47,7 @@
   --color-muted: var(--c-muted);
   --color-faint: var(--c-faint);
   --color-hairline: var(--c-hairline);
+  --color-accent: var(--c-accent);
 }
 
 @layer base {
@@ -171,20 +161,6 @@
 
 .magnetic-sheen:hover::before {
   transform: translate3d(135%, 0, 0);
-}
-
-/* Architectural plate elevation */
-.luxury-card {
-  transition:
-    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
-}
-
-.luxury-card:hover {
-  transform: translate3d(0, -4px, 0);
-  box-shadow: 0 22px 46px -22px rgba(24, 20, 19, 0.28);
 }
 
 /* Ken Burns GPU-only header background animations */

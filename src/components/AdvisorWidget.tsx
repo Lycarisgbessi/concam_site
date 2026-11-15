@@ -571,7 +571,7 @@ export function AdvisorWidget() {
                     {m.mode === 'voice' && (
                       <span
                         className={`inline-flex items-center gap-1 text-[10px] uppercase tracking-wide mr-1.5 font-semibold ${
-                          m.role === 'user' ? 'text-white/90' : 'text-[#931916]'
+                          m.role === 'user' ? 'text-white/90' : 'text-accent'
                         }`}
                       >
                         <Volume2 className="w-3 h-3" /> {p('Voix', 'Voice')} ·
@@ -619,7 +619,7 @@ export function AdvisorWidget() {
                           onClick={() => setShowCallbackForm(true)}
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-surface border border-hairline hover:border-[#931916] text-ink rounded-[4px] transition-colors cursor-pointer"
                         >
-                          <PhoneCall className="w-3.5 h-3.5 text-[#931916]" />
+                          <PhoneCall className="w-3.5 h-3.5 text-accent" />
                           {p('Planifier un rappel', 'Schedule Callback')}
                         </button>
                       )}
@@ -646,7 +646,7 @@ export function AdvisorWidget() {
               {showCallbackForm && (
                 <form onSubmit={handleCallbackSubmit} className="bg-surface border border-hairline p-3.5 rounded-[4px] space-y-2.5">
                   {cbSent ? (
-                    <p className="text-xs text-[#931916] font-semibold">
+                    <p className="text-xs text-accent font-semibold">
                       {p('Rappel planifié ! Un conseiller vous contactera rapidement.', 'Callback scheduled! An advisor will reach out shortly.')}
                     </p>
                   ) : (
@@ -694,7 +694,7 @@ export function AdvisorWidget() {
               )}
 
               {sending && (
-                <div className="text-xs text-[#931916] italic">
+                <div className="text-xs text-accent italic">
                   {p('Conseiller CONCAM rédige sa réponse...', 'CONCAM Advisor is typing...')}
                 </div>
               )}
@@ -718,7 +718,7 @@ export function AdvisorWidget() {
                   <button
                     type="button"
                     onClick={stopVoiceSession}
-                    className="underline font-semibold shrink-0 text-[#931916] cursor-pointer"
+                    className="underline font-semibold shrink-0 text-accent cursor-pointer"
                   >
                     {p('Arrêter', 'Stop')}
                   </button>
@@ -737,7 +737,7 @@ export function AdvisorWidget() {
                       type="button"
                       onClick={() => handleRating(n)}
                       aria-label={`${n} étoiles`}
-                      className="p-0.5 text-faint hover:text-[#931916] transition-colors cursor-pointer"
+                      className="p-0.5 text-faint hover:text-accent transition-colors cursor-pointer"
                     >
                       <Star className="w-3.5 h-3.5" />
                     </button>

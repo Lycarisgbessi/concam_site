@@ -136,7 +136,7 @@ export function GalleryPage() {
               >
               <div className="flex items-center justify-between gap-4">
                 <ParallaxHorizontalTitle direction={-1} distance={20}>
-                  <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#931916]">
+                  <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
                     {p('Défilement des projets phares', 'Featured Projects Reel')}
                   </p>
                 </ParallaxHorizontalTitle>
@@ -152,7 +152,7 @@ export function GalleryPage() {
                         setReelIdx((i) => (i - 1 + reelSource.length) % reelSource.length);
                       }}
                       aria-label={p('Projet précédent', 'Previous project')}
-                      className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                      className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
@@ -163,7 +163,7 @@ export function GalleryPage() {
                         setReelIdx((i) => (i + 1) % reelSource.length);
                       }}
                       aria-label={p('Projet suivant', 'Next project')}
-                      className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-[#931916] transition-colors cursor-pointer"
+                      className="bg-surface border border-hairline p-2 rounded-[4px] text-ink hover:border-[#931916] hover:text-accent transition-colors cursor-pointer"
                     >
                       <ChevronRight className="w-4 h-4" />
                     </button>
@@ -189,12 +189,12 @@ export function GalleryPage() {
                           alt={lang === 'en' ? reelSource[reelIdx].titleEn : reelSource[reelIdx].titleFr}
                           referrerPolicy="no-referrer"
                           className="w-full h-full object-cover"
-                        />
+                         loading="lazy" decoding="async" />
                       </ParallaxImageFrame>
                     </div>
                     <div className="lg:col-span-6 p-7 sm:p-9 flex flex-col justify-between gap-5">
                       <div className="space-y-3">
-                        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider tabular-nums text-[#931916]">
+                        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider tabular-nums text-accent">
                           <span>Planche 0{reelIdx + 1}</span>
                           <span>·</span>
                           <span>{reelSource[reelIdx].clientOrSector}</span>
@@ -316,7 +316,7 @@ export function GalleryPage() {
                                   alt={lang === 'en' ? item.titleEn : item.titleFr}
                                   referrerPolicy="no-referrer"
                                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                                />
+                                 loading="lazy" decoding="async" />
                               </ClipCurtainReveal>
                             </ParallaxImageFrame>
                             <div className="absolute inset-0 bg-gradient-to-t from-[#110D0C]/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end p-4 pointer-events-none">
@@ -329,13 +329,13 @@ export function GalleryPage() {
                           <div className="p-6 space-y-2.5 flex-1 flex flex-col justify-between">
                             <div className="space-y-2">
                               <div className="flex items-center gap-2 text-xs text-muted">
-                                <span className="font-semibold text-[#931916]">
+                                <span className="font-semibold text-accent">
                                   {cat ? (lang === 'en' ? cat.nameEn : cat.nameFr) : ''}
                                 </span>
                                 <span>·</span>
                                 <span className="tabular-nums font-medium">{item.year}</span>
                               </div>
-                              <h2 className="font-serif text-xl font-bold text-ink group-hover:text-[#931916] transition-colors leading-snug">
+                              <h2 className="font-serif text-xl font-bold text-ink group-hover:text-accent transition-colors leading-snug">
                                 {lang === 'en' ? item.titleEn : item.titleFr}
                               </h2>
                               <p className="text-xs font-medium text-muted">{item.clientOrSector}</p>
@@ -343,7 +343,7 @@ export function GalleryPage() {
                                 {lang === 'en' ? item.solutionEn : item.solutionFr}
                               </p>
                             </div>
-                            <span className="pt-2 text-xs font-semibold text-[#931916] editorial-link w-fit">
+                            <span className="pt-2 text-xs font-semibold text-accent editorial-link w-fit">
                               {p('Ouvrir la fiche détaillée →', 'Inspect Case Study →')}
                             </span>
                           </div>
@@ -430,6 +430,7 @@ export function GalleryPage() {
                       zoomed ? 'scale-125 cursor-zoom-out' : 'cursor-zoom-in'
                     }`}
                     onClick={() => setZoomed((z) => !z)}
+                    loading="lazy" decoding="async"
                   />
                 </div>
 
@@ -477,7 +478,7 @@ export function GalleryPage() {
                           lightboxImgIdx === idx ? 'border-[#E40014]' : 'border-white/20 opacity-60'
                         }`}
                       >
-                        <img src={imgUrl} alt="" className="w-full h-full object-cover" />
+                        <img src={imgUrl} alt="" className="w-full h-full object-cover"  loading="lazy" decoding="async" />
                       </button>
                     ))}
                   </div>

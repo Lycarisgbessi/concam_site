@@ -102,7 +102,7 @@ export function PresseEditionPage() {
                             alt={p('Réussite Magazine — Édition presse économique en Guinée', 'Réussite Magazine — Guinean business press publishing')}
                             referrerPolicy="no-referrer"
                             className="w-full h-full object-cover"
-                          />
+                           loading="lazy" decoding="async" />
                         </ParallaxImageFrame>
                         <div className="absolute inset-0 bg-gradient-to-t from-[#110D0C]/70 via-transparent to-transparent pointer-events-none" />
                       </div>
@@ -117,7 +117,7 @@ export function PresseEditionPage() {
                           <p className="text-sm sm:text-base text-muted leading-relaxed">
                             {lang === 'en' ? mediaHub.reussiteMagazineDescEn : mediaHub.reussiteMagazineDescFr}
                           </p>
-                          <p className="text-xs font-medium text-[#931916] pt-3 border-t border-hairline">
+                          <p className="text-xs font-medium text-accent pt-3 border-t border-hairline">
                             {p(
                               `Lancé en octobre 2016 à Conakry · Contact rédaction : ${settings.magazineEmail}`,
                               `Launched October 2016 in Conakry · Editorial desk: ${settings.magazineEmail}`,
@@ -155,7 +155,7 @@ export function PresseEditionPage() {
                             alt={p('MediaInfoPro — Presse rotative et information économique', 'MediaInfoPro — Commercial press and business news wire')}
                             referrerPolicy="no-referrer"
                             className="w-full h-full object-cover"
-                          />
+                           loading="lazy" decoding="async" />
                         </ParallaxImageFrame>
                         <div className="absolute inset-0 bg-gradient-to-t from-[#110D0C]/70 via-transparent to-transparent pointer-events-none" />
                       </div>
@@ -170,7 +170,7 @@ export function PresseEditionPage() {
                           <p className="text-sm sm:text-base text-muted leading-relaxed">
                             {lang === 'en' ? mediaHub.mediaInfoProDescEn : mediaHub.mediaInfoProDescFr}
                           </p>
-                          <p className="text-xs font-medium text-[#931916] pt-3 border-t border-hairline">
+                          <p className="text-xs font-medium text-accent pt-3 border-t border-hairline">
                             {mediaHub.mediaInfoProUrl}
                           </p>
                         </div>

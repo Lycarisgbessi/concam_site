@@ -108,7 +108,7 @@ export function QuoteModal() {
             <div className="p-6 bg-page">
               {status === 'success' ? (
                 <div className="py-6 text-center space-y-3">
-                  <CheckCircle2 className="w-10 h-10 text-[#931916] mx-auto" />
+                  <CheckCircle2 className="w-10 h-10 text-accent mx-auto" />
                   <h3 className="font-serif text-xl font-bold text-ink">
                     {p('Demande enregistrée', 'Request Received')}
                   </h3>
@@ -226,7 +226,7 @@ export function QuoteModal() {
                       <Link
                         to={p('/confidentialite', '/en/privacy')}
                         onClick={closeQuoteModal}
-                        className="underline text-[#931916] font-medium"
+                        className="underline text-accent font-medium"
                       >
                         {p('politique de confidentialité', 'privacy policy')}
                       </Link>
@@ -234,7 +234,7 @@ export function QuoteModal() {
                     </span>
                   </label>
 
-                  {status === 'error' && <p className="text-xs text-[#931916] font-semibold">{errorMsg}</p>}
+                  {status === 'error' && <p className="text-xs text-accent font-semibold">{errorMsg}</p>}
 
                   <div className="flex items-center justify-end gap-3 pt-2">
                     <button

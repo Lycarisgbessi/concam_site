@@ -71,7 +71,7 @@ export function UnsubscribePage() {
             <div className="archival-plate rounded-[4px] p-6 sm:p-8 space-y-5">
           {status === 'done' ? (
             <div className="text-center space-y-4 py-4">
-              <CheckCircle2 className="w-10 h-10 text-[#931916] mx-auto" />
+              <CheckCircle2 className="w-10 h-10 text-accent mx-auto" />
               <p className="text-sm text-ink leading-relaxed">{message}</p>
               <Link
                 to={p('/', '/en')}
@@ -82,7 +82,7 @@ export function UnsubscribePage() {
             </div>
           ) : (
             <form onSubmit={handleUnsubscribe} className="space-y-4">
-              <div className="flex items-center gap-3 text-[#931916]">
+              <div className="flex items-center gap-3 text-accent">
                 <MailX className="w-6 h-6 shrink-0" />
                 <ParallaxHorizontalTitle direction={1} distance={18}>
                   <h2 className="font-serif text-2xl font-bold text-ink">
@@ -111,7 +111,7 @@ export function UnsubscribePage() {
                   />
                 </div>
               )}
-              {status === 'error' && <p className="text-xs text-[#931916] font-medium">{message}</p>}
+              {status === 'error' && <p className="text-xs text-accent font-medium">{message}</p>}
               <button
                 type="submit"
                 disabled={status === 'submitting'}

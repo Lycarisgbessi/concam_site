@@ -16,14 +16,14 @@ export function Breadcrumbs({ items }: { items: Array<{ label: string; to?: stri
   return (
     <nav aria-label={lang === 'en' ? 'Breadcrumb' : "Fil d'Ariane"} className="bg-limestone border-b border-hairline">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2.5 flex items-center gap-2 text-xs text-muted overflow-x-auto whitespace-nowrap">
-        <Link to={lang === 'en' ? '/en' : '/'} className="hover:text-[#931916] transition-colors font-medium">
+        <Link to={lang === 'en' ? '/en' : '/'} className="hover:text-accent transition-colors font-medium">
           {lang === 'en' ? 'Home' : 'Accueil'}
         </Link>
         {items.map((item, idx) => (
           <React.Fragment key={idx}>
             <ChevronRight className="w-3.5 h-3.5 text-faint shrink-0" aria-hidden="true" />
             {item.to ? (
-              <Link to={item.to} className="hover:text-[#931916] transition-colors font-medium">
+              <Link to={item.to} className="hover:text-accent transition-colors font-medium">
                 {item.label}
               </Link>
             ) : (
@@ -158,10 +158,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Top Bar Contract: 3 zones, sovereign chancery header with crisp hairline */}
       <header
-        className={`sticky top-0 z-40 h-16 transition-all duration-300 border-b ${
+        className={`sticky top-0 z-40 h-16 transition-[background-color,border-color,box-shadow] duration-300 border-b ${
           scrolled
             ? 'bg-[#110D0C]/95 backdrop-blur-md border-white/15 shadow-[0_14px_36px_-18px_rgba(0,0,0,0.65)]'
-            : 'bg-[#110D0C]/85 backdrop-blur-sm border-white/10'
+            : 'bg-[#110D0C] border-white/10'
         }`}
       >
         <div className="max-w-6xl mx-auto h-full px-4 sm:px-6 flex items-center justify-between gap-8">
@@ -242,7 +242,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <button
                 type="button"
                 onClick={() => openQuoteModal()}
-                className="hidden min-[420px]:inline-flex magnetic-sheen px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-[#931916] hover:bg-[#A30013] border border-[#931916] rounded-[4px] transition-all duration-300 shadow-[0_8px_20px_-8px_rgba(147,25,22,0.65)] whitespace-nowrap shrink-0 cursor-pointer"
+                className="hidden min-[420px]:inline-flex magnetic-sheen px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-[#931916] hover:bg-[#A30013] border border-[#931916] rounded-[4px] transition-colors duration-300 shadow-[0_8px_20px_-8px_rgba(147,25,22,0.65)] whitespace-nowrap shrink-0 cursor-pointer"
               >
                 {p('Demander un devis', 'Request a Quote')}
               </button>
@@ -447,7 +447,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackEvent('media_outbound', 'reussitemagazine.info')}
-                  className="group sovereign-plate-subtle flex items-center justify-between text-xs text-white px-3.5 py-2.5 rounded-[4px] hover:border-[#931916] transition-all"
+                  className="group sovereign-plate-subtle flex items-center justify-between text-xs text-white px-3.5 py-2.5 rounded-[4px] hover:border-[#931916] transition-colors"
                 >
                   <span>Réussite Magazine</span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-[#E40014] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
@@ -459,7 +459,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackEvent('media_outbound', 'mediainfopro.net')}
-                  className="group sovereign-plate-subtle flex items-center justify-between text-xs text-white px-3.5 py-2.5 rounded-[4px] hover:border-[#931916] transition-all"
+                  className="group sovereign-plate-subtle flex items-center justify-between text-xs text-white px-3.5 py-2.5 rounded-[4px] hover:border-[#931916] transition-colors"
                 >
                   <span>MediaInfoPro</span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-[#E40014] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />

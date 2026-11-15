@@ -1106,7 +1106,7 @@ function ParallaxHorizontalBandActive({
     tone === 'dark'
       ? 'bg-[#110D0C] text-white border-y border-white/15'
       : 'bg-limestone text-ink border-y border-hairline';
-  const diamondClass = tone === 'dark' ? 'text-[#E40014]' : 'text-[#931916]';
+  const diamondClass = tone === 'dark' ? 'text-[#E40014]' : 'text-accent';
   const secondaryTextClass = tone === 'dark' ? 'text-white/75' : 'text-muted';
 
   const repeatedPrimary = [...primaryItems, ...primaryItems, ...primaryItems, ...primaryItems];
@@ -1180,7 +1180,7 @@ export function ParallaxHorizontalBand({
       tone === 'dark'
         ? 'bg-[#110D0C] text-white border-y border-white/15'
         : 'bg-limestone text-ink border-y border-hairline';
-    const diamondClass = tone === 'dark' ? 'text-[#E40014]' : 'text-[#931916]';
+    const diamondClass = tone === 'dark' ? 'text-[#E40014]' : 'text-accent';
     return (
       <div className={`relative overflow-x-clip py-5 px-4 ${bgClass} ${className}`}>
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-6">

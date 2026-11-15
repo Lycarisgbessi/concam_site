@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { SiteProvider } from './context/SiteContext';
@@ -8,18 +8,32 @@ import { QuoteModal } from './components/QuoteModal';
 import { SearchOverlay } from './components/SearchOverlay';
 import { WhatsAppAndPopups } from './components/WhatsAppAndPopups';
 import { AdvisorWidget } from './components/AdvisorWidget';
-import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { ServicesIndexPage } from './pages/ServicesIndexPage';
-import { ServiceDetailPage } from './pages/ServiceDetailPage';
-import { PresseEditionPage } from './pages/PresseEditionPage';
-import { GalleryPage } from './pages/GalleryPage';
-import { BlogPage } from './pages/BlogPage';
-import { ContactPage } from './pages/ContactPage';
-import { SearchPage } from './pages/SearchPage';
-import { UnsubscribePage } from './pages/UnsubscribePage';
 import { LegalNoticePage, PrivacyPolicyPage } from './pages/LegalPages';
-import { AdminDashboard } from './pages/AdminDashboard';
+
+// Découpage du bundle par route : chaque page (et tout l'espace admin,
+// ~4 000 lignes) est chargée uniquement lorsqu'elle est visitée.
+const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })));
+const AboutPage = lazy(() => import('./pages/AboutPage').then((m) => ({ default: m.AboutPage })));
+const ServicesIndexPage = lazy(() => import('./pages/ServicesIndexPage').then((m) => ({ default: m.ServicesIndexPage })));
+const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage').then((m) => ({ default: m.ServiceDetailPage })));
+const PresseEditionPage = lazy(() => import('./pages/PresseEditionPage').then((m) => ({ default: m.PresseEditionPage })));
+const GalleryPage = lazy(() => import('./pages/GalleryPage').then((m) => ({ default: m.GalleryPage })));
+const BlogPage = lazy(() => import('./pages/BlogPage').then((m) => ({ default: m.BlogPage })));
+const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })));
+const SearchPage = lazy(() => import('./pages/SearchPage').then((m) => ({ default: m.SearchPage })));
+const UnsubscribePage = lazy(() => import('./pages/UnsubscribePage').then((m) => ({ default: m.UnsubscribePage })));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard').then((m) => ({ default: m.AdminDashboard })));
+
+/** Écran d'attente neutre pendant le chargement d'un segment de route :
+ *  fond de page du thème actif, sans flash blanc ni saut de mise en page. */
+function RouteFallback() {
+  return (
+    <div
+      aria-hidden="true"
+      style={{ minHeight: '60vh', background: 'var(--c-page, #F7F4EF)' }}
+    />
+  );
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -35,15 +49,16 @@ function PublicRoutes() {
 
   return (
     <Layout>
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={location.pathname}
-          initial={reduced ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={reduced ? undefined : { opacity: 0, y: -10 }}
-          transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <Routes location={location}>
+      <Suspense fallback={<RouteFallback />}>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={location.pathname}
+            initial={reduced ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduced ? undefined : { opacity: 0, y: -10 }}
+            transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Routes location={location}>
             {/* French Default Routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/a-propos" element={<AboutPage />} />
@@ -78,18 +93,26 @@ function PublicRoutes() {
           </Routes>
         </motion.div>
       </AnimatePresence>
+      </Suspense>
     </Layout>
   );
 }
 
 export default function App() {
   return (
-    <BrowserRouter>
+      <BrowserRouter>
       <SiteProvider>
         <ScrollToTop />
         <Preloader />
         <Routes>
-          <Route path="/admin" element={<AdminDashboard />} />
+          <Route
+            path="/admin"
+            element={
+              <Suspense fallback={<RouteFallback />}>
+                <AdminDashboard />
+              </Suspense>
+            }
+          />
           <Route path="/*" element={<PublicRoutes />} />
         </Routes>
         <SearchOverlay />
